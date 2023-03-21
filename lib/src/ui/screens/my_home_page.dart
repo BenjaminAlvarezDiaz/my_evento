@@ -126,7 +126,7 @@ class _MyHomePageState extends StateMVC<MyHomePage> {
         children: [
           isLoading ? const Center(child: CircularProgressIndicator())
               : eventListHome(),
-          Container(color: Colors.white, child: CalendarPicker()),
+          calendar(),
           isLoading ? const Center(child: CircularProgressIndicator())
               : myEventList(context),
           Container(color: Colors.redAccent,)
@@ -192,6 +192,19 @@ class _MyHomePageState extends StateMVC<MyHomePage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget calendar(){
+    return Container(
+        color: Colors.white,
+        child: const CalendarPicker(
+          daysWithBorder: false,
+          nameDaysWithBorder: false,
+          fontWeightOfNameDay: FontWeight.w500,
+          fontWeightOfDay: FontWeight.normal,
+          fontWeightOfMonth: FontWeight.w500,
+        )
     );
   }
 

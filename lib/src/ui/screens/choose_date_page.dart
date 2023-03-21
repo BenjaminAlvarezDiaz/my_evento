@@ -52,7 +52,14 @@ class _ChooseDatePageState extends StateMVC<ChooseDatePage> {
         children: [
           const SizedBox(height: 10,),
           Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: Colors.black),),
-          const CalendarPicker(),
+          const CalendarPicker(
+            enabledAllDaysOfMonth: false,
+            daysWithBorder: false,
+            nameDaysWithBorder: false,
+            fontWeightOfNameDay: FontWeight.w500,
+            fontWeightOfDay: FontWeight.normal,
+            fontWeightOfMonth: FontWeight.w500,
+          ),
           cancelAndNext(context)
         ],
       ),
