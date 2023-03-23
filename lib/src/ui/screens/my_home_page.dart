@@ -196,9 +196,10 @@ class _MyHomePageState extends StateMVC<MyHomePage> {
   }
 
   Widget calendar(){
+    late int? daySelected = 0;
     return Container(
         color: Colors.white,
-        child: const CalendarPicker(
+        child: CalendarPicker(
           daysWithBorder: false,
           nameDaysWithBorder: false,
           fontWeightOfNameDay: FontWeight.w500,

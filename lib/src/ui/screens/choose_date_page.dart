@@ -13,6 +13,8 @@ class ChooseDatePage extends StatefulWidget {
 
 class _ChooseDatePageState extends StateMVC<ChooseDatePage> {
   late ChooseDatePageController _con;
+  late int daySelected = 0;
+  late CalendarPicker calendarPicker;
 
   _ChooseDatePageState() : super (ChooseDatePageController()){
     _con = ChooseDatePageController();
@@ -52,7 +54,7 @@ class _ChooseDatePageState extends StateMVC<ChooseDatePage> {
         children: [
           const SizedBox(height: 10,),
           Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: Colors.black),),
-          const CalendarPicker(
+          calendarPicker = CalendarPicker(
             enabledAllDaysOfMonth: false,
             daysWithBorder: false,
             nameDaysWithBorder: false,
@@ -79,6 +81,8 @@ class _ChooseDatePageState extends StateMVC<ChooseDatePage> {
             icon: const Icon(Icons.clear, color: Color(0xffEB1B1B), size: 30,),
             onTap: (){
               _con.onPressedCancel(context);
+              daySelected = 0;
+              print(daySelected);
             }
         ),
         ButtonMultifunction(
@@ -90,6 +94,13 @@ class _ChooseDatePageState extends StateMVC<ChooseDatePage> {
             icon: const Icon(Icons.check, color: Color(0xff1B8023), size: 30,),
             onTap: (){
               _con.onPressedFollowing(context);
+              if(calendarPicker.onTapDaySelected != null){
+                daySelected = calendarPicker.onTapDaySelected!;
+              }else{
+                daySelected = DateTime.now().day;
+              }
+
+              print(daySelected);
             }
         ),
       ],

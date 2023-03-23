@@ -14,7 +14,10 @@ class CalendarPicker extends StatefulWidget {
   final FontWeight? fontWeightOfDay;
   final FontWeight? fontWeightOfNameDay;
   final FontWeight? fontWeightOfMonth;
-  const CalendarPicker({
+  final double? widthCalendar;
+  final double? heightCalendar;
+  late int? onTapDaySelected;
+  CalendarPicker({
     Key? key,
     this.currentDayColor = const Color(0xff7F0432),
     this.disabledColorDay = Colors.grey,
@@ -27,6 +30,9 @@ class CalendarPicker extends StatefulWidget {
     this.fontWeightOfDay = FontWeight.bold,
     this.fontWeightOfNameDay,
     this.fontWeightOfMonth = FontWeight.bold,
+    this.widthCalendar = 500,
+    this.heightCalendar = 500,
+    this.onTapDaySelected,
   }) : super(key: key);
 
   @override
@@ -40,8 +46,6 @@ class _CalendarPickerState extends State<CalendarPicker> {
   late int _daysPassed;
   DateTime timeNow = DateTime.now();
   //int otherIndex = 0;
-  double? widthCalendar = 500;
-  double? heightCalendar = 500;
   final List<String> _monthsOfTheYear = [
     'Enero',
     'Febrero',
@@ -121,13 +125,16 @@ class _CalendarPickerState extends State<CalendarPicker> {
       alignment: Alignment.center,
       child: Container(
         color: Colors.white,
-        width: widthCalendar,
-        height: heightCalendar,
+        width: widget.widthCalendar! < 500 ? 500 : widget.widthCalendar,
+        height: widget.heightCalendar! < 500 ? 500 : widget.heightCalendar,
         child: ScrollConfiguration(
           behavior: MyBehavior(),
           child: Column(
             children: [
-              monthBuilder(widthCalendar, _monthsOfTheYear[_currentMonth - 1]),
+              monthBuilder(
+                  widget.widthCalendar! < 500 ? 500 : widget.widthCalendar,
+                  _monthsOfTheYear[_currentMonth - 1]
+              ),
               weekBuilder(),
               GridView.builder(
                   shrinkWrap: true,
@@ -171,30 +178,39 @@ class _CalendarPickerState extends State<CalendarPicker> {
   }
 
   Widget dayBuilder(CalendarDate date, Color textColor, bool isCurrentDay, bool isCurrentMonth){
-    return Container(
-      decoration: BoxDecoration(
-        border: widget.daysWithBorder ? Border.all(color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor) : null,
-        borderRadius: widget.borderRadiusGeometryOfDay,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '${date.day}',
-            style: TextStyle(
-              color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor,
-              fontWeight: widget.fontWeightOfDay,
+    return InkWell(
+      child: Container(
+        decoration: BoxDecoration(
+          border: widget.daysWithBorder ? Border.all(color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor) : null,
+          borderRadius: widget.borderRadiusGeometryOfDay,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '${date.day}',
+              style: TextStyle(
+                color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor,
+                fontWeight: widget.fontWeightOfDay,
+              ),
             ),
-          ),
-          /*Text(
-            '${date.getWeekdayName()}',
-            style: TextStyle(
-              color: textColor,
-            ),
-          ),*/
-        ],
+            /*Text(
+              '${date.getWeekdayName()}',
+              style: TextStyle(
+                color: textColor,
+              ),
+            ),*/
+          ],
+        ),
       ),
+      onTap: (){
+        selectedDay(date.day);
+      },
     );
+  }
+
+  void selectedDay(int daySelected){
+    widget.onTapDaySelected = daySelected == null ? DateTime.now().day : daySelected;
   }
 
   Widget monthBuilder(double? widthCalendar, String month){
