@@ -100,11 +100,9 @@ class _ChooseDatePageState extends StateMVC<ChooseDatePage> {
             icon: const Icon(Icons.check, color: Color(0xff1B8023), size: 30,),
             onTap: (){
               _con.onPressedFollowing(context);
-              /*if(calendarPicker.onTapDaySelected != null){
-                daySelected = calendarPicker.onTapDaySelected!;
-              }else{
+              if(daySelected == 0){
                 daySelected = DateTime.now().day;
-              }*/
+              }
               print(daySelected);
             }
         ),

@@ -151,14 +151,14 @@ class _CalendarPickerState extends State<CalendarPicker> {
                     Color textColor;
                     if(widget.enabledAllDaysOfMonth){
                       textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
-                      isDayActivated = isCurrentMonth ? true : false;
+                      isDayActivated = true;
                     }else{
                       if(index < _daysPassed || (_currentMonth == 1 && index < _daysPassed + 4) || (_currentMonth == 12 && index < _daysPassed + 2)){
                         textColor = widget.disabledColorDay;
                         isDayActivated = false;
                       }else{
                         textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
-                        isDayActivated = isCurrentMonth ? true : false;
+                        isDayActivated = true;
                       }
                     }
                     /*CalendarDate lastDays;
