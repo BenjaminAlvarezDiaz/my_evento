@@ -3,7 +3,37 @@ import 'package:intl/intl.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
 
 class CalendarPicker extends StatefulWidget {
-  const CalendarPicker({Key? key}) : super(key: key);
+  final Color currentDayColor;
+  final Color disabledColorDay;
+  final Color enabledColorDay;
+  final bool daysWithBorder;
+  final bool enabledAllDaysOfMonth;
+  final bool nameDaysWithBorder;
+  final BorderRadiusGeometry? borderRadiusGeometryOfDay;
+  final BorderRadiusGeometry? borderRadiusGeometryOfNameDay;
+  final FontWeight? fontWeightOfDay;
+  final FontWeight? fontWeightOfNameDay;
+  final FontWeight? fontWeightOfMonth;
+  final double? widthCalendar;
+  final double? heightCalendar;
+  late int? onTapDaySelected;
+  CalendarPicker({
+    Key? key,
+    this.currentDayColor = const Color(0xff7F0432),
+    this.disabledColorDay = Colors.grey,
+    this.enabledColorDay = Colors.black,
+    this.daysWithBorder = true,
+    this.enabledAllDaysOfMonth = true,
+    this.nameDaysWithBorder = true,
+    this.borderRadiusGeometryOfDay = const BorderRadius.all(Radius.circular(10)),
+    this.borderRadiusGeometryOfNameDay = const BorderRadius.all(Radius.circular(10)),
+    this.fontWeightOfDay = FontWeight.bold,
+    this.fontWeightOfNameDay,
+    this.fontWeightOfMonth = FontWeight.bold,
+    this.widthCalendar = 500,
+    this.heightCalendar = 500,
+    this.onTapDaySelected,
+  }) : super(key: key);
 
   @override
   State<CalendarPicker> createState() => _CalendarPickerState();
@@ -16,9 +46,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
   late int _daysPassed;
   DateTime timeNow = DateTime.now();
   //int otherIndex = 0;
-  double? widthCalendar = 500;
-  double? heightCalendar = 500;
-  List<String> _monthsOfTheYear = [
+  final List<String> _monthsOfTheYear = [
     'Enero',
     'Febrero',
     'Marzo',
@@ -97,13 +125,17 @@ class _CalendarPickerState extends State<CalendarPicker> {
       alignment: Alignment.center,
       child: Container(
         color: Colors.white,
-        width: widthCalendar,
-        height: heightCalendar,
+        width: widget.widthCalendar! < 500 ? 500 : widget.widthCalendar,
+        height: widget.heightCalendar! < 500 ? 500 : widget.heightCalendar,
         child: ScrollConfiguration(
           behavior: MyBehavior(),
           child: Column(
             children: [
-              monthBuilder(widthCalendar, _monthsOfTheYear[_currentMonth - 1]),
+              monthBuilder(
+                  widget.widthCalendar! < 500 ? 500 : widget.widthCalendar,
+                  _monthsOfTheYear[_currentMonth - 1]
+              ),
+              weekBuilder(),
               GridView.builder(
                   shrinkWrap: true,
                   itemCount: _daysInMonth.length,
@@ -114,10 +146,14 @@ class _CalendarPickerState extends State<CalendarPicker> {
                     bool isCurrentMonth = date.month == _currentMonth;
                     bool isCurrentDay = date.day == _currentDay;
                     Color textColor;
-                    if(index < _daysPassed || (_currentMonth == 1 && index < _daysPassed + 4) || (_currentMonth == 12 && index < _daysPassed + 2)){
-                      textColor = Colors.grey;
+                    if(widget.enabledAllDaysOfMonth){
+                      textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
                     }else{
-                      textColor = isCurrentMonth ? Colors.black : Colors.grey;
+                      if(index < _daysPassed || (_currentMonth == 1 && index < _daysPassed + 4) || (_currentMonth == 12 && index < _daysPassed + 2)){
+                        textColor = widget.disabledColorDay;
+                      }else{
+                        textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
+                      }
                     }
                     /*CalendarDate lastDays;
                     if(_daysInMonth[index].day >= _currentDay){
@@ -142,30 +178,39 @@ class _CalendarPickerState extends State<CalendarPicker> {
   }
 
   Widget dayBuilder(CalendarDate date, Color textColor, bool isCurrentDay, bool isCurrentMonth){
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: isCurrentMonth ? isCurrentDay ? const Color(0xff7F0432) : textColor : textColor),
-        borderRadius: const BorderRadius.all(Radius.circular(10))
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '${date.day}',
-            style: TextStyle(
-              color: isCurrentMonth ? isCurrentDay ? const Color(0xff7F0432) : textColor : textColor,
-              fontWeight: FontWeight.bold,
+    return InkWell(
+      child: Container(
+        decoration: BoxDecoration(
+          border: widget.daysWithBorder ? Border.all(color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor) : null,
+          borderRadius: widget.borderRadiusGeometryOfDay,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '${date.day}',
+              style: TextStyle(
+                color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor,
+                fontWeight: widget.fontWeightOfDay,
+              ),
             ),
-          ),
-          Text(
-            '${date.getWeekdayName()}',
-            style: TextStyle(
-              color: textColor,
-            ),
-          ),
-        ],
+            /*Text(
+              '${date.getWeekdayName()}',
+              style: TextStyle(
+                color: textColor,
+              ),
+            ),*/
+          ],
+        ),
       ),
+      onTap: (){
+        selectedDay(date.day);
+      },
     );
+  }
+
+  void selectedDay(int daySelected){
+    widget.onTapDaySelected = daySelected == null ? DateTime.now().day : daySelected;
   }
 
   Widget monthBuilder(double? widthCalendar, String month){
@@ -180,30 +225,59 @@ class _CalendarPickerState extends State<CalendarPicker> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          widget.enabledAllDaysOfMonth ?
           IconButton(
             icon: Icon(Icons.arrow_back_ios_outlined, size: sizeIcon,),
             color: colorIcon,
             onPressed: (){
 
             },
-          ),
+          ) : SizedBox(width: sizeIcon * 2.4,),
           Container(
             color: Colors.white,
             width: widthCalendar! / 1.5,
             height: height,
-            child: Center(child: Text(month, style: TextStyle(fontSize: fontSize),)),
+            child: Center(child: Text(month, style: TextStyle(fontSize: fontSize, fontWeight: widget.fontWeightOfMonth),)),
           ),
           IconButton(
             icon: Icon(Icons.arrow_forward_ios_outlined, size: sizeIcon,),
             color: colorIcon,
             onPressed: () {
               setState(() {
-                timeNow.add(Duration(days: 31));
+                timeNow.add(const Duration(days: 31));
               });
             },
           )
         ],
       ),
+    );
+  }
+
+  Widget weekBuilder(){
+    return Row(
+      children: [
+        nameDayBuilder('Lu'),
+        nameDayBuilder('Ma'),
+        nameDayBuilder('Mi'),
+        nameDayBuilder('Ju'),
+        nameDayBuilder('Vi'),
+        nameDayBuilder('Sa'),
+        nameDayBuilder('Do'),
+      ],
+    );
+  }
+
+  Widget nameDayBuilder(String day){
+    return Expanded(
+        flex: 2,
+        child: Container(
+          decoration: BoxDecoration(
+            border: widget.nameDaysWithBorder ? Border.all(
+                color: widget.enabledColorDay) : null,
+            borderRadius: widget.borderRadiusGeometryOfNameDay,
+          ),
+          child: Center(child: Text('${day}', style: TextStyle(fontWeight: widget.fontWeightOfNameDay),)),
+        )
     );
   }
 }
