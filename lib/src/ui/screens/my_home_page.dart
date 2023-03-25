@@ -205,6 +205,12 @@ class _MyHomePageState extends StateMVC<MyHomePage> {
           fontWeightOfNameDay: FontWeight.w500,
           fontWeightOfDay: FontWeight.normal,
           fontWeightOfMonth: FontWeight.w500,
+          onDaySelected: (date){
+            setState(() {
+              daySelected = date.day;
+              print(daySelected);
+            });
+          },
         )
     );
   }
