@@ -17,6 +17,7 @@ class CalendarPicker extends StatefulWidget {
   final double? widthCalendar;
   final double? heightCalendar;
   late int? onTapDaySelected;
+  final Function(CalendarDate) onDaySelected;
   CalendarPicker({
     Key? key,
     this.currentDayColor = const Color(0xff7F0432),
@@ -33,6 +34,7 @@ class CalendarPicker extends StatefulWidget {
     this.widthCalendar = 500,
     this.heightCalendar = 500,
     this.onTapDaySelected,
+    required this.onDaySelected,
   }) : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
   //late List<CalendarDate> _lastDaysInMonth;
   late int _daysPassed;
   DateTime timeNow = DateTime.now();
+  late bool isDayActivated;
   //int otherIndex = 0;
   final List<String> _monthsOfTheYear = [
     'Enero',
@@ -148,11 +151,14 @@ class _CalendarPickerState extends State<CalendarPicker> {
                     Color textColor;
                     if(widget.enabledAllDaysOfMonth){
                       textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
+                      isDayActivated = isCurrentMonth ? true : false;
                     }else{
                       if(index < _daysPassed || (_currentMonth == 1 && index < _daysPassed + 4) || (_currentMonth == 12 && index < _daysPassed + 2)){
                         textColor = widget.disabledColorDay;
+                        isDayActivated = false;
                       }else{
                         textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
+                        isDayActivated = isCurrentMonth ? true : false;
                       }
                     }
                     /*CalendarDate lastDays;
@@ -167,7 +173,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
                       lastDays = date;
                     }*/
                     //bool isLastDaysInMonth = date.day == lastDays.day;
-                    return dayBuilder(date, textColor, isCurrentDay, isCurrentMonth);
+                    return dayBuilder(date, textColor, isCurrentDay, isCurrentMonth, isDayActivated);
                   }
               ),
             ],
@@ -177,8 +183,12 @@ class _CalendarPickerState extends State<CalendarPicker> {
     );
   }
 
-  Widget dayBuilder(CalendarDate date, Color textColor, bool isCurrentDay, bool isCurrentMonth){
-    return InkWell(
+  Widget dayBuilder(CalendarDate date, Color textColor, bool isCurrentDay, bool isCurrentMonth, bool isDayActivated){
+    return isDayActivated ? InkWell(
+      onTap: (){
+        selectedDay(date.day);
+        widget.onDaySelected(date);
+      },
       child: Container(
         decoration: BoxDecoration(
           border: widget.daysWithBorder ? Border.all(color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor) : null,
@@ -203,9 +213,30 @@ class _CalendarPickerState extends State<CalendarPicker> {
           ],
         ),
       ),
-      onTap: (){
-        selectedDay(date.day);
-      },
+    ) :
+    Container(
+      decoration: BoxDecoration(
+        border: widget.daysWithBorder ? Border.all(color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor) : null,
+        borderRadius: widget.borderRadiusGeometryOfDay,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '${date.day}',
+            style: TextStyle(
+              color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor,
+              fontWeight: widget.fontWeightOfDay,
+            ),
+          ),
+          /*Text(
+              '${date.getWeekdayName()}',
+              style: TextStyle(
+                color: textColor,
+              ),
+            ),*/
+        ],
+      ),
     );
   }
 
