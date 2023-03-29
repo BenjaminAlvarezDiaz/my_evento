@@ -57,9 +57,30 @@ class _ChooseHourPageState extends StateMVC<ChooseHourPage> {
             HourPicker(),
             SizedBox(height: 40,),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ButtonMultifunction(text: Text('Cancelar'), onTap: (){}),
-                ButtonMultifunction(text: Text('Siguiente'), onTap: (){}),
+                ButtonMultifunction(
+                  text: Text('Cancelar', style: TextStyle(fontSize: 20),),
+                  onTap: (){
+                    _con.onPressedCancel(context);
+                  },
+                  withIcon: true,
+                  iconRight: true,
+                  width: 200,
+                  backgroundColor: Colors.white,
+                  icon: Icon(Icons.clear, color: Color(0xffEB1B1B), size: 30,),
+                ),
+                ButtonMultifunction(
+                  text: Text('Siguiente', style: TextStyle(fontSize: 20),),
+                  onTap: (){
+                    _con.onPressedFollowing(context);
+                  },
+                  withIcon: true,
+                  iconRight: true,
+                  width: 200,
+                  backgroundColor: Colors.white,
+                  icon: Icon(Icons.check, color: Color(0xff1B8023), size: 30,),
+                ),
               ],
             ),
             SizedBox(height: 20,),
