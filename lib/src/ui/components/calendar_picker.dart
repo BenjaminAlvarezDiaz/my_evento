@@ -48,6 +48,8 @@ class _CalendarPickerState extends State<CalendarPicker> {
   late int _daysPassed;
   DateTime timeNow = DateTime.now();
   late bool isDayActivated;
+  List<CalendarDate> daysInTheCurrentMonth= [];
+  int otherIndex = -1;
   //int otherIndex = 0;
   final List<String> _monthsOfTheYear = [
     'Enero',
@@ -80,6 +82,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
     // Obtener los días del mes actual
     for (int i = 1; i <= daysInMonth; i++) {
       daysInMonthList.add(CalendarDate(i, month, year));
+      daysInTheCurrentMonth.add(CalendarDate(i, month, year));
     }
 
     // Obtener los días del mes siguiente para completar la última semana
@@ -149,30 +152,21 @@ class _CalendarPickerState extends State<CalendarPicker> {
                     bool isCurrentMonth = date.month == _currentMonth;
                     bool isCurrentDay = date.day == _currentDay;
                     Color textColor;
-                    if(widget.enabledAllDaysOfMonth){
-                      textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
-                      isDayActivated = true;
-                    }else{
-                      if(index < _daysPassed || (_currentMonth == 1 && index < _daysPassed + 4) || (_currentMonth == 12 && index < _daysPassed + 2)){
+
+                    if(!widget.enabledAllDaysOfMonth && isCurrentMonth){
+                      otherIndex++;
+                      if(daysInTheCurrentMonth[otherIndex].day < _currentDay){
                         textColor = widget.disabledColorDay;
                         isDayActivated = false;
                       }else{
-                        textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
+                        textColor = widget.enabledColorDay;
                         isDayActivated = true;
                       }
-                    }
-                    /*CalendarDate lastDays;
-                    if(_daysInMonth[index].day >= _currentDay){
-                      otherIndex++;
-                      if(otherIndex < _lastDaysInMonth.length){
-                        lastDays = _lastDaysInMonth[otherIndex];
-                      }else{
-                        lastDays = date;
-                      }
                     }else{
-                      lastDays = date;
-                    }*/
-                    //bool isLastDaysInMonth = date.day == lastDays.day;
+                      textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
+                      isDayActivated = true;
+                      otherIndex = -1;
+                    }
                     return dayBuilder(date, textColor, isCurrentDay, isCurrentMonth, isDayActivated);
                   }
               ),
