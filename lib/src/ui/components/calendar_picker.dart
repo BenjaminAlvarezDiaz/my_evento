@@ -44,11 +44,11 @@ class CalendarPicker extends StatefulWidget {
 class _CalendarPickerState extends State<CalendarPicker> {
 
   late List<CalendarDate> _daysInMonth;
-  //late List<CalendarDate> _lastDaysInMonth;
   late int _daysPassed;
   DateTime timeNow = DateTime.now();
   late bool isDayActivated;
-  //int otherIndex = 0;
+  List<CalendarDate> daysInTheCurrentMonth= [];
+  int otherIndex = -1;
   final List<String> _monthsOfTheYear = [
     'Enero',
     'Febrero',
@@ -80,6 +80,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
     // Obtener los días del mes actual
     for (int i = 1; i <= daysInMonth; i++) {
       daysInMonthList.add(CalendarDate(i, month, year));
+      daysInTheCurrentMonth.add(CalendarDate(i, month, year));
     }
 
     // Obtener los días del mes siguiente para completar la última semana
@@ -92,22 +93,8 @@ class _CalendarPickerState extends State<CalendarPicker> {
     return daysInMonthList;
   }
 
-  /*List<CalendarDate> _getLastDaysOfMonth(DateTime currentDate){
-    DateTime lastDayOfMonth = DateTime(currentDate.year, currentDate.month + 1, 0);
-    List<CalendarDate> remainingDaysOfMonth = [];
-    for (int i = currentDate.day; i <= lastDayOfMonth.day; i++) {
-      remainingDaysOfMonth.add(CalendarDate(currentDate.year, currentDate.month, i));
-    }
-    return remainingDaysOfMonth;
-  }*/
-
   int _getDaysPassed(int currentDate){
-    //DateTime firstDayOfLastMonth = DateTime(currentDate.year, currentDate.month - 1, 1);
-    //int daysInLastMonth = DateTime(firstDayOfLastMonth.year, firstDayOfLastMonth.month + 1, 0).day;
-    //int daysInCurrentMonth = DateTime(currentDate.year, currentDate.month, 0).day;
     int daysPassedInCurrentMonth = currentDate + 1;
-    //int daysPassedInLastMonth = daysInLastMonth - (daysInCurrentMonth - daysPassedInCurrentMonth);
-    //int daysPassed = currentDate.difference(firstDayOfLastMonth).inDays - daysInLastMonth;
     return daysPassedInCurrentMonth;
   }
 
@@ -115,7 +102,6 @@ class _CalendarPickerState extends State<CalendarPicker> {
   void initState() {
     super.initState();
     _daysInMonth = _getDaysInMonth(timeNow.month, timeNow.year);
-    //_lastDaysInMonth = _getLastDaysOfMonth(DateTime.now());
     _daysPassed = _getDaysPassed(timeNow.day);
   }
 
@@ -149,30 +135,21 @@ class _CalendarPickerState extends State<CalendarPicker> {
                     bool isCurrentMonth = date.month == _currentMonth;
                     bool isCurrentDay = date.day == _currentDay;
                     Color textColor;
-                    if(widget.enabledAllDaysOfMonth){
-                      textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
-                      isDayActivated = true;
-                    }else{
-                      if(index < _daysPassed || (_currentMonth == 1 && index < _daysPassed + 4) || (_currentMonth == 12 && index < _daysPassed + 2)){
+
+                    if(!widget.enabledAllDaysOfMonth && isCurrentMonth){
+                      otherIndex++;
+                      if(daysInTheCurrentMonth[otherIndex].day < _currentDay){
                         textColor = widget.disabledColorDay;
                         isDayActivated = false;
                       }else{
-                        textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
+                        textColor = widget.enabledColorDay;
                         isDayActivated = true;
                       }
-                    }
-                    /*CalendarDate lastDays;
-                    if(_daysInMonth[index].day >= _currentDay){
-                      otherIndex++;
-                      if(otherIndex < _lastDaysInMonth.length){
-                        lastDays = _lastDaysInMonth[otherIndex];
-                      }else{
-                        lastDays = date;
-                      }
                     }else{
-                      lastDays = date;
-                    }*/
-                    //bool isLastDaysInMonth = date.day == lastDays.day;
+                      textColor = isCurrentMonth ? widget.enabledColorDay : widget.disabledColorDay;
+                      isDayActivated = true;
+                      otherIndex = -1;
+                    }
                     return dayBuilder(date, textColor, isCurrentDay, isCurrentMonth, isDayActivated);
                   }
               ),
@@ -229,12 +206,6 @@ class _CalendarPickerState extends State<CalendarPicker> {
               fontWeight: widget.fontWeightOfDay,
             ),
           ),
-          /*Text(
-              '${date.getWeekdayName()}',
-              style: TextStyle(
-                color: textColor,
-              ),
-            ),*/
         ],
       ),
     );
