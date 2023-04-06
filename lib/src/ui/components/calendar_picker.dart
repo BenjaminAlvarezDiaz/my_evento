@@ -44,13 +44,11 @@ class CalendarPicker extends StatefulWidget {
 class _CalendarPickerState extends State<CalendarPicker> {
 
   late List<CalendarDate> _daysInMonth;
-  //late List<CalendarDate> _lastDaysInMonth;
   late int _daysPassed;
   DateTime timeNow = DateTime.now();
   late bool isDayActivated;
   List<CalendarDate> daysInTheCurrentMonth= [];
   int otherIndex = -1;
-  //int otherIndex = 0;
   final List<String> _monthsOfTheYear = [
     'Enero',
     'Febrero',
@@ -95,22 +93,8 @@ class _CalendarPickerState extends State<CalendarPicker> {
     return daysInMonthList;
   }
 
-  /*List<CalendarDate> _getLastDaysOfMonth(DateTime currentDate){
-    DateTime lastDayOfMonth = DateTime(currentDate.year, currentDate.month + 1, 0);
-    List<CalendarDate> remainingDaysOfMonth = [];
-    for (int i = currentDate.day; i <= lastDayOfMonth.day; i++) {
-      remainingDaysOfMonth.add(CalendarDate(currentDate.year, currentDate.month, i));
-    }
-    return remainingDaysOfMonth;
-  }*/
-
   int _getDaysPassed(int currentDate){
-    //DateTime firstDayOfLastMonth = DateTime(currentDate.year, currentDate.month - 1, 1);
-    //int daysInLastMonth = DateTime(firstDayOfLastMonth.year, firstDayOfLastMonth.month + 1, 0).day;
-    //int daysInCurrentMonth = DateTime(currentDate.year, currentDate.month, 0).day;
     int daysPassedInCurrentMonth = currentDate + 1;
-    //int daysPassedInLastMonth = daysInLastMonth - (daysInCurrentMonth - daysPassedInCurrentMonth);
-    //int daysPassed = currentDate.difference(firstDayOfLastMonth).inDays - daysInLastMonth;
     return daysPassedInCurrentMonth;
   }
 
@@ -118,7 +102,6 @@ class _CalendarPickerState extends State<CalendarPicker> {
   void initState() {
     super.initState();
     _daysInMonth = _getDaysInMonth(timeNow.month, timeNow.year);
-    //_lastDaysInMonth = _getLastDaysOfMonth(DateTime.now());
     _daysPassed = _getDaysPassed(timeNow.day);
   }
 
@@ -223,12 +206,6 @@ class _CalendarPickerState extends State<CalendarPicker> {
               fontWeight: widget.fontWeightOfDay,
             ),
           ),
-          /*Text(
-              '${date.getWeekdayName()}',
-              style: TextStyle(
-                color: textColor,
-              ),
-            ),*/
         ],
       ),
     );
