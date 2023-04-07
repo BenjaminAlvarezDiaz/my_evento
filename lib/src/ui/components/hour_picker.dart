@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class HourPicker extends StatefulWidget {
   final double? height;
   final double? width;
+  final double? fontSize;
   final ValueChanged<TimeOfDay>? onChanged;
   final TimeOfDay? initialTime;
 
@@ -11,7 +12,8 @@ class HourPicker extends StatefulWidget {
     this.height = 400,
     this.width = 200,
     this.onChanged,
-    this.initialTime
+    this.initialTime,
+    this.fontSize = 100
 
   }) : super(key: key);
 
@@ -22,26 +24,28 @@ class HourPicker extends StatefulWidget {
 class _HourPickerState extends State<HourPicker> {
   late int _hour;
   late int _minute;
+  late TimeOfDay _selectedTime;
 
   @override
   void initState() {
     super.initState();
-    _hour = widget.initialTime?.hour ?? TimeOfDay.now().hour;
-    _minute = widget.initialTime?.minute ?? TimeOfDay.now().minute;
+    _selectedTime = TimeOfDay.now();
   }
 
-  void _handleHourChanged(int? value) {
-    setState(() {
-      _hour = value!;
-    });
-    widget.onChanged?.call(TimeOfDay(hour: _hour, minute: _minute));
-  }
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? time = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+      builder: (context, child){
+        return builder();
+      },
+    );
 
-  void _handleMinuteChanged(int? value) {
-    setState(() {
-      _minute = value!;
-    });
-    widget.onChanged?.call(TimeOfDay(hour: _hour, minute: _minute));
+    if (time != null && time != _selectedTime) {
+      setState(() {
+        _selectedTime = time;
+      });
+    }
   }
 
   @override
@@ -51,33 +55,45 @@ class _HourPickerState extends State<HourPicker> {
       height: 200,
       width: 400,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          DropdownButton<int>(
-            value: _hour,
-            items: List.generate(24, (index) {
-              return DropdownMenuItem<int>(
-                value: index,
-                child: Text(index.toString().padLeft(2, '0')),
-              );
-            }),
-            onChanged: _handleHourChanged,
+          Container(
+            height: 200,
+            child: Text('${_selectedTime.hour}', style: TextStyle(fontSize: widget.fontSize),),
           ),
-          SizedBox(width: 8),
-          Text(':'),
-          SizedBox(width: 8),
-          DropdownButton<int>(
-            value: _minute,
-            items: List.generate(60, (index) {
-              return DropdownMenuItem<int>(
-                value: index,
-                child: Text(index.toString().padLeft(2, '0')),
-              );
-            }),
-            onChanged: _handleMinuteChanged,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  child: Text(':', style: TextStyle(fontSize: widget.fontSize),)),
+              Container(height: 50, color: Colors.white,)
+            ],
+          ),
+          Container(
+            height: 200,
+            child: Text('${_selectedTime.minute}', style: TextStyle(fontSize: widget.fontSize),),
           ),
         ],
-      ),
+      )
+    );
+  }
+
+  Widget builder(){
+    return Theme(
+        data: ThemeData.light().copyWith(
+          colorScheme: ColorScheme.light(
+            // change the border color
+            primary: Colors.red,
+            // change the text color
+            onSurface: Colors.purple,
+          ),
+          // button colors
+          buttonTheme: ButtonThemeData(
+            colorScheme: ColorScheme.light(
+              primary: Colors.green,
+            ),
+          ),
+        ),
+        child: Center(child: Container(height: 100, width: 100, color: Colors.white,))
     );
   }
 }
