@@ -114,14 +114,14 @@ class _HourPickerState extends State<HourPicker> {
   Widget _buildWheelPicker(
       String title, List<int> items, Function(int) onChanged, int initialValue, context) {
     return onLongPress ? Container(
-      height: 100,
+      height: 120,
       width: 100,
       child: ListWheelScrollView(
-        itemExtent: 40,
+        itemExtent: 50,
         children: items.map((item) {
-          return Center(
-            child: Container(
-              color: Colors.red,
+          return Container(
+            color: Colors.red,
+            child: Center(
               child: Text(
                 item.toString(),
                 style: TextStyle(fontSize: 24),
@@ -133,12 +133,12 @@ class _HourPickerState extends State<HourPicker> {
         physics: FixedExtentScrollPhysics(),
         useMagnifier: true,
         magnification: 1.2,
-        squeeze: 1.4,
-        diameterRatio: 1.3,
-        perspective: 0.003,
+        squeeze: 1.5,
+        diameterRatio: 1,
+        perspective: 0.0001,
         offAxisFraction: 0,
         clipBehavior: Clip.none,
-        overAndUnderCenterOpacity: 0.7,
+        overAndUnderCenterOpacity: 0.8,
         renderChildrenOutsideViewport: true,
       ),
     ) :
