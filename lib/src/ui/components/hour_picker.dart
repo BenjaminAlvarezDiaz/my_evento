@@ -114,31 +114,34 @@ class _HourPickerState extends State<HourPicker> {
   Widget _buildWheelPicker(
       String title, List<int> items, Function(int) onChanged, int initialValue, context) {
     return onLongPress ? Container(
-        height: 200,
-        width: 100,
-        child: PageView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: items.length,
-              controller: PageController(viewportFraction: 0.5, keepPage: true),
-              itemBuilder: (context, i){
-                if(i == currentPage){
-                  return Transform.scale(
-                      scale: 1,
-                      child: builder(items[i].toString())
-                  );
-                }else if(i < currentPage){
-                  return Transform.scale(
-                      scale: max(1 - (currentPage - i), 0.8),
-                      child: builder(items[i].toString())
-                  );
-                }else {
-                  return Transform.scale(
-                      scale: max(1 - (i - currentPage), 0.8),
-                      child: builder(items[i].toString())
-                  );
-                }},
-          )
-        ) :
+      height: 100,
+      width: 100,
+      child: ListWheelScrollView(
+        itemExtent: 40,
+        children: items.map((item) {
+          return Center(
+            child: Container(
+              color: Colors.red,
+              child: Text(
+                item.toString(),
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+          );
+        }).toList(),
+        onSelectedItemChanged: onChanged,
+        physics: FixedExtentScrollPhysics(),
+        useMagnifier: true,
+        magnification: 1.2,
+        squeeze: 1.4,
+        diameterRatio: 1.3,
+        perspective: 0.003,
+        offAxisFraction: 0,
+        clipBehavior: Clip.none,
+        overAndUnderCenterOpacity: 0.7,
+        renderChildrenOutsideViewport: true,
+      ),
+    ) :
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -154,28 +157,7 @@ class _HourPickerState extends State<HourPicker> {
               borderRadius: BorderRadius.circular(20),
               color: Colors.grey[200],
             ),
-            child: PageView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: items.length,
-              controller: PageController(viewportFraction: 0.5, keepPage: true),
-              itemBuilder: (_, i){
-                if(i == currentPage){
-                  return Transform.scale(
-                      scale: 1,
-                      child: builder(items[i].toString())
-                  );
-                }else if(i < currentPage){
-                  return Transform.scale(
-                      scale: max(1 - (currentPage - i), 0.8),
-                      child: builder(items[i].toString())
-                  );
-                }else {
-                  return Transform.scale(
-                      scale: max(1 - (i - currentPage), 0.8),
-                      child: builder(items[i].toString())
-                  );
-                }},
-            )
+          child: Center(child: Text('${_hour}'),),
         ),
       ],
     );
