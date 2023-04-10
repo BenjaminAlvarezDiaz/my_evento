@@ -26,6 +26,7 @@ class HourPicker extends StatefulWidget {
 class _HourPickerState extends State<HourPicker> {
   int _hour = DateTime.now().hour;
   int _minute = DateTime.now().minute;
+  bool onLongPress = false;
   final _controller = PageController(
       viewportFraction: 0.5,
       keepPage: true
@@ -66,6 +67,9 @@ class _HourPickerState extends State<HourPicker> {
             },
             onLongPress: (){
               print("Editar ruleta");
+              setState(() {
+                onLongPress = !onLongPress;
+              });
             },
             child: _buildWheelPicker(
               'Hour',
@@ -76,6 +80,7 @@ class _HourPickerState extends State<HourPicker> {
                 });
               },
               _hour,
+              context
             ),
           ),
           SizedBox(width: 20),
@@ -85,6 +90,9 @@ class _HourPickerState extends State<HourPicker> {
             },
             onLongPress: (){
               print("Editar ruleta");
+              setState(() {
+                onLongPress = !onLongPress;
+              });
             },
             child: _buildWheelPicker(
               'Minute',
@@ -95,6 +103,7 @@ class _HourPickerState extends State<HourPicker> {
                 });
               },
               _minute,
+              context
             ),
           ),
         ],
@@ -103,27 +112,15 @@ class _HourPickerState extends State<HourPicker> {
   }
 
   Widget _buildWheelPicker(
-      String title, List<int> items, Function(int) onChanged, int initialValue) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: 20),
-        ),
-        SizedBox(height: 10),
-        Container(
-          height: 100,
-          width: 100,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.grey[200],
-          ),
-          child: PageView.builder(
+      String title, List<int> items, Function(int) onChanged, int initialValue, context) {
+    return onLongPress ? Container(
+        height: 200,
+        width: 100,
+        child: PageView.builder(
               scrollDirection: Axis.vertical,
               itemCount: items.length,
-              controller: _controller,
-              itemBuilder: (_, i){
+              controller: PageController(viewportFraction: 0.5, keepPage: true),
+              itemBuilder: (context, i){
                 if(i == currentPage){
                   return Transform.scale(
                       scale: 1,
@@ -141,6 +138,44 @@ class _HourPickerState extends State<HourPicker> {
                   );
                 }},
           )
+        ) :
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: 20),
+        ),
+        SizedBox(height: 10),
+        Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.grey[200],
+            ),
+            child: PageView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: items.length,
+              controller: PageController(viewportFraction: 0.5, keepPage: true),
+              itemBuilder: (_, i){
+                if(i == currentPage){
+                  return Transform.scale(
+                      scale: 1,
+                      child: builder(items[i].toString())
+                  );
+                }else if(i < currentPage){
+                  return Transform.scale(
+                      scale: max(1 - (currentPage - i), 0.8),
+                      child: builder(items[i].toString())
+                  );
+                }else {
+                  return Transform.scale(
+                      scale: max(1 - (i - currentPage), 0.8),
+                      child: builder(items[i].toString())
+                  );
+                }},
+            )
         ),
       ],
     );
