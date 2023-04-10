@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class HourPicker extends StatefulWidget {
@@ -24,44 +26,48 @@ class HourPicker extends StatefulWidget {
 class _HourPickerState extends State<HourPicker> {
   int _hour = DateTime.now().hour;
   int _minute = DateTime.now().minute;
-  late TimeOfDay _selectedTime;
+  final _controller = PageController(
+      viewportFraction: 0.5,
+      keepPage: true
+  );
+  double currentPage = 0.0;
+
+  void _listener(){
+    setState(() {
+      currentPage = _controller.page!;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    _selectedTime = TimeOfDay.now();
+    _controller.addListener(_listener);
   }
 
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? time = await showTimePicker(
-      context: context,
-      initialTime: _selectedTime,
-      builder: (context, child){
-        return builder();
-      },
-    );
-
-    if (time != null && time != _selectedTime) {
-      setState(() {
-        _selectedTime = time;
-      });
-    }
+  @override
+  void dispose(){
+    _controller.removeListener(_listener);
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-
-      },
-      child: Container(
-        color: Colors.white,
-        height: 200,
-        width: 400,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _buildWheelPicker(
+    return Container(
+      color: Colors.white,
+      height: 200,
+      width: 400,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          InkWell(
+            onTap: (){
+              print("Editar teclado");
+            },
+            onLongPress: (){
+              print("Editar ruleta");
+            },
+            child: _buildWheelPicker(
               'Hour',
               List.generate(24, (i) => i),
                   (index) {
@@ -71,8 +77,16 @@ class _HourPickerState extends State<HourPicker> {
               },
               _hour,
             ),
-            SizedBox(width: 20),
-            _buildWheelPicker(
+          ),
+          SizedBox(width: 20),
+          InkWell(
+            onTap: (){
+              print("Editar teclado");
+            },
+            onLongPress: (){
+              print("Editar ruleta");
+            },
+            child: _buildWheelPicker(
               'Minute',
               List.generate(60, (i) => i),
                   (index) {
@@ -82,29 +96,9 @@ class _HourPickerState extends State<HourPicker> {
               },
               _minute,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
-
-  Widget builder(){
-    return Theme(
-        data: ThemeData.light().copyWith(
-          colorScheme: ColorScheme.light(
-            // change the border color
-            primary: Colors.red,
-            // change the text color
-            onSurface: Colors.purple,
-          ),
-          // button colors
-          buttonTheme: ButtonThemeData(
-            colorScheme: ColorScheme.light(
-              primary: Colors.green,
-            ),
-          ),
-        ),
-        child: Center(child: Container(height: 100, width: 100, color: Colors.white,))
     );
   }
 
@@ -125,31 +119,34 @@ class _HourPickerState extends State<HourPicker> {
             borderRadius: BorderRadius.circular(20),
             color: Colors.grey[200],
           ),
-          child: ListWheelScrollView(
-            //controller: ScrollController(initialScrollOffset: initialValue as double),
-            itemExtent: 40,
-            children: items.map((item) {
-              return Center(
-                child: Text(
-                  item.toString(),
-                  style: TextStyle(fontSize: 24),
-                ),
-              );
-            }).toList(),
-            onSelectedItemChanged: onChanged,
-            physics: FixedExtentScrollPhysics(),
-            useMagnifier: true,
-            magnification: 1.2,
-            squeeze: 1.4,
-            diameterRatio: 1.3,
-            perspective: 0.003,
-            offAxisFraction: 0,
-            clipBehavior: Clip.none,
-            overAndUnderCenterOpacity: 0.7,
-            renderChildrenOutsideViewport: true,
-          ),
+          child: PageView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: items.length,
+              controller: _controller,
+              itemBuilder: (_, i){
+                if(i == currentPage){
+                  return Transform.scale(
+                      scale: 1,
+                      child: builder(items[i].toString())
+                  );
+                }else if(i < currentPage){
+                  return Transform.scale(
+                      scale: max(1 - (currentPage - i), 0.8),
+                      child: builder(items[i].toString())
+                  );
+                }else {
+                  return Transform.scale(
+                      scale: max(1 - (i - currentPage), 0.8),
+                      child: builder(items[i].toString())
+                  );
+                }},
+          )
         ),
       ],
     );
+  }
+
+  Widget builder(String number){
+    return Container(color: Colors.red, child: Text(number),);
   }
 }
