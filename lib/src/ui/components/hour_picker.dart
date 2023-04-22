@@ -11,8 +11,8 @@ class HourPicker extends StatefulWidget {
 
   HourPicker({
     Key? key,
-    this.height = 400,
-    this.width = 200,
+    this.height = 200,
+    this.width = 400,
     this.onChanged,
     this.initialTime,
     this.fontSize = 100
@@ -26,7 +26,8 @@ class HourPicker extends StatefulWidget {
 class _HourPickerState extends State<HourPicker> {
   int _hour = DateTime.now().hour;
   int _minute = DateTime.now().minute;
-  bool onLongPress = false;
+  bool activateRoulette = false;
+  bool activateKeyboard = false;
   final _controller = PageController(
       viewportFraction: 0.5,
       keepPage: true
@@ -55,57 +56,84 @@ class _HourPickerState extends State<HourPicker> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      height: 200,
-      width: 400,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: const Color(0xff7F0432),
+            width: 2
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(20))
+      ),
+      height: widget.height,
+      width: widget.width,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          InkWell(
-            onTap: (){
-              print("Editar teclado");
-            },
-            onLongPress: (){
-              print("Editar ruleta");
-              setState(() {
-                onLongPress = !onLongPress;
-              });
-            },
-            child: _buildWheelPicker(
-              'Hour',
-              List.generate(24, (i) => i),
-                  (index) {
-                setState(() {
-                  _hour = index;
-                });
-              },
-              _hour,
-              context
-            ),
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          SizedBox(width: widget.width!/6,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              InkWell(
+                onTap: (){
+                  print("Editar ruleta");
+                  setState(() {
+                    if(!activateKeyboard){
+                      activateRoulette = !activateRoulette;
+                    }
+                  });
+                },
+                child: _buildWheelPicker(
+                  'Hour',
+                  List.generate(24, (i) => i),
+                      (index) {
+                    setState(() {
+                      _hour = index;
+                    });
+                  },
+                  _hour,
+                  context
+                ),
+              ),
+              const SizedBox(width: 20),
+              InkWell(
+                onTap: (){
+                  print("Editar ruleta");
+                  setState(() {
+                    if(!activateKeyboard){
+                      activateRoulette = !activateRoulette;
+                    }
+                  });
+                },
+                child: _buildWheelPicker(
+                  'Minute',
+                  List.generate(60, (i) => i),
+                      (index) {
+                    setState(() {
+                      _minute = index;
+                    });
+                  },
+                  _minute,
+                  context
+                ),
+              ),
+            ],
           ),
-          SizedBox(width: 20),
-          InkWell(
-            onTap: (){
-              print("Editar teclado");
-            },
-            onLongPress: (){
-              print("Editar ruleta");
-              setState(() {
-                onLongPress = !onLongPress;
-              });
-            },
-            child: _buildWheelPicker(
-              'Minute',
-              List.generate(60, (i) => i),
-                  (index) {
-                setState(() {
-                  _minute = index;
-                });
-              },
-              _minute,
-              context
-            ),
-          ),
+          const SizedBox(width: 10,),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(),
+              IconButton(
+                  onPressed: (){
+                    setState(() {
+                      print("Editar teclado");
+                      activateRoulette = false;
+                      activateKeyboard = !activateKeyboard;
+                    });
+                  },
+                  icon: const Icon(Icons.keyboard, color: Color(0xff231142),))
+            ],
+          )
         ],
       ),
     );
@@ -113,22 +141,11 @@ class _HourPickerState extends State<HourPicker> {
 
   Widget _buildWheelPicker(
       String title, List<int> items, Function(int) onChanged, int initialValue, context) {
-    return onLongPress ? Container(
+    return activateRoulette ? Container(
       height: 120,
       width: 100,
       child: ListWheelScrollView(
         itemExtent: 50,
-        children: items.map((item) {
-          return Container(
-            color: Colors.red,
-            child: Center(
-              child: Text(
-                item.toString(),
-                style: TextStyle(fontSize: 24),
-              ),
-            ),
-          );
-        }).toList(),
         onSelectedItemChanged: onChanged,
         physics: FixedExtentScrollPhysics(),
         useMagnifier: true,
@@ -140,6 +157,17 @@ class _HourPickerState extends State<HourPicker> {
         clipBehavior: Clip.none,
         overAndUnderCenterOpacity: 0.8,
         renderChildrenOutsideViewport: true,
+        children: items.map((item) {
+          return Container(
+            color: Colors.red,
+            child: Center(
+              child: Text(
+                item.toString(),
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+          );
+        }).toList(),
       ),
     ) :
     Column(
@@ -161,6 +189,61 @@ class _HourPickerState extends State<HourPicker> {
         ),
       ],
     );
+  }
+
+  Widget buildRoulette(String title, List<int> items, Function(int) onChanged, int initialValue, context){
+    return activateRoulette ? Container(
+      height: 120,
+      width: 100,
+      child: ListWheelScrollView(
+        itemExtent: 50,
+        onSelectedItemChanged: onChanged,
+        physics: FixedExtentScrollPhysics(),
+        useMagnifier: true,
+        magnification: 1.2,
+        squeeze: 1.5,
+        diameterRatio: 1,
+        perspective: 0.0001,
+        offAxisFraction: 0,
+        clipBehavior: Clip.none,
+        overAndUnderCenterOpacity: 0.8,
+        renderChildrenOutsideViewport: true,
+        children: items.map((item) {
+          return Container(
+            color: Colors.red,
+            child: Center(
+              child: Text(
+                item.toString(),
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    ) :
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: 20),
+        ),
+        SizedBox(height: 10),
+        Container(
+          height: 100,
+          width: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.grey[200],
+          ),
+          child: Center(child: Text('${_hour}'),),
+        ),
+      ],
+    );
+  }
+
+  Widget roulette(){
+    return Container();
   }
 
   Widget builder(String number){
