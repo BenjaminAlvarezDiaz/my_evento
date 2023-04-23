@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:my_evento/src/ui/components/my_behavior.dart';
 
 class HourPicker extends StatefulWidget {
   final double? height;
@@ -26,6 +27,7 @@ class HourPicker extends StatefulWidget {
 class _HourPickerState extends State<HourPicker> {
   int _hour = DateTime.now().hour;
   int _minute = DateTime.now().minute;
+  double opacity = 0.0;
   bool activateRoulette = false;
   bool activateKeyboard = false;
   final _controller = PageController(
@@ -142,50 +144,60 @@ class _HourPickerState extends State<HourPicker> {
   Widget _buildWheelPicker(
       String title, List<int> items, Function(int) onChanged, int initialValue, context) {
     return activateRoulette ? Container(
-      height: 120,
+      height: 130,
       width: 100,
-      child: ListWheelScrollView(
-        itemExtent: 50,
-        onSelectedItemChanged: onChanged,
-        physics: FixedExtentScrollPhysics(),
-        useMagnifier: true,
-        magnification: 1.2,
-        squeeze: 1.5,
-        diameterRatio: 1,
-        perspective: 0.0001,
-        offAxisFraction: 0,
-        clipBehavior: Clip.none,
-        overAndUnderCenterOpacity: 0.8,
-        renderChildrenOutsideViewport: true,
-        children: items.map((item) {
-          return Container(
-            color: Colors.red,
-            child: Center(
-              child: Text(
-                item.toString(),
-                style: TextStyle(fontSize: 24),
+      child: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: ListWheelScrollView(
+          itemExtent: 50,
+          onSelectedItemChanged: onChanged,
+          physics: FixedExtentScrollPhysics(),
+          useMagnifier: true,
+          magnification: 1.2,
+          squeeze: 1.5,
+          diameterRatio: 1,
+          perspective: 0.0001,
+          offAxisFraction: 0,
+          clipBehavior: Clip.none,
+          overAndUnderCenterOpacity: 0.8,
+          renderChildrenOutsideViewport: true,
+          children: items.map((item) {
+            return Container(
+              width: 100,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                      color: Colors.black)
               ),
-            ),
-          );
-        }).toList(),
+              child: Center(
+                child: Text(
+                  item.toString(),
+                  style: TextStyle(fontSize: 24, color: Colors.black),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
       ),
     ) :
     Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        SizedBox(height: 20,),
         Text(
           title,
           style: TextStyle(fontSize: 20),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 20),
         Container(
-            height: 100,
+            height: 70,
             width: 100,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.grey[200],
+              //borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+              border: Border.all(color: Colors.black)
             ),
-          child: Center(child: Text('${_hour}'),),
+          child: Center(child: Text('${_hour}', style: TextStyle(fontSize: 26),),),
         ),
       ],
     );
@@ -210,11 +222,11 @@ class _HourPickerState extends State<HourPicker> {
         renderChildrenOutsideViewport: true,
         children: items.map((item) {
           return Container(
-            color: Colors.red,
+            color: Colors.white,
             child: Center(
               child: Text(
                 item.toString(),
-                style: TextStyle(fontSize: 24),
+                style: TextStyle(fontSize: 24, color: Colors.black),
               ),
             ),
           );
@@ -224,13 +236,17 @@ class _HourPickerState extends State<HourPicker> {
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: 20),
+        AnimatedOpacity(
+          opacity: 3,
+          duration: Duration(milliseconds: 2000),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 20),
+          ),
         ),
         SizedBox(height: 10),
         Container(
-          height: 100,
+          height: 50,
           width: 100,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -244,6 +260,9 @@ class _HourPickerState extends State<HourPicker> {
 
   Widget roulette(){
     return Container();
+  }
+  Widget timer(){
+    return Positioned(child: Container());
   }
 
   Widget builder(String number){
