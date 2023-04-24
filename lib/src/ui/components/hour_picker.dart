@@ -28,6 +28,7 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
   int _hour = DateTime.now().hour;
   int _minute = DateTime.now().minute;
 
+  bool activateWidget = true;
   bool activateRoulette = false;
   bool activateKeyboard = false;
 
@@ -94,28 +95,40 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildWheelPicker(
-                'Hour',
-                List.generate(24, (i) => i),
-                    (index) {
-                  setState(() {
-                    _hour = index;
-                  });
+              InkWell(
+                onTap: (){
+                  activateWidget ? _changeWidget() : null;
                 },
-                _hour,
-                context
+                child: _buildWheelPicker(
+                  'Hour',
+                  List.generate(24, (i) => i),
+                      (index) {
+                    setState(() {
+                      _hour = index;
+                    });
+                  },
+                  _hour,
+                  context
+                ),
               ),
               const SizedBox(width: 20),
-              _buildWheelPicker(
-                'Minute',
-                List.generate(60, (i) => i),
-                    (index) {
-                  setState(() {
-                    _minute = index;
-                  });
+              InkWell(
+                onTap: (){
+                  if(activateWidget){
+                    _changeWidget();
+                  }
                 },
-                _minute,
-                context
+                child: _buildWheelPicker(
+                  'Minute',
+                  List.generate(60, (i) => i),
+                      (index) {
+                    setState(() {
+                      _minute = index;
+                    });
+                  },
+                  _minute,
+                  context
+                ),
               ),
             ],
           ),
@@ -137,8 +150,10 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
         onPressed: (){
           setState(() {
             print("Editar teclado");
+            activateWidget = false;
             activateRoulette = false;
             activateKeyboard = !activateKeyboard;
+            !activateKeyboard ? activateWidget = true : null;
           });
         },
         icon: Icon(icon, color: const Color(0xff231142),));
@@ -146,63 +161,32 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
 
   Widget _buildWheelPicker(
       String title, List<int> items, Function(int) onChanged, int initialValue, context) {
-    return activateRoulette ? InkWell(
-      onTap: (){
-        print("Editar ruleta");
-        setState(() {
-          if(!activateKeyboard){
-            activateRoulette = !activateRoulette;
-          }
-          if (activateRoulette) {
-            animationController.forward();
-          } else {
-            animationController.reverse();
-          }
-        });
-      },
-      child: FadeTransition(
-        opacity: animation,
-        child: SizedBox(
-          height: 130,
-          width: 100,
-          child: ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: ListWheelScrollView(
-              itemExtent: 50,
-              onSelectedItemChanged: onChanged,
-              physics: const FixedExtentScrollPhysics(),
-              useMagnifier: true,
-              magnification: 1.2,
-              squeeze: 1.5,
-              diameterRatio: 1,
-              perspective: 0.0001,
-              offAxisFraction: 0,
-              clipBehavior: Clip.none,
-              overAndUnderCenterOpacity: 0.5,
-              renderChildrenOutsideViewport: true,
-              children: items.map((item) {
-                return buildItemWheelPicker(item);
-              }).toList(),
-            ),
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 300),
+      child: activateRoulette ? SizedBox(
+        height: 130,
+        width: 100,
+        child: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: ListWheelScrollView(
+            itemExtent: 50,
+            onSelectedItemChanged: onChanged,
+            physics: const FixedExtentScrollPhysics(),
+            useMagnifier: true,
+            magnification: 1.2,
+            squeeze: 1.5,
+            diameterRatio: 1,
+            perspective: 0.0001,
+            offAxisFraction: 0,
+            clipBehavior: Clip.none,
+            overAndUnderCenterOpacity: 0.5,
+            renderChildrenOutsideViewport: true,
+            children: items.map((item) {
+              return buildItemWheelPicker(item);
+            }).toList(),
           ),
         ),
-      ),
-    ) :
-    InkWell(
-      onTap: (){
-        print("Editar ruleta");
-        setState(() {
-          if(!activateKeyboard){
-            activateRoulette = !activateRoulette;
-          }
-          if (activateRoulette) {
-            animationController.reverse();
-          } else {
-            animationController.forward();
-          }
-        });
-      },
-      child: buildTimer(title),
+      ) : buildTimer(title),
     );
   }
 
