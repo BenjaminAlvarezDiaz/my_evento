@@ -43,6 +43,12 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
   );
   double currentPage = 0.0;
 
+  void _changeWidget() {
+    setState(() {
+      activateRoulette = !activateRoulette;
+    });
+  }
+
   void _listener(){
     setState(() {
       currentPage = _controller.page!;
@@ -88,58 +94,28 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              InkWell(
-                onTap: (){
-                  print("Editar ruleta");
+              _buildWheelPicker(
+                'Hour',
+                List.generate(24, (i) => i),
+                    (index) {
                   setState(() {
-                    if(!activateKeyboard){
-                      activateRoulette = !activateRoulette;
-                    }
-                    if (activateRoulette) {
-                      animationController.forward();
-                    } else {
-                      animationController.reverse();
-                    }
+                    _hour = index;
                   });
                 },
-                child: _buildWheelPicker(
-                  'Hour',
-                  List.generate(24, (i) => i),
-                      (index) {
-                    setState(() {
-                      _hour = index;
-                    });
-                  },
-                  _hour,
-                  context
-                ),
+                _hour,
+                context
               ),
               const SizedBox(width: 20),
-              InkWell(
-                onTap: (){
-                  print("Editar ruleta");
+              _buildWheelPicker(
+                'Minute',
+                List.generate(60, (i) => i),
+                    (index) {
                   setState(() {
-                    if(!activateKeyboard){
-                      activateRoulette = !activateRoulette;
-                    }
-                    if (activateRoulette) {
-                      animationController.forward();
-                    } else {
-                      animationController.reverse();
-                    }
+                    _minute = index;
                   });
                 },
-                child: _buildWheelPicker(
-                  'Minute',
-                  List.generate(60, (i) => i),
-                      (index) {
-                    setState(() {
-                      _minute = index;
-                    });
-                  },
-                  _minute,
-                  context
-                ),
+                _minute,
+                context
               ),
             ],
           ),
@@ -220,13 +196,18 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
             activateRoulette = !activateRoulette;
           }
           if (activateRoulette) {
-            animationController.forward();
-          } else {
             animationController.reverse();
+          } else {
+            animationController.forward();
           }
         });
       },
-      child: FadeTransition(
+      child: buildTimer(title),
+    );
+  }
+
+  Widget buildTimer(String title){
+    return FadeTransition(
         opacity: animation,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -238,17 +219,16 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
             ),
             const SizedBox(height: 10),
             Container(
-                height: 70,
-                width: 100,
-                decoration: BoxDecoration(
+              height: 70,
+              width: 100,
+              decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.black)
-                ),
+              ),
               child: Center(child: Text('${_hour}', style: const TextStyle(fontSize: 26, color: Colors.black),),),
             ),
           ],
         ),
-      ),
     );
   }
 
