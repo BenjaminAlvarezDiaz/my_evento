@@ -186,11 +186,11 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
             }).toList(),
           ),
         ),
-      ) : buildTimer(title),
+      ) : buildTimer(title, initialValue.toString()),
     );
   }
 
-  Widget buildTimer(String title){
+  Widget buildTimer(String title, String time){
     return FadeTransition(
         opacity: animation,
         child: Column(
@@ -209,7 +209,12 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
                   color: Colors.white,
                   border: Border.all(color: Colors.black)
               ),
-              child: Center(child: Text('${_hour}', style: const TextStyle(fontSize: 26, color: Colors.black),),),
+              child: Center(
+                child: Text(
+                  time,
+                  style: const TextStyle(fontSize: 26, color: Colors.black),
+                ),
+              ),
             ),
           ],
         ),
