@@ -161,6 +161,8 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
 
   Widget _buildWheelPicker(
       String title, List<int> items, Function(int) onChanged, int initialValue, context) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    final timeTimer = twoDigits(initialValue.remainder(60));
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 300),
       child: activateRoulette ? SizedBox(
@@ -182,11 +184,12 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
             overAndUnderCenterOpacity: 0.5,
             renderChildrenOutsideViewport: true,
             children: items.map((item) {
-              return buildItemWheelPicker(item);
+              final timeWheel = twoDigits(item.remainder(60));
+              return buildItemWheelPicker(timeWheel);
             }).toList(),
           ),
         ),
-      ) : buildTimer(title, initialValue.toString()),
+      ) : buildTimer(title, timeTimer),
     );
   }
 
@@ -221,7 +224,7 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
     );
   }
 
-  Widget buildItemWheelPicker(int item){
+  Widget buildItemWheelPicker(String item){
     return Container(
       width: 100,
       decoration: BoxDecoration(
@@ -232,7 +235,7 @@ class _HourPickerState extends State<HourPicker> with SingleTickerProviderStateM
       ),
       child: Center(
         child: Text(
-          item.toString(),
+          item,
           style: const TextStyle(fontSize: 24, color: Colors.black),
         ),
       ),
