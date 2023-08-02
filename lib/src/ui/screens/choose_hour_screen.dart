@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:my_evento/src/ui/screen_controllers/choose_hour_page_controller.dart';
+import 'package:my_evento/src/ui/screen_controllers/choose_hour_screen_controller.dart';
 
-class ChooseHourPage extends StatefulWidget {
-  const ChooseHourPage({Key? key}) : super(key: key);
+class ChooseHourScreen extends StatefulWidget {
+  const ChooseHourScreen({Key? key}) : super(key: key);
 
   @override
-  StateMVC<ChooseHourPage> createState() => _ChooseHourPageState();
+  StateMVC<ChooseHourScreen> createState() => _ChooseHourScreenState();
 }
 
-class _ChooseHourPageState extends StateMVC<ChooseHourPage> {
-  late ChooseHourPageController _con;
+class _ChooseHourScreenState extends StateMVC<ChooseHourScreen> {
+  late ChooseHourScreenController _con;
 
-  _ChooseHourPageState() : super(ChooseHourPageController()){
-    _con = ChooseHourPageController();
+  _ChooseHourScreenState() : super(ChooseHourScreenController()){
+    _con = ChooseHourScreenController();
   }
 
 

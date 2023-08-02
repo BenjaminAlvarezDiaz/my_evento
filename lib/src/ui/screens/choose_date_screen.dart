@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
 import 'package:my_evento/src/ui/components/calendar_picker.dart';
-import 'package:my_evento/src/ui/screen_controllers/choose_date_page_controller.dart';
+import 'package:my_evento/src/ui/screen_controllers/choose_date_screen_controller.dart';
 
-class ChooseDatePage extends StatefulWidget {
-  const ChooseDatePage({Key? key}) : super(key: key);
+class ChooseDateScreen extends StatefulWidget {
+  const ChooseDateScreen({Key? key}) : super(key: key);
 
   @override
-  StateMVC<ChooseDatePage> createState() => _ChooseDatePageState();
+  StateMVC<ChooseDateScreen> createState() => _ChooseDateScreenState();
 }
 
-class _ChooseDatePageState extends StateMVC<ChooseDatePage> {
-  late ChooseDatePageController _con;
+class _ChooseDateScreenState extends StateMVC<ChooseDateScreen> {
+  late ChooseDateScreenController _con;
 
-  _ChooseDatePageState() : super (ChooseDatePageController()){
-    _con = ChooseDatePageController();
+  _ChooseDateScreenState() : super (ChooseDateScreenController()){
+    _con = ChooseDateScreenController();
   }
 
   @override

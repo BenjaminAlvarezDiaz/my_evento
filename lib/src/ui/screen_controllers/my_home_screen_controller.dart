@@ -1,18 +1,18 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:my_evento/src/ui/screens/choose_date_page.dart';
-import 'package:my_evento/src/ui/screens/create_event_page.dart';
-import 'package:my_evento/src/ui/screens/my_home_page.dart';
+import 'package:my_evento/src/ui/screens/choose_date_screen.dart';
+import 'package:my_evento/src/ui/screens/create_event_screen.dart';
+import 'package:my_evento/src/ui/screens/my_home_screen.dart';
 import 'package:my_evento/src/managers/data_manager.dart';
 import 'package:my_evento/src/models/event_model.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePageController extends ControllerMVC{
+class MyHomeScreenController extends ControllerMVC{
   late List<Event> events;
   late DataManager dataManager;
-  MyHomePageController._privateConstruct(this.dataManager);
-  static final MyHomePageController _instance = MyHomePageController._privateConstruct(DataManager());
+  MyHomeScreenController._privateConstruct(this.dataManager);
+  static final MyHomeScreenController _instance = MyHomeScreenController._privateConstruct(DataManager());
 
-  factory MyHomePageController(){
+  factory MyHomeScreenController(){
     return _instance;
   }
 
@@ -40,7 +40,7 @@ class MyHomePageController extends ControllerMVC{
 
   onPressedCreateEvent(context){
     return Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const ChooseDatePage())
+        builder: (context) => const ChooseDateScreen())
     );
   }
 }

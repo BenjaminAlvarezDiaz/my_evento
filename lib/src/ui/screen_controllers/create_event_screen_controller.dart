@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:my_evento/src/ui/screens/create_event_page.dart';
+import 'package:my_evento/src/ui/screens/create_event_screen.dart';
 import 'package:my_evento/src/managers/data_manager.dart';
 
-class CreateEventPageController extends ControllerMVC{
+class CreateEventScreenController extends ControllerMVC{
   late DataManager dataManager;
   late TextEditingController textEditingController;
   late TextEditingController titleEditingController;
@@ -12,11 +12,11 @@ class CreateEventPageController extends ControllerMVC{
   late String valueTitle;
   late String valueDescription;
 
-  CreateEventPageController._privateConstruct(this.dataManager);
+  CreateEventScreenController._privateConstruct(this.dataManager);
 
-  static final CreateEventPageController _instance = CreateEventPageController._privateConstruct(DataManager());
+  static final CreateEventScreenController _instance = CreateEventScreenController._privateConstruct(DataManager());
 
-  factory CreateEventPageController(){
+  factory CreateEventScreenController(){
     return _instance;
   }
 

@@ -3,24 +3,24 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
-import 'package:my_evento/src/ui/screen_controllers/create_event_page_controller.dart';
+import 'package:my_evento/src/ui/screen_controllers/create_event_screen_controller.dart';
 
-class CreateEventPage extends StatefulWidget {
-  const CreateEventPage({Key? key}) : super(key: key);
+class CreateEventScreen extends StatefulWidget {
+  const CreateEventScreen({Key? key}) : super(key: key);
 
   @override
-  StateMVC<CreateEventPage> createState() => _CreateEventPageState();
+  StateMVC<CreateEventScreen> createState() => _CreateEventScreenState();
 }
 
-class _CreateEventPageState extends StateMVC<CreateEventPage> {
-  late CreateEventPageController _con;
+class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
+  late CreateEventScreenController _con;
   late TextEditingController _textEditingController;
   String displayTextTitle = "";
   String displayTextDescriptionUp = "";
   String displayTextDescriptionDown = "";
 
-  _CreateEventPageState() : super (CreateEventPageController()) {
-    _con = CreateEventPageController();
+  _CreateEventScreenState() : super (CreateEventScreenController()) {
+    _con = CreateEventScreenController();
   }
 
   @override
