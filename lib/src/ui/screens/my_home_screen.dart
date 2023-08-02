@@ -3,23 +3,23 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
 import 'package:my_evento/src/ui/components/calendar_picker.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
-import 'package:my_evento/src/ui/screen_controllers/my_home_page_controller.dart';
+import 'package:my_evento/src/ui/screen_controllers/my_home_screen_controller.dart';
 import 'package:my_evento/src/models/event_model.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MyHomeScreen extends StatefulWidget {
+  const MyHomeScreen({super.key});
 
   @override
-  StateMVC<MyHomePage> createState() => _MyHomePageState();
+  StateMVC<MyHomeScreen> createState() => _MyHomeScreenState();
 }
 
-class _MyHomePageState extends StateMVC<MyHomePage> {
-  late MyHomePageController _con;
+class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
+  late MyHomeScreenController _con;
   late List<Event> events;
   bool isLoading = false;
 
-  _MyHomePageState() : super (MyHomePageController()) {
-    _con = MyHomePageController();
+  _MyHomeScreenState() : super (MyHomeScreenController()) {
+    _con = MyHomeScreenController();
   }
 
   int _selectedIndex = 0;

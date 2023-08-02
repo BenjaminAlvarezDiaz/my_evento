@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:my_evento/src/ui/screens/create_event_page.dart';
-import 'package:my_evento/src/ui/screens/my_home_page.dart';
+import 'package:my_evento/src/ui/screens/create_event_screen.dart';
+import 'package:my_evento/src/ui/screens/my_home_screen.dart';
 
-class ChooseHourPageController extends ControllerMVC{
-  ChooseHourPageController._privateConstruct();
+class ChooseHourScreenController extends ControllerMVC{
+  ChooseHourScreenController._privateConstruct();
 
-  static final ChooseHourPageController _instance = ChooseHourPageController._privateConstruct();
+  static final ChooseHourScreenController _instance = ChooseHourScreenController._privateConstruct();
 
-  factory ChooseHourPageController(){
+  factory ChooseHourScreenController(){
     return _instance;
   }
 
@@ -28,13 +28,13 @@ class ChooseHourPageController extends ControllerMVC{
 
   onPressedFollowing(context){
     return Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const CreateEventPage())
+        builder: (context) => const CreateEventScreen())
     );
   }
 
   onPressedCancel(context){
     return Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const MyHomePage())
+        builder: (context) => const MyHomeScreen())
     );
   }
 }
