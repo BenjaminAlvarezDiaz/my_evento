@@ -11,8 +11,11 @@ class ChooseDateScreen extends StatefulWidget {
   StateMVC<ChooseDateScreen> createState() => _ChooseDateScreenState();
 }
 
+
 class _ChooseDateScreenState extends StateMVC<ChooseDateScreen> {
   late ChooseDateScreenController _con;
+  late int daySelected = 0;
+  //late CalendarPicker calendarPicker;
 
   _ChooseDateScreenState() : super (ChooseDateScreenController()){
     _con = ChooseDateScreenController();
@@ -52,7 +55,20 @@ class _ChooseDateScreenState extends StateMVC<ChooseDateScreen> {
         children: [
           const SizedBox(height: 10,),
           Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: Colors.black),),
-          const CalendarPicker(),
+          CalendarPicker(
+            enabledAllDaysOfMonth: false,
+            daysWithBorder: false,
+            nameDaysWithBorder: false,
+            fontWeightOfNameDay: FontWeight.w500,
+            fontWeightOfDay: FontWeight.normal,
+            fontWeightOfMonth: FontWeight.w500,
+            onDaySelected: (date){
+              setState(() {
+                daySelected = date.day;
+                print(daySelected);
+              });
+            },
+          ),
           cancelAndNext(context)
         ],
       ),
@@ -72,6 +88,8 @@ class _ChooseDateScreenState extends StateMVC<ChooseDateScreen> {
             icon: const Icon(Icons.clear, color: Color(0xffEB1B1B), size: 30,),
             onTap: (){
               _con.onPressedCancel(context);
+              daySelected = 0;
+              print(daySelected);
             }
         ),
         ButtonMultifunction(
@@ -83,6 +101,10 @@ class _ChooseDateScreenState extends StateMVC<ChooseDateScreen> {
             icon: const Icon(Icons.check, color: Color(0xff1B8023), size: 30,),
             onTap: (){
               _con.onPressedFollowing(context);
+              if(daySelected == 0){
+                daySelected = DateTime.now().day;
+              }
+              print(daySelected);
             }
         ),
       ],

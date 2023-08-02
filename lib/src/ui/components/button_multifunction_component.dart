@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ButtonMultifunction extends StatefulWidget {
-  late bool withIcon;
-  late bool iconRight;
-  late bool withBorder;
-  late Icon? changedIcon;
-  late Icon? icon;
-  late Text text;
-  late Function()? onTap;
-  late double height;
-  late double width;
-  late Color? backgroundColor;
-  ButtonMultifunction({
+  final bool withIcon;
+  final bool iconRight;
+  final bool withBorder;
+  final Icon? changedIcon;
+  final Icon? icon;
+  final Text text;
+  final Function()? onTap;
+  final double height;
+  final double width;
+  final Color? backgroundColor;
+  const ButtonMultifunction({
     Key? key,
     this.withIcon = false,
     this.iconRight = false,

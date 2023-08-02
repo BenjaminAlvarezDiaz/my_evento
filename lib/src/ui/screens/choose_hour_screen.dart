@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
+import 'package:my_evento/src/ui/components/hour_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/screen_controllers/choose_hour_screen_controller.dart';
 
@@ -41,6 +43,50 @@ class _ChooseHourScreenState extends StateMVC<ChooseHourScreen> {
   }
 
   Widget body(){
-    return Container(color: Colors.blue,);
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(height: 20,),
+            Text('Desde: ', style: TextStyle(fontSize: 16),),
+            HourPicker(),
+            SizedBox(height: 20,),
+            Text('Hasta: ', style: TextStyle(fontSize: 16),),
+            HourPicker(),
+            SizedBox(height: 40,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ButtonMultifunction(
+                  text: Text('Cancelar', style: TextStyle(fontSize: 20),),
+                  onTap: (){
+                    _con.onPressedCancel(context);
+                  },
+                  withIcon: true,
+                  iconRight: true,
+                  width: 200,
+                  backgroundColor: Colors.white,
+                  icon: Icon(Icons.clear, color: Color(0xffEB1B1B), size: 30,),
+                ),
+                ButtonMultifunction(
+                  text: Text('Siguiente', style: TextStyle(fontSize: 20),),
+                  onTap: (){
+                    _con.onPressedFollowing(context);
+                  },
+                  withIcon: true,
+                  iconRight: true,
+                  width: 200,
+                  backgroundColor: Colors.white,
+                  icon: Icon(Icons.check, color: Color(0xff1B8023), size: 30,),
+                ),
+              ],
+            ),
+            SizedBox(height: 20,),
+          ],
+        ),
+      ),
+    );
   }
 }
