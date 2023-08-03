@@ -6,20 +6,25 @@ import 'package:my_evento/src/ui/components/my_behavior.dart';
 import 'package:my_evento/src/ui/screen_controllers/my_home_screen_controller.dart';
 import 'package:my_evento/src/models/event_model.dart';
 
+import '../../utils/page_args.dart';
+
 class MyHomeScreen extends StatefulWidget {
-  const MyHomeScreen({super.key});
+  final PageArgs? args;
+  const MyHomeScreen(this.args, {super.key});
 
   @override
-  StateMVC<MyHomeScreen> createState() => _MyHomeScreenState();
+  StateMVC<MyHomeScreen> createState() => _MyHomeScreenState(this.args);
 }
 
 class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
   late MyHomeScreenController _con;
+  PageArgs? args;
   late List<Event> events;
   bool isLoading = false;
 
-  _MyHomeScreenState() : super (MyHomeScreenController()) {
-    _con = MyHomeScreenController();
+  _MyHomeScreenState(PageArgs? arguments) : super (MyHomeScreenController(arguments)) {
+    _con = MyHomeScreenController.con;
+    args = arguments;
   }
 
   int _selectedIndex = 0;
@@ -27,6 +32,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
 
   @override
   void initState(){
+    _con.initScreen(arguments: args);
     super.initState();
 
     refreshEvents();
@@ -127,8 +133,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
           isLoading ? const Center(child: CircularProgressIndicator())
               : eventListHome(),
           calendar(),
-          isLoading ? const Center(child: CircularProgressIndicator())
-              : myEventList(context),
+          myEventList(context),
           Container(color: Colors.redAccent,)
         ],
       ),
@@ -180,6 +185,8 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
           const SizedBox(height: 20),
           newEvent(context),
           const SizedBox(height: 20),
+          isLoading ? const Center(child: CircularProgressIndicator())
+              :
           ScrollConfiguration(
             behavior: MyBehavior(),
             child: ListView.separated(

@@ -15,6 +15,24 @@ class DataManager {
     return _instance;
   }
 
+  init() async {
+    //dataAccess = RemoteDataAccess();
+    //dataAccess = Dummy();
+
+    //prefs = await SharedPreferences.getInstance();
+  }
+
+  //#region Preferences
+  /* hasSession() {
+    return prefs?.getString('token') != null;
+  } */
+
+  saveToken(String token) async {}
+
+  saveCulture(Future culture) async {}
+
+  getCulture() {}
+
   getDateEvent(){
     return ;
   }
