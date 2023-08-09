@@ -2,22 +2,22 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../interfaces/i_view_controller.dart';
 import '../../managers/data_manager.dart';
 import '../../providers/app_provider.dart';
-import '../../utils/page_args.dart';
+import '../../utils/screen_args.dart';
 
 class InitScreenController extends ControllerMVC implements IViewController {
   static late InitScreenController _this;
 
-  factory InitScreenController(PageArgs? args) {
+  factory InitScreenController(ScreenArgs? args) {
     _this = InitScreenController._(args);
     return _this;
   }
 
   static InitScreenController get con => _this;
-  PageArgs? args;
+  ScreenArgs? args;
   InitScreenController._(this.args);
 
   @override
-  void initScreen({PageArgs? arguments}) {
+  void initScreen({ScreenArgs? arguments}) {
     args = arguments;
   }
 

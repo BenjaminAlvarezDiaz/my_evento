@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
 import 'package:my_evento/src/ui/screen_controllers/create_event_screen_controller.dart';
+import 'package:my_evento/values/k_colors.dart';
 
 class CreateEventScreen extends StatefulWidget {
   const CreateEventScreen({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: Color(0xff7F0432),
+            color: KPrimary,
           )
       ),
       elevation: 0.0,
@@ -60,7 +61,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
             Container(
               height: 400,
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: KWhite,
                 image: DecorationImage(image: AssetImage('assets/FkhJZuIWIAALYHi.jpg'),
                   fit: BoxFit.cover,
                 )
@@ -89,7 +90,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
                 ),
                 description(_con.getDescriptionUpEditingController()),
                 const SizedBox(height: 200,),
-                description(_con.getDescriptionDownEditingController()),
+                //description(_con.getDescriptionDownEditingController()),
                 //const SizedBox(height: 10,),
                 button(),
               ],
@@ -143,16 +144,16 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
       child: Container(
         height: 70,
         decoration: const BoxDecoration(
-            color:Colors.white,
+            color:KWhite,
             //boxShadow: [BoxShadow(color: Colors.black, spreadRadius: 2, blurRadius: 5, offset: Offset(0, 3))]
         ),
         child: Padding(padding: const EdgeInsets.only(left: 40, top: 10, right: 40, bottom: 20),
           child: Container(
-            color: Color(0xff7F0432),
+            color: KPrimary,
             child: Center(
               child: Text(
                 'Crear evento',
-                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(color: KWhite, fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -162,7 +163,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   }
   
   Widget bottomSheet(){
-    return BottomSheet(onClosing: (){}, builder: (BuildContext) => Container(color: Colors.red, height: 200,)
+    return BottomSheet(onClosing: (){}, builder: (BuildContext) => Container(color: KRed, height: 200,)
     );
   }
   

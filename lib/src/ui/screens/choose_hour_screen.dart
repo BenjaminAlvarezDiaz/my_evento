@@ -3,6 +3,7 @@ import 'package:my_evento/src/ui/components/button_multifunction_component.dart'
 import 'package:my_evento/src/ui/components/hour_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/screen_controllers/choose_hour_screen_controller.dart';
+import 'package:my_evento/values/k_colors.dart';
 
 class ChooseHourScreen extends StatefulWidget {
   const ChooseHourScreen({Key? key}) : super(key: key);
@@ -29,14 +30,14 @@ class _ChooseHourScreenState extends StateMVC<ChooseHourScreen> {
 
   AppBar appBar(context){
     return AppBar(
-      backgroundColor: const Color(0xff7F0432),
+      backgroundColor: KPrimary,
       leading: IconButton(
           onPressed: (){
             _con.onPressedBack(context);
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.white,
+            color: KWhite,
           )
       ),
     );
@@ -44,7 +45,7 @@ class _ChooseHourScreenState extends StateMVC<ChooseHourScreen> {
 
   Widget body(){
     return Container(
-      color: Colors.white,
+      color: KWhite,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,15 +61,15 @@ class _ChooseHourScreenState extends StateMVC<ChooseHourScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ButtonMultifunction(
-                  text: Text('Cancelar', style: TextStyle(fontSize: 20),),
+                  text: Text('Cancelar', style: TextStyle(fontSize: 20, color: KDefault_Text),),
                   onTap: (){
                     _con.onPressedCancel(context);
                   },
                   withIcon: true,
                   iconRight: true,
                   width: 200,
-                  backgroundColor: Colors.white,
-                  icon: Icon(Icons.clear, color: Color(0xffEB1B1B), size: 30,),
+                  backgroundColor: KWhite,
+                  icon: Icon(Icons.clear, color: KCancel, size: 30,),
                 ),
                 ButtonMultifunction(
                   text: Text('Siguiente', style: TextStyle(fontSize: 20),),
@@ -78,8 +79,8 @@ class _ChooseHourScreenState extends StateMVC<ChooseHourScreen> {
                   withIcon: true,
                   iconRight: true,
                   width: 200,
-                  backgroundColor: Colors.white,
-                  icon: Icon(Icons.check, color: Color(0xff1B8023), size: 30,),
+                  backgroundColor: KWhite,
+                  icon: const Icon(Icons.check, color: KAccept, size: 30,),
                 ),
               ],
             ),

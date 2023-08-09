@@ -80,7 +80,7 @@ class LineChartComponent extends StatelessWidget {
               child: Text(
                 "",
                 style: TextStyle(
-                  color: KBackgroundBlue,
+                  color: KFontColor,
                 ),
                 textAlign: TextAlign.end,
               ),
@@ -101,7 +101,7 @@ class LineChartComponent extends StatelessWidget {
           getTitlesWidget: (value, meta) {
             return Text(
               "",
-              style: TextStyle(color: KBackgroundBlue),
+              style: TextStyle(color: KFontColor),
             );
           },
         ),

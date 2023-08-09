@@ -10,7 +10,7 @@ import '../enums/page_names.dart';
 import '../ui/screens/my_home_screen.dart';
 import '../ui/popups/form_popup.dart';
 import '../ui/popups/information_alert_popup.dart';
-import '../utils/page_args.dart';
+import '../utils/screen_args.dart';
 
 class ScreenManager {
   static final ScreenManager _instance = ScreenManager._constructor();
@@ -33,10 +33,10 @@ class ScreenManager {
   ScreenManager._constructor();
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
-    PageArgs? arguments;
+    ScreenArgs? arguments;
 
     if (settings.arguments != null) {
-      arguments = settings.arguments as PageArgs;
+      arguments = settings.arguments as ScreenArgs;
     }
 
     PageNames? page = getPageNameEnum(settings.name);
@@ -51,14 +51,14 @@ class ScreenManager {
   }
 
   _goPage(String pageName,
-      {PageArgs? args,
-      Function(PageArgs args)? actionBack,
+      {ScreenArgs? args,
+      Function(ScreenArgs args)? actionBack,
       bool makeRootPage = false}) {
     if (!makeRootPage) {
       return navigatorKey.currentState
           ?.pushNamed(pageName, arguments: args)
           .then((value) {
-        if (actionBack != null) actionBack(value as PageArgs);
+        if (actionBack != null) actionBack(value as ScreenArgs);
       });
     } else {
       navigatorKey.currentState?.pushNamedAndRemoveUntil(
@@ -67,7 +67,7 @@ class ScreenManager {
     }
   }
 
-  goBack({PageArgs? args, PageNames? specificPage}) {
+  goBack({ScreenArgs? args, PageNames? specificPage}) {
     if (specificPage != null) {
       navigatorKey.currentState!
           .popAndPushNamed(specificPage.toString(), arguments: args);
@@ -76,7 +76,7 @@ class ScreenManager {
     }
   }
 
-  goHome({PageArgs? args, Function(PageArgs? args)? actionBack}) {
+  goHome({ScreenArgs? args, Function(ScreenArgs? args)? actionBack}) {
     ScreenManager()._goPage(PageNames.home.toString(),
         args: args, actionBack: actionBack, makeRootPage: true);
   }

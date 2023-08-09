@@ -37,11 +37,11 @@ class _CustomContainerComponentState extends State<CustomContainerComponent> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: KBackgroundBlue,
+        color: KPrimary_L1,
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
-            color: KBackgroundBlue_T1,
+            color: KShadow,
             spreadRadius: 0.5,
             blurRadius: 5.5,
             offset: Offset(0, 0),

@@ -5,11 +5,12 @@ import 'package:my_evento/src/ui/components/calendar_picker.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
 import 'package:my_evento/src/ui/screen_controllers/my_home_screen_controller.dart';
 import 'package:my_evento/src/models/event_model.dart';
+import 'package:my_evento/values/k_colors.dart';
 
-import '../../utils/page_args.dart';
+import '../../utils/screen_args.dart';
 
 class MyHomeScreen extends StatefulWidget {
-  final PageArgs? args;
+  final ScreenArgs? args;
   const MyHomeScreen(this.args, {super.key});
 
   @override
@@ -18,11 +19,11 @@ class MyHomeScreen extends StatefulWidget {
 
 class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
   late MyHomeScreenController _con;
-  PageArgs? args;
+  ScreenArgs? args;
   late List<Event> events;
   bool isLoading = false;
 
-  _MyHomeScreenState(PageArgs? arguments) : super (MyHomeScreenController(arguments)) {
+  _MyHomeScreenState(ScreenArgs? arguments) : super (MyHomeScreenController(arguments)) {
     _con = MyHomeScreenController.con;
     args = arguments;
   }
@@ -41,7 +42,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
   Future refreshEvents() async {
     setState(() => isLoading = true);
 
-    events = await _con.dataManager.getListEvent();
+    events = await _con.getListEvent();
 
     setState(() => isLoading = false);
   }
@@ -70,14 +71,14 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
         ],
         centerTitle: true,
         title: titlePage(),
-        backgroundColor: const Color(0xff7F0432),
+        backgroundColor: KPrimary,
       ),
       body: body(context),
       bottomNavigationBar: BottomNavigationBar(
         items: barItems(),
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xff00001D),
-        unselectedItemColor: const Color(0xff231142),
+        backgroundColor: KWhite,
+        selectedItemColor: KSecondary_D1,
+        unselectedItemColor: KSecondary,
         currentIndex: _selectedIndex,
         onTap: onTaped,
         showSelectedLabels: false,
@@ -205,7 +206,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
   Widget calendar(){
     late int? daySelected = 0;
     return Container(
-        color: Colors.white,
+        color: KWhite,
         child: CalendarPicker(
           daysWithBorder: false,
           nameDaysWithBorder: false,
@@ -225,13 +226,13 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
   Widget newEvent(context){
     return ButtonMultifunction(
       text: const Text('Nuevo evento', style: TextStyle(
-          color: Colors.white,
+          color: KWhite,
           fontWeight: FontWeight.bold,
           fontSize: 16),
       ),
       icon: const Icon(
         Icons.add,
-        color: Colors.white,
+        color: KWhite,
       ),
       onTap: (){
         _con.onPressedCreateEvent(context);
@@ -246,7 +247,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
     return InkWell(
       child: Container(
         height: 200,
-        color: Colors.white,
+        color: KWhite,
         child: Stack(
           children: [
             imageItemBuilder(index),
@@ -299,6 +300,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
                   child: Text('${_con.getListEvent()[index].eventTitle}',
                       style: const TextStyle(
                           fontSize: 18,
+                          color: KDefault_Text,
                           fontWeight: FontWeight.w500))),
               const Expanded(flex: 2, child: SizedBox()),
             ],
@@ -323,14 +325,14 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
                       '/ ${_con.getListEvent()[index].date.month.toString()}'
                       ' de ${_con.getListEvent()[index].startHour}'
                       ' a ${_con.getListEvent()[index].endHour}',
-                      style: const TextStyle(fontSize: 16))),
+                      style: const TextStyle(fontSize: 16, color: KDefault_Text))),
                   const Expanded(flex: 1, child: SizedBox()),
                 ],
               ),
               Row(
                 children: [
                   const Expanded(flex: 1, child: SizedBox()),
-                  Expanded(flex: 7, child: Text('${_con.getListEvent()[index].localization}', style: const TextStyle(fontSize: 16))),
+                  Expanded(flex: 7, child: Text('${_con.getListEvent()[index].localization}', style: const TextStyle(fontSize: 16, color: KDefault_Text))),
                   const Expanded(flex: 3, child: SizedBox()),
                 ],
               ),

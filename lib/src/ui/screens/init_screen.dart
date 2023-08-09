@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../../values/k_colors.dart';
-import '../../utils/page_args.dart';
+import '../../utils/screen_args.dart';
 import '../screen_controllers/init_screen_controller.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
@@ -11,7 +11,7 @@ import 'package:page_transition/page_transition.dart';
 import 'my_home_screen.dart';
 
 class InitScreen extends StatefulWidget {
-  final PageArgs? args;
+  final ScreenArgs? args;
   const InitScreen(this.args, {Key? key}) : super(key: key);
   @override
   _InitScreenState createState() => _InitScreenState(args);
@@ -19,8 +19,8 @@ class InitScreen extends StatefulWidget {
 
 class _InitScreenState extends StateMVC<InitScreen> {
   late InitScreenController _con;
-  PageArgs? args;
-  _InitScreenState(PageArgs? arguments) : super(InitScreenController(arguments)) {
+  ScreenArgs? args;
+  _InitScreenState(ScreenArgs? arguments) : super(InitScreenController(arguments)) {
     _con = InitScreenController.con;
     args = arguments;
   }

@@ -64,7 +64,7 @@ class FormPopup {
                 1.5,
             margin: const EdgeInsets.all(30),
             decoration: BoxDecoration(
-              color: KBackgroundBlue,
+              color: KFontColor,
               borderRadius: BorderRadius.circular(radius),
             ),
           ),

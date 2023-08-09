@@ -9,7 +9,7 @@ class DataManager {
   DataManager._privateConstruct(this.dataAccess);
 
   //EventDataBase.instance para la base de datos Dummy() para los datos dummy
-  static final DataManager _instance = DataManager._privateConstruct(EventDataBase.instance);
+  static final DataManager _instance = DataManager._privateConstruct(Dummy());
 
   factory DataManager(){
     return _instance;
@@ -17,7 +17,7 @@ class DataManager {
 
   init() async {
     //dataAccess = RemoteDataAccess();
-    //dataAccess = Dummy();
+    dataAccess = Dummy();
 
     //prefs = await SharedPreferences.getInstance();
   }
