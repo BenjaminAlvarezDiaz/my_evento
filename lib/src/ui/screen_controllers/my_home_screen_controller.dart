@@ -5,29 +5,44 @@ import 'package:my_evento/src/ui/screens/my_home_screen.dart';
 import 'package:my_evento/src/managers/data_manager.dart';
 import 'package:my_evento/src/models/event_model.dart';
 import 'package:flutter/material.dart';
+import 'package:my_evento/src/utils/screen_args.dart';
+import '../../interfaces/i_view_controller.dart';
 
-class MyHomeScreenController extends ControllerMVC{
+class MyHomeScreenController extends ControllerMVC implements IViewController{
   late List<Event> events;
-  late DataManager dataManager;
-  MyHomeScreenController._privateConstruct(this.dataManager);
+  late DataManager _dataManager;
+  static late MyHomeScreenController _this;
+  MyHomeScreenController._privateConstruct(this._dataManager);
   static final MyHomeScreenController _instance = MyHomeScreenController._privateConstruct(DataManager());
 
-  factory MyHomeScreenController(){
+  factory MyHomeScreenController(ScreenArgs? args){
+    _this = MyHomeScreenController._(args);
     return _instance;
   }
 
+  static MyHomeScreenController get con => _this;
+  ScreenArgs? args;
+  MyHomeScreenController._(this.args);
+
   @override
   void initState(){
+    _dataManager = DataManager();
     super.initState();
     //getTitleEvent();
   }
 
+  @override
+  initScreen({ScreenArgs? arguments}) {}
+
+  @override
+  disposeScreen() {}
+
   getListEvents(){
-    return dataManager.getListEvent();
+    return DataManager().getListEvent();
   }
 
   closeDataBase(){
-    return dataManager.closeDataBase();
+    return DataManager().closeDataBase();
   }
 
   /*getTitleEvent(){
@@ -35,7 +50,7 @@ class MyHomeScreenController extends ControllerMVC{
   }*/
 
   getListEvent(){
-    return dataManager.getListEvent();
+    return DataManager().getListEvent();
   }
 
   onPressedCreateEvent(context){

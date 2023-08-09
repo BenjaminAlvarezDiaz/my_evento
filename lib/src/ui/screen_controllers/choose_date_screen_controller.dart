@@ -35,7 +35,7 @@ class ChooseDateScreenController extends ControllerMVC{
 
   onPressedCancel(context){
     return Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const MyHomeScreen())
+        builder: (context) => const MyHomeScreen(null))
     );
   }
 }

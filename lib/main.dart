@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xff7F0432),
         secondaryHeaderColor: const Color(0xff231142)
       ),
-      home: const MyHomeScreen(),
+      home: const MyHomeScreen(null),
       debugShowCheckedModeBanner: false,
     );
   }

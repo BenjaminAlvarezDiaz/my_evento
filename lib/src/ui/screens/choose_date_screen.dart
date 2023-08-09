@@ -3,6 +3,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
 import 'package:my_evento/src/ui/components/calendar_picker.dart';
 import 'package:my_evento/src/ui/screen_controllers/choose_date_screen_controller.dart';
+import 'package:my_evento/values/k_colors.dart';
 
 class ChooseDateScreen extends StatefulWidget {
   const ChooseDateScreen({Key? key}) : super(key: key);
@@ -31,14 +32,14 @@ class _ChooseDateScreenState extends StateMVC<ChooseDateScreen> {
 
   AppBar appBar(context){
     return AppBar(
-      backgroundColor: const Color(0xff7F0432),
+      backgroundColor: KPrimary,
       leading: IconButton(
           onPressed: (){
             _con.onPressedBack(context);
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.white,
+            color: KWhite,
           )
       ),
     );
@@ -49,12 +50,12 @@ class _ChooseDateScreenState extends StateMVC<ChooseDateScreen> {
     DateTime firstDate = DateTime.now();
     DateTime lastDate = DateTime(2023 + 20);
     return Container(
-      color: Colors.white,
+      color: KWhite,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           const SizedBox(height: 10,),
-          Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: Colors.black),),
+          Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: KDefault_Text),),
           CalendarPicker(
             enabledAllDaysOfMonth: false,
             daysWithBorder: false,
@@ -80,12 +81,12 @@ class _ChooseDateScreenState extends StateMVC<ChooseDateScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         ButtonMultifunction(
-            text: const Text('Cancelar', style: TextStyle(fontSize: 20, color: Color(0xff7F0432)),),
+            text: const Text('Cancelar', style: TextStyle(fontSize: 20, color: KPrimary),),
             withIcon: true,
             iconRight: true,
             width: 200,
-            backgroundColor: Colors.white,
-            icon: const Icon(Icons.clear, color: Color(0xffEB1B1B), size: 30,),
+            backgroundColor: KWhite,
+            icon: const Icon(Icons.clear, color: KCancel, size: 30,),
             onTap: (){
               _con.onPressedCancel(context);
               daySelected = 0;
@@ -93,12 +94,12 @@ class _ChooseDateScreenState extends StateMVC<ChooseDateScreen> {
             }
         ),
         ButtonMultifunction(
-            text: const Text('Siguiente', style: TextStyle(fontSize: 20, color: Color(0xff00001D)),),
+            text: const Text('Siguiente', style: TextStyle(fontSize: 20, color: KSecondary_D1),),
             withIcon: true,
             iconRight: true,
             width: 200,
-            backgroundColor: Colors.white,
-            icon: const Icon(Icons.check, color: Color(0xff1B8023), size: 30,),
+            backgroundColor: KWhite,
+            icon: const Icon(Icons.check, color: KAccept, size: 30,),
             onTap: (){
               _con.onPressedFollowing(context);
               if(daySelected == 0){

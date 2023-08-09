@@ -9,11 +9,29 @@ class DataManager {
   DataManager._privateConstruct(this.dataAccess);
 
   //EventDataBase.instance para la base de datos Dummy() para los datos dummy
-  static final DataManager _instance = DataManager._privateConstruct(EventDataBase.instance);
+  static final DataManager _instance = DataManager._privateConstruct(Dummy());
 
   factory DataManager(){
     return _instance;
   }
+
+  init() async {
+    //dataAccess = RemoteDataAccess();
+    dataAccess = Dummy();
+
+    //prefs = await SharedPreferences.getInstance();
+  }
+
+  //#region Preferences
+  /* hasSession() {
+    return prefs?.getString('token') != null;
+  } */
+
+  saveToken(String token) async {}
+
+  saveCulture(Future culture) async {}
+
+  getCulture() {}
 
   getDateEvent(){
     return ;
