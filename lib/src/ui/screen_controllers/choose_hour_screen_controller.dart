@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:my_evento/src/ui/screens/choose_day_and_time_screen.dart';
 import 'package:my_evento/src/ui/screens/create_event_screen.dart';
 import 'package:my_evento/src/ui/screens/my_home_screen.dart';
 import 'package:my_evento/src/ui/screens/title_and_description_screen.dart';
@@ -29,7 +30,7 @@ class ChooseHourScreenController extends ControllerMVC{
 
   onPressedFollowing(context){
     return Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const TitleAndDescriptionScreen())
+        builder: (context) => const ChooseDayAndTimeScreen(null))
     );
   }
 
