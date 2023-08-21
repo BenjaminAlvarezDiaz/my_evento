@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_evento/values/k_colors.dart';
 
 class Dropdown extends StatefulWidget {
-  const Dropdown({super.key});
+  final Widget? button;
+  final Widget? content;
+  const Dropdown({
+    Key? key,
+    required this.button,
+    required this.content,
+
+  }) : super (key: key);
 
   @override
   State<Dropdown> createState() => _DropdownState();
@@ -17,30 +24,10 @@ class _DropdownState extends State<Dropdown> {
   bool activated = false;
   @override
   Widget build(BuildContext context) {
-    return _dropdown(
-        Container(
-            color: Colors.deepPurple,
-            child: const Text('Nouuuuuuuuuuuuuuuuuu')
-        ),
-        Container(
-            color: Colors.pink,
-            child: const Text('Siiuu'
-                '\nuuu\nuu'
-                '\'nuuu\nuuu'
-                '\nuuu\nuuu'
-                '\nuu\nuuuuu'
-                '\nuuuuuu\nuuuuu'
-                '\nuuuuuu\nuuuuu'
-                '\nuuuuuu\nuuuuu'
-                '\nuuuuuu\nuuuuu'
-                '\nuuuuuu\nuuuuu'
-                '\nuuuuuu\nuuuuu'
-            )
-        )
-    );
+    return _dropdown();
   }
 
-  Widget _dropdown(Widget? widgetClose, Widget? widgetOpen){
+  Widget _dropdown(){
     return Column(
       children: [
         GestureDetector(
@@ -59,7 +46,7 @@ class _DropdownState extends State<Dropdown> {
           child: Container(
               key: containerCloseKey,
               height: heightClose,
-              child: widgetClose
+              child: widget.button
           ),
         ),
         activated ? GestureDetector(
@@ -72,7 +59,7 @@ class _DropdownState extends State<Dropdown> {
               key: containerOpenKey,
               height: height,
               width: width,
-              child: widgetOpen
+              child: widget.content
           ),
         ) : Container(color: KTransparent,)
       ],

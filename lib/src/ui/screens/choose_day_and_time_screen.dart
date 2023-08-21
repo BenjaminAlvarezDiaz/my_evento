@@ -70,6 +70,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
@@ -110,7 +111,27 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     return Column(
       children: [
         Text(title),
-        Dropdown(),
+        Dropdown(
+            button: Container(
+                color: Colors.deepPurple,
+                child: const Text('Nouuuuuuuuuuuuuuuuuu')
+            ),
+            content: Container(
+                color: Colors.pink,
+                child: const Text('Siiuu'
+                    '\nuuu\nuu'
+                    '\'nuuu\nuuu'
+                    '\nuuu\nuuu'
+                    '\nuu\nuuuuu'
+                    '\nuuuuuu\nuuuuu'
+                    '\nuuuuuu\nuuuuu'
+                    '\nuuuuuu\nuuuuu'
+                    '\nuuuuuu\nuuuuu'
+                    '\nuuuuuu\nuuuuu'
+                    '\nuuuuuu\nuuuuu'
+                )
+            )
+        ),
       ],
     );
   }
