@@ -103,53 +103,25 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
       )
     ];
 
-    List <DropdownMenuItem> item = [
-      const DropdownMenuItem(child: Text('a'), value: 1,),
-      const DropdownMenuItem(child: Text('b'), value: 2,),
-      const DropdownMenuItem(child: Text('b'), value: 3,),
-    ];
     return Column(
       children: [
         Text(title),
         Dropdown(
-            button: Container(
-                color: Colors.deepPurple,
-                child: const Text('Nouuuuuuuuuuuuuuuuuu')
+            button: button('a', Icons.add, Icons.abc_outlined),
+            content: CalendarDatePicker(
+                initialDate: initialDate,
+                firstDate: initialDate,
+                lastDate: initialDate,
+                onDateChanged: (date){}
             ),
-            content: Container(
-                color: Colors.pink,
-                child: const Text('Siiuu'
-                    '\nuuu\nuu'
-                    '\'nuuu\nuuu'
-                    '\nuuu\nuuu'
-                    '\nuu\nuuuuu'
-                    '\nuuuuuu\nuuuuu'
-                    '\nuuuuuu\nuuuuu'
-                    '\nuuuuuu\nuuuuu'
-                    '\nuuuuuu\nuuuuu'
-                    '\nuuuuuu\nuuuuu'
-                    '\nuuuuuu\nuuuuu'
-                )
-            )
+          widthOpen: 200,
+          heightOpen: 500,
         ),
       ],
     );
   }
 
-  Widget dropdownComponent(){
-    return ButtonMultifunction(
-        text: Text('a'),
-        onTap: (){
-
-        }
-    );
-  }
-
-  Widget _dropDownMenu(){
-    return Container(height: 500, width: 500, color: KRed,);
-  }
-
-  Widget dropdownOther(String text, items){
+  /*Widget dropdownOther(String text, items){
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
         hint: ButtonMultifunction(
@@ -169,21 +141,13 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
         menuItemStyleData: MenuItemStyleData(height: 400),
       ),
     );
-  }
-
-  Widget dropdown(){
-    List<DropdownMenuEntry> dropdownMenuEntries = [
-      DropdownMenuEntry(value: 1, label: 'a'),
-      DropdownMenuEntry(value: 2, label: 'b'),
-      DropdownMenuEntry(value: 3, label: 'c'),
-    ];
-    return DropdownMenu(
-        dropdownMenuEntries: dropdownMenuEntries
-    );
-  }
+  }*/
 
   Widget button(String text, IconData? iconLeft, iconRight){
     return Container(
+      color: KPrimary_L1,
+      height: 10,
+      width: 200,
       child: Row(
         children: [
           Icon(iconLeft),
