@@ -64,7 +64,7 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
               children: [
                 title(_con.getTitleEditingController()),
                 description(_con.getDescriptionUpEditingController()),
-                SizedBox(height: 320,),
+                SizedBox(height: 250,),
                 buttons(),
                 SizedBox(height: 20,),
               ],
@@ -122,7 +122,7 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
               _con.onSubmittedDescription(value);
               },*/
             maxLines: null,
-            minLines: 10,
+            minLines: 14,
             strutStyle: StrutStyle(),
             style: TextStyle(fontSize: 16,),
             decoration: InputDecoration(
