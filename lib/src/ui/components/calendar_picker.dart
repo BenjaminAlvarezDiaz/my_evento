@@ -237,7 +237,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
           ) : SizedBox(width: sizeIcon * 2.4,),
           Container(
             color: Colors.white,
-            width: widthCalendar! / 1.5,
+            width: widthCalendar! / 2,
             height: height,
             child: Center(child: Text(month, style: TextStyle(fontSize: fontSize, fontWeight: widget.fontWeightOfMonth),)),
           ),

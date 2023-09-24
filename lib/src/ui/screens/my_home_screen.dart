@@ -332,7 +332,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
               Row(
                 children: [
                   const Expanded(flex: 1, child: SizedBox()),
-                  Expanded(flex: 7, child: Text('${_con.getListEvent()[index].localization}', style: const TextStyle(fontSize: 16, color: KDefault_Text))),
+                  Expanded(flex: 10, child: Text('${_con.getListEvent()[index].localization}', style: const TextStyle(fontSize: 16, color: KDefault_Text))),
                   const Expanded(flex: 3, child: SizedBox()),
                 ],
               ),
