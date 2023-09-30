@@ -79,6 +79,8 @@ class _DropdownState extends State<Dropdown> {
     );
   }
 
+
+
   /*Widget _a(){
     return _cardExpanded(
         Container(
@@ -150,4 +152,65 @@ class _DropdownState extends State<Dropdown> {
       ),
     );
   }*/
+}
+
+class _MyDropdownState extends State<Dropdown> {
+  List<String> items = ['Opción 1', 'Opción 2', 'Opción 3'];
+  String selectedItem = 'Opción 1';
+  bool isDropdownOpen = false;
+
+  void toggleDropdown() {
+    setState(() {
+      isDropdownOpen = !isDropdownOpen;
+    });
+  }
+
+  void selectItem(String item) {
+    setState(() {
+      selectedItem = item;
+      isDropdownOpen = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GestureDetector(
+            onTap: toggleDropdown,
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(selectedItem),
+            ),
+          ),
+          if (isDropdownOpen)
+            Container(
+              margin: EdgeInsets.only(top: 8),
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Column(
+                children: items.map((item) {
+                  return GestureDetector(
+                    onTap: () => selectItem(item),
+                    child: Container(
+                      padding: EdgeInsets.all(16),
+                      width: double.infinity,
+                      child: Text(item),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
 }

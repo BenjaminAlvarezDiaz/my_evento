@@ -61,13 +61,50 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   }
 
   Widget body() {
+    DateTime initialDate = DateTime.now();
+    List a = [
+      DropdownMenuItem(child: Text('1'),),
+      DropdownMenuItem(child: Text('2'),)
+    ];
     return Padding(
       padding: EdgeInsets.all(20),
       child: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            dropdownMenu('Elija día del evento: ', '09/08/2023'),
-            Padding(
+            DropdownButton(
+              value: 1,
+              items: [
+                DropdownMenuItem(value: 1, child: Text('1')),
+                DropdownMenuItem(value: 2, child: Text('2')),
+                /*DropdownMenuItem(value: 2, child: CalendarDatePicker(
+                    initialDate: initialDate,
+                    firstDate: initialDate,
+                    lastDate: initialDate,
+                    onDateChanged: (date){}
+                ),),*/
+              ],
+              onChanged: (item) {
+
+              },
+            ), DropdownButton(
+              value: 1,
+              items: [
+                DropdownMenuItem(value: 1, child: Text('1')),
+                DropdownMenuItem(value: 2, child: Text('2')),
+                /*DropdownMenuItem(value: 2, child: CalendarDatePicker(
+                    initialDate: initialDate,
+                    firstDate: initialDate,
+                    lastDate: initialDate,
+                    onDateChanged: (date){}
+                ),),*/
+              ],
+              onChanged: (item) {
+
+              },
+            )
+            //dropdownMenu('Elija día del evento: ', '09/08/2023'),
+            /*Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +119,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                   ),
                   ],
               ),
-            ),
+            ),*/
           ],
         ),
       ),
