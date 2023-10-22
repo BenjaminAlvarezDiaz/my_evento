@@ -17,6 +17,10 @@ class ChooseDayAndTimeScreen extends StatefulWidget {
 
 class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   late ChooseDayAndTimeScreenController _con;
+  bool isWidgetVisible = false;
+  bool isEventDayVisible = false;
+  bool isFromVisible = false;
+  bool isToVisible = false;
   ScreenArgs? args;
 
   _ChooseDayAndTimeScreenState(ScreenArgs? arguments) : super (ChooseDayAndTimeScreenController(arguments)) {
@@ -61,31 +65,162 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   }
 
   Widget body() {
+    DateTime initialDate = DateTime.now();
+    List a = [
+      DropdownMenuItem(child: Text('1'),),
+      DropdownMenuItem(child: Text('2'),)
+    ];
     return Padding(
       padding: EdgeInsets.all(20),
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            dropdownMenu('Elija día del evento: ', '09/08/2023'),
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: dropdownMenu('Desde: ', '16:00'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: dropdownMenu('Hasta: ', '20:00'),
-                  ),
+        child: Container(
+          height: 1000,
+          width: 600,
+          child: Stack(
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              //Container(height: 100, width: 200, child: dropdownExt())
+              /*Positioned(
+                top: 100,
+                child: DropdownButton(
+                  value: 1,
+                  items: [
+                    DropdownMenuItem(value: 1, child: Text('1')),
+                    DropdownMenuItem(value: 2, child: Text('2')),
+                    /*DropdownMenuItem(value: 2, child: CalendarDatePicker(
+                        initialDate: initialDate,
+                        firstDate: initialDate,
+                        lastDate: initialDate,
+                        onDateChanged: (date){}
+                    ),),*/
                   ],
+                  onChanged: (item) {
+
+                  },
+                ),
+              ),*/
+              //Positioned(top: 150, child: Container(height: 100, width: 200 ,color: KRed,)),
+              //eventDayFromAndTo(250, isToVisible, KSecondary, context),
+              Positioned(
+                  top: 250,
+                  child: ElevatedButton(
+                      onPressed: (){
+                        setState(() {
+                          isToVisible = !isToVisible;
+                        });
+                      },
+                      child: Text('a', style: TextStyle(color: KSecondary),)
+                  )
               ),
-            ),
-          ],
+              isToVisible? Positioned(
+                top: 300,
+                child: Container(
+                  width: 400,
+                  height: 400,
+                  color: KBlack,
+                  child: Center(
+                    child: Text('Widget Superpuesto'),
+                  ),
+                ),
+              ) : Container(),
+              //eventDayFromAndTo(150, isFromVisible, KBlack, context),
+              Positioned(
+                  top: 150,
+                  child: ElevatedButton(
+                      onPressed: (){
+                        setState(() {
+                          isFromVisible = !isFromVisible;
+                        });
+                      },
+                      child: Text('a', style: TextStyle(color: KBlack),)
+                  )
+              ),
+              isFromVisible? Positioned(
+                top: 200,
+                child: Container(
+                  width: 400,
+                  height: 400,
+                  color: KBlack,
+                  child: Center(
+                    child: Text('Widget Superpuesto'),
+                  ),
+                ),
+              ) : Container(),
+              //eventDayFromAndTo(50, isEventDayVisible, KRed, context),
+              Positioned(
+                  top: 50,
+                  child: ElevatedButton(
+                      onPressed: (){
+                        setState(() {
+                          isEventDayVisible = !isEventDayVisible;
+                        });
+                      },
+                      child: Text('a', style: TextStyle(color: KRed),)
+                  )
+              ),
+              isEventDayVisible? Positioned(
+                top: 100,
+                child: Container(
+                  width: 400,
+                  height: 400,
+                  color: KBlack,
+                  child: Center(
+                    child: Text('Widget Superpuesto'),
+                  ),
+                ),
+              ) : Container(),
+
+              //dropdownMenu('Elija día del evento: ', '09/08/2023'),
+              /*Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: dropdownMenu('Desde: ', '16:00'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: dropdownMenu('Hasta: ', '20:00'),
+                    ),
+                    ],
+                ),
+              ),*/
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget dropdownMenuNormal(){
+    DateTime initialDate = DateTime.now();
+    return DropdownButton(
+      menuMaxHeight: 800,
+      itemHeight: 100,
+      value: 1,
+      items: [
+        DropdownMenuItem(value: 1, child: Text('1')),
+        //DropdownMenuItem(value: 2, child: Text('2')),
+        DropdownMenuItem(
+          value: 2,
+          child: Container(
+            height: 800,
+            width: 400,
+            color: KWhite,
+            child: CalendarDatePicker(
+                initialDate: initialDate,
+                firstDate: initialDate,
+                lastDate: initialDate,
+                onDateChanged: (date){}
+            ),
+          ),
+        ),
+      ],
+      onChanged: (item) {
+
+      },
     );
   }
 
@@ -120,28 +255,91 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
       ],
     );
   }
-
-  /*Widget dropdownOther(String text, items){
-    return DropdownButtonHideUnderline(
-      child: DropdownButton2(
-        hint: ButtonMultifunction(
-          text: Text(text),
-          onTap: (){},
+  
+  Widget dropdownExt(){
+    DateTime initialDate = DateTime.now();
+    return DropdownButton2(
+        customButton: Center(
+          child: Container(
+              decoration: BoxDecoration(color: KWhite),
+              child: Row(children: [Text('a'), Icon(Icons.add, color: KBlack,)],)),
         ),
-        isExpanded: true,
-        isDense: true,
-        items: items,
-        onChanged: (a){
-          print(a);
-        },
-        onMenuStateChange: (a){
-          print(a);
-        },
-        dropdownStyleData: DropdownStyleData(maxHeight: 400, width: 500),
+        hint: Text('a'),
+        style: TextStyle(color: KBlack),
+        dropdownStyleData: DropdownStyleData(maxHeight: 400, width: 400),
         menuItemStyleData: MenuItemStyleData(height: 400),
+        items:[
+          //DropdownMenuItem(value: 1, child: Text('1')),
+          //DropdownMenuItem(value: 2, child: Text('2')),
+          DropdownMenuItem(
+            value: 1,
+            child: Container(
+              height: 800,
+              width: 400,
+              color: KWhite,
+              child: CalendarDatePicker(
+                  initialDate: initialDate,
+                  firstDate: initialDate,
+                  lastDate: initialDate,
+                  onDateChanged: (date){}
+              ),
+            ),
+          ),
+        ],
+      onChanged: (item) {
+
+      },
+    );
+  }
+
+  Widget trueDropdown(){
+    DateTime initialDate = DateTime.now();
+    return Container(
+      height: 400,
+      width: 200,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+              top: 50,
+              child: ElevatedButton(
+                  onPressed: (){
+                    setState(() {
+                      isWidgetVisible = !isWidgetVisible;
+                    });
+                  },
+                  child: Text('a', style: TextStyle(color: KBlack),)
+              )
+          ),
+          isWidgetVisible? Positioned(
+            top: 100,
+            child: Container(
+              width: 400,
+              height: 400,
+              color: KBlack,
+              child: Center(
+                child: Text('Widget Superpuesto'),
+              ),
+            ),
+          ) : Container(),
+        ],
       ),
     );
-  }*/
+  }
+
+  Widget eventDayFromAndTo(double positioned, bool isWidgetVisible, Color? color, context){
+    return Positioned(
+        top: positioned,
+        child: ElevatedButton(
+            onPressed: (){
+              setState(() {
+                isWidgetVisible = !isWidgetVisible;
+              });
+            },
+            child: Text('a', style: TextStyle(color: color),)
+        )
+    );
+  }
 
   Widget button(String text, IconData? iconLeft, iconRight){
     return Container(
