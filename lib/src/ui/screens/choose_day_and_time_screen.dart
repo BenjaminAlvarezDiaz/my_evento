@@ -66,58 +66,64 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
 
   Widget body() {
     DateTime initialDate = DateTime.now();
-    List a = [
-      DropdownMenuItem(child: Text('1'),),
-      DropdownMenuItem(child: Text('2'),)
-    ];
-    return Padding(
-      padding: EdgeInsets.all(20),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(20),
         child: Container(
-          height: 1000,
+          height: 800,
           width: 600,
           child: Stack(
-            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              //Container(height: 100, width: 200, child: dropdownExt())
-              /*Positioned(
-                top: 100,
-                child: DropdownButton(
-                  value: 1,
-                  items: [
-                    DropdownMenuItem(value: 1, child: Text('1')),
-                    DropdownMenuItem(value: 2, child: Text('2')),
-                    /*DropdownMenuItem(value: 2, child: CalendarDatePicker(
-                        initialDate: initialDate,
-                        firstDate: initialDate,
-                        lastDate: initialDate,
-                        onDateChanged: (date){}
-                    ),),*/
-                  ],
-                  onChanged: (item) {
-
-                  },
-                ),
-              ),*/
               //Positioned(top: 150, child: Container(height: 100, width: 200 ,color: KRed,)),
               //eventDayFromAndTo(250, isToVisible, KSecondary, context),
-              Positioned(
-                  top: 250,
-                  child: ElevatedButton(
-                      onPressed: (){
-                        setState(() {
-                          isToVisible = !isToVisible;
-                        });
-                      },
-                      child: Text('a', style: TextStyle(color: KSecondary),)
+              /*Positioned(
+                  top: 90,
+                  left: 160,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text('Hasta:', style: TextStyle(fontSize: 16, color: KGrey2),),
+                          SizedBox(width: 100,)
+                        ],
+                      ),
+                      SizedBox(height: 2,),
+                      button(
+                          text: '16:00',
+                          fontSize: 16,
+                          iconLeft: Icons.calendar_today,
+                          iconRight: Icons.keyboard_arrow_down,
+                          function: (){
+                            setState(() {
+                              isToVisible = !isToVisible;
+                            });
+                          },
+                          height: 40,
+                          width: 140,
+                          content: Container()
+                      ),
+                    ],
                   )
-              ),
+              ),*/
               isToVisible? Positioned(
-                top: 300,
+                top: 140,
+                left: 10,
                 child: Container(
-                  width: 400,
+                  width: 300,
                   height: 400,
-                  color: KBlack,
+                  color: KWhite,
+                  child: Center(
+                    child: Text('Widget Superpuesto'),
+                  ),
+                ),
+              ) : Container(),
+              isFromVisible? Positioned(
+                top: 140,
+                left: 10,
+                child: Container(
+                  width: 300,
+                  height: 400,
+                  color: KRed,
                   child: Center(
                     child: Text('Widget Superpuesto'),
                   ),
@@ -125,68 +131,133 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
               ) : Container(),
               //eventDayFromAndTo(150, isFromVisible, KBlack, context),
               Positioned(
-                  top: 150,
-                  child: ElevatedButton(
-                      onPressed: (){
-                        setState(() {
-                          isFromVisible = !isFromVisible;
-                        });
-                      },
-                      child: Text('a', style: TextStyle(color: KBlack),)
+                  top: 90,
+                  left: 10,
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text('Desde:', style: TextStyle(fontSize: 16, color: KGrey2),),
+                              SizedBox(width: 90,)
+                            ],
+                          ),
+                          SizedBox(height: 2,),
+                          button(
+                              iconRightFlex: 1,
+                              iconLeftFlex: 1,
+                              textFlex: 2,
+                              contentFlex: 0,
+                              text: '16:00',
+                              fontSize: 16,
+                              iconLeft: Icons.access_time,
+                              iconRight: Icons.keyboard_arrow_down,
+                              function: (){
+                                setState(() {
+                                  isFromVisible = !isFromVisible;
+                                });
+                              },
+                              height: 40,
+                              width: 140,
+                              content: Container()
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 20,),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text('Hasta:', style: TextStyle(fontSize: 16, color: KGrey2),),
+                              SizedBox(width: 90,)
+                            ],
+                          ),
+                          SizedBox(height: 2,),
+                          button(
+                              iconRightFlex: 1,
+                              iconLeftFlex: 1,
+                              textFlex: 2,
+                              contentFlex: 0,
+                              text: '20:00',
+                              fontSize: 16,
+                              iconLeft: Icons.access_time,
+                              iconRight: Icons.keyboard_arrow_down,
+                              function: (){
+                                setState(() {
+                                  isToVisible = !isToVisible;
+                                });
+                              },
+                              height: 40,
+                              width: 140,
+                              content: Container()
+                          ),
+                        ],
+                      ),
+
+                    ],
                   )
               ),
-              isFromVisible? Positioned(
-                top: 200,
-                child: Container(
-                  width: 400,
-                  height: 400,
-                  color: KBlack,
-                  child: Center(
-                    child: Text('Widget Superpuesto'),
-                  ),
-                ),
-              ) : Container(),
               //eventDayFromAndTo(50, isEventDayVisible, KRed, context),
               Positioned(
-                  top: 50,
-                  child: ElevatedButton(
-                      onPressed: (){
-                        setState(() {
-                          isEventDayVisible = !isEventDayVisible;
-                        });
-                      },
-                      child: Text('a', style: TextStyle(color: KRed),)
+                  top: 5,
+                  left: 10,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: KGrey2),),
+                          SizedBox(width: 130,)
+                        ],
+                      ),
+                      SizedBox(height: 5,),
+                      button(
+                          iconLeftFlex: 1,
+                          iconRightFlex: 1,
+                          textFlex: 6,
+                          contentFlex: 3,
+                          text: ' 09/08/2023',
+                          fontSize: 16,
+                          iconLeft: Icons.calendar_today,
+                          iconRight: Icons.keyboard_arrow_down,
+                              function: (){
+                            setState(() {
+                              isEventDayVisible = !isEventDayVisible;
+                            });
+                          },
+                        height: 40,
+                        width: 300,
+                        content: Container()
+                      ),
+                    ],
                   )
               ),
               isEventDayVisible? Positioned(
-                top: 100,
+                top: 90,
+                left: 10,
                 child: Container(
-                  width: 400,
+                  width: 300,
                   height: 400,
-                  color: KBlack,
-                  child: Center(
-                    child: Text('Widget Superpuesto'),
+                  decoration: const BoxDecoration(
+                      color: KGrey5,
+                      boxShadow: [
+                        BoxShadow(
+                            color: KGray,
+                            blurRadius: 12,
+                            offset: Offset(0, 4))]
+                  ),
+                  child: CalendarDatePicker(
+                      initialDate: initialDate,
+                      firstDate: initialDate,
+                      lastDate: initialDate,
+                      onDateChanged: (date){}
                   ),
                 ),
               ) : Container(),
 
-              //dropdownMenu('Elija día del evento: ', '09/08/2023'),
-              /*Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: dropdownMenu('Desde: ', '16:00'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: dropdownMenu('Hasta: ', '20:00'),
-                    ),
-                    ],
-                ),
-              ),*/
+              Positioned(
+                child: Container(),
+              )
             ],
           ),
         ),
@@ -224,7 +295,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     );
   }
 
-  Widget dropdownMenu(String title, String text){
+  /*Widget dropdownMenu(String title, String text){
     DateTime initialDate = DateTime.now();
     List <DropdownMenuItem> items = [
       DropdownMenuItem(
@@ -242,7 +313,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
       children: [
         Text(title),
         Dropdown(
-            button: button('a', Icons.add, Icons.abc_outlined),
+            button: button('a', Icons.add, Icons.abc_outlined, (){}),
             content: CalendarDatePicker(
                 initialDate: initialDate,
                 firstDate: initialDate,
@@ -254,7 +325,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
         ),
       ],
     );
-  }
+  }*/
   
   Widget dropdownExt(){
     DateTime initialDate = DateTime.now();
@@ -341,17 +412,36 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     );
   }
 
-  Widget button(String text, IconData? iconLeft, iconRight){
-    return Container(
-      color: KPrimary_L1,
-      height: 10,
-      width: 200,
-      child: Row(
-        children: [
-          Icon(iconLeft),
-          Text(text),
-          Icon(iconRight),
-        ],
+  Widget button({
+    required String text,
+    required int iconLeftFlex,
+    required int iconRightFlex,
+    required int textFlex,
+    required int contentFlex,
+    IconData? iconLeft,
+    iconRight, function,
+    double? height,
+    double? width,
+    content,
+    double? fontSize
+  }){
+    return InkWell(
+      onTap: function,
+      child: Container(
+        color: KPrimary_L1,
+        height: height,
+        width: width,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          child: Row(
+            children: [
+              Expanded(flex: iconLeftFlex, child: Icon(iconLeft, color: KGrey5,)),
+              Expanded(flex: textFlex, child: Text(text, style: TextStyle(fontSize: fontSize, color: KGrey5),)),
+              Expanded(flex: contentFlex, child: content),
+              Expanded(flex: iconRightFlex, child: Icon(iconRight, color: KGrey5,)),
+            ],
+          ),
+        ),
       ),
     );
   }
