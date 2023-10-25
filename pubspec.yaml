@@ -49,6 +49,8 @@ dependencies:
   calendar_date_picker2: ^0.5.2
   fl_chart: ^0.55.2
   dropdown_button2: ^2.3.7
+  flutter_time_picker_spinner: ^2.0.0
+  time_pickerr: ^1.0.6
 
 dev_dependencies:
   flutter_test:
