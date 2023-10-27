@@ -1,8 +1,10 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
 import 'package:my_evento/src/ui/components/dropdown_component.dart';
+import 'package:my_evento/src/ui/components/hour_picker_component.dart';
 import 'package:my_evento/src/ui/screen_controllers/choose_day_and_time_screen_controller.dart';
 import '../../../values/k_colors.dart';
 import '../../utils/screen_args.dart';
@@ -215,18 +217,25 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                 isToVisible? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        SizedBox(height: 150,),
-                        Container(
-                          width: 300,
-                          height: 400,
-                          color: KGray,
-                          child: Center(
-                            child: Text('Widget Superpuesto'),
+                    SizedBox(width: 15,),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 150,),
+                          Container(
+                            width: 290,
+                            height: 400,
+                            decoration: BoxDecoration(
+                                color: KWhite,
+                                border: Border.all(color: KSecondary,),
+                                borderRadius: BorderRadius.all(Radius.circular(5))
+                            ),
+                            child: Center(
+                              child: Text('Widget Superpuesto'),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ) : Container(),
@@ -234,19 +243,26 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                 isFromVisible? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        SizedBox(height: 150,),
-                        Container(
-                          width: 300,
-                          height: 400,
-                          color: KRed,
-                          child: Center(
-                            child: Text('Widget Superpuesto'),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 150,),
+                          Container(
+                            width: 290,
+                            height: 400,
+                            decoration: BoxDecoration(
+                                color: KWhite,
+                                border: Border.all(color: KSecondary),
+                                borderRadius: BorderRadius.all(Radius.circular(5))
+                            ),
+                            child: HourPickerComponent(
+                              backgroundColor: KGray,
+                            )
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
+                    SizedBox(width: 15,),
                   ],
                 ) : Container(),
 
@@ -259,20 +275,22 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                         Container(
                           width: 300,
                           height: 400,
-                          decoration: const BoxDecoration(
-                              color: KGrey5,
+                          decoration: BoxDecoration(
+                              color: KWhite,
+                              border: Border.all(color: KSecondary),
                               boxShadow: [
                                 BoxShadow(
                                     color: KGray,
                                     blurRadius: 12,
-                                    offset: Offset(0, 4))]
+                                    offset: Offset(0, 4))],
+                              borderRadius: BorderRadius.all(Radius.circular(5))
                           ),
-                          child: CalendarDatePicker(
-                              initialDate: initialDate,
-                              firstDate: initialDate,
-                              lastDate: initialDate,
-                              onDateChanged: (date){}
-                          ),
+                          child: CalendarDatePicker2(
+                              config: CalendarDatePicker2Config(
+                                selectedDayHighlightColor: KSecondary
+                              ),
+                              value: [initialDate],
+                          )
                         ),
                       ],
                     ),
@@ -455,7 +473,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     return InkWell(
       onTap: function,
       child: Container(
-        color: KPrimary_L1,
+        decoration: BoxDecoration(color: KPrimary_L1, borderRadius: BorderRadius.all(Radius.circular(5))),
         height: height,
         width: width,
         child: Padding(
