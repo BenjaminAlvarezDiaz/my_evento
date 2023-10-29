@@ -1,6 +1,10 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinner_picker/flutter_spinner_picker.dart';
+import 'package:flutter_spinner_time_picker/flutter_spinner_time_picker.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+//import 'package:time_picker_spinner/time_picker_spinner.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
 import 'package:my_evento/src/ui/components/dropdown_component.dart';
@@ -68,6 +72,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
 
   Widget body() {
     DateTime initialDate = DateTime.now();
+    TimeOfDay initialTime = TimeOfDay.now();
     return Center(
       child: SingleChildScrollView(
         child: Padding(
@@ -199,6 +204,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                 function: (){
                                   setState(() {
                                     isToVisible = !isToVisible;
+                                    //showSpinnerTimePicker(context);
                                   });
                                 },
                                 height: 40,
@@ -255,8 +261,9 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                 border: Border.all(color: KSecondary),
                                 borderRadius: BorderRadius.all(Radius.circular(5))
                             ),
-                            child: HourPickerComponent(
-                              backgroundColor: KGray,
+                            child: TimePickerSpinner(
+                              time: initialDate,
+                              is24HourMode: false,
                             )
                           ),
                         ],
