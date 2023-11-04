@@ -12,6 +12,7 @@ import 'package:my_evento/src/ui/components/hour_picker_component.dart';
 import 'package:my_evento/src/ui/screen_controllers/choose_day_and_time_screen_controller.dart';
 import '../../../values/k_colors.dart';
 import '../../utils/screen_args.dart';
+import '../components/my_behavior.dart';
 
 class ChooseDayAndTimeScreen extends StatefulWidget {
   final ScreenArgs? args;
@@ -28,6 +29,9 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   bool isFromVisible = false;
   bool isToVisible = false;
   ScreenArgs? args;
+  DateTime initialDate = DateTime.now();
+  TimeOfDay initialTime = TimeOfDay.now();
+  TimeOfDay timeTo = TimeOfDay.now();
 
   _ChooseDayAndTimeScreenState(ScreenArgs? arguments) : super (ChooseDayAndTimeScreenController(arguments)) {
     _con = ChooseDayAndTimeScreenController.con;
@@ -45,6 +49,14 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     //_con.closeDataBase();
 
     super.dispose();
+  }
+
+  String formatDate(int dateTime) {
+    if(dateTime == 24){
+      return '00';
+    }
+    String date = dateTime.toString().padLeft(2, '0');
+    return date;
   }
 
   @override
@@ -71,243 +83,344 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   }
 
   Widget body() {
-    DateTime initialDate = DateTime.now();
-    TimeOfDay initialTime = TimeOfDay.now();
     return Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Container(
-            height: 800,
-            width: double.infinity,
-            child: Stack(
-              children: [
-                //Positioned(top: 150, child: Container(height: 100, width: 200 ,color: KRed,)),
-                //eventDayFromAndTo(250, isToVisible, KSecondary, context),
-                /*Positioned(
-                    top: 90,
-                    left: 160,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text('Hasta:', style: TextStyle(fontSize: 16, color: KGrey2),),
-                            SizedBox(width: 100,)
-                          ],
-                        ),
-                        SizedBox(height: 2,),
-                        button(
-                            text: '16:00',
-                            fontSize: 16,
-                            iconLeft: Icons.calendar_today,
-                            iconRight: Icons.keyboard_arrow_down,
-                            function: (){
-                              setState(() {
-                                isToVisible = !isToVisible;
-                              });
-                            },
-                            height: 40,
-                            width: 140,
-                            content: Container()
-                        ),
-                      ],
-                    )
-                ),*/
-                //eventDayFromAndTo(150, isFromVisible, KBlack, context),
-                //eventDayFromAndTo(50, isEventDayVisible, KRed, context),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(width: 10,),
-                        Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: KGrey2),),
-                        SizedBox(width: 140,)
-                      ],
-                    ),
-                    //Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: KGrey2),),
-                    SizedBox(height: 5,),
-                    button(
-                        iconLeftFlex: 1,
-                        iconRightFlex: 1,
-                        textFlex: 6,
-                        contentFlex: 3,
-                        text: ' 09/08/2023',
-                        fontSize: 16,
-                        iconLeft: Icons.calendar_today,
-                        iconRight: Icons.keyboard_arrow_down,
-                            function: (){
-                          setState(() {
-                            isEventDayVisible = !isEventDayVisible;
-                          });
-                        },
-                      height: 40,
-                      width: 300,
-                      content: Container()
-                    ),
-                    SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text('Desde:', style: TextStyle(fontSize: 16, color: KGrey2),),
-                                SizedBox(width: 95,)
-                              ],
-                            ),
-                            SizedBox(height: 2,),
-                            button(
-                                iconRightFlex: 1,
-                                iconLeftFlex: 1,
-                                textFlex: 2,
-                                contentFlex: 0,
-                                text: '16:00',
-                                fontSize: 16,
-                                iconLeft: Icons.access_time,
-                                iconRight: Icons.keyboard_arrow_down,
-                                iconLeftSize: 22,
-                                iconRightSize: 22,
-                                function: (){
-                                  setState(() {
-                                    isFromVisible = !isFromVisible;
-                                  });
-                                },
-                                height: 40,
-                                width: 140,
-                                content: Container()
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 20,),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text('Hasta:', style: TextStyle(fontSize: 16, color: KGrey2),),
-                                SizedBox(width: 100,)
-                              ],
-                            ),
-                            SizedBox(height: 2,),
-                            button(
-                                iconRightFlex: 1,
-                                iconLeftFlex: 1,
-                                textFlex: 2,
-                                contentFlex: 0,
-                                text: '20:00',
-                                fontSize: 16,
-                                iconLeft: Icons.access_time,
-                                iconRight: Icons.keyboard_arrow_down,
-                                iconLeftSize: 22,
-                                iconRightSize: 22,
-                                function: (){
-                                  setState(() {
-                                    isToVisible = !isToVisible;
-                                    //showSpinnerTimePicker(context);
-                                  });
-                                },
-                                height: 40,
-                                width: 140,
-                                content: Container()
-                            ),
-                          ],
-                        ),
-
-                      ],
-                    ),
-
-                  ],
-                ),
-
-                isToVisible? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 15,),
-                    Expanded(
+      child: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Container(
+              height: 580,
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  //Positioned(top: 150, child: Container(height: 100, width: 200 ,color: KRed,)),
+                  //eventDayFromAndTo(250, isToVisible, KSecondary, context),
+                  /*Positioned(
+                      top: 90,
+                      left: 160,
                       child: Column(
                         children: [
-                          SizedBox(height: 150,),
-                          Container(
-                            width: 290,
-                            height: 400,
-                            decoration: BoxDecoration(
-                                color: KWhite,
-                                border: Border.all(color: KSecondary,),
-                                borderRadius: BorderRadius.all(Radius.circular(5))
-                            ),
-                            child: Center(
-                              child: Text('Widget Superpuesto'),
-                            ),
+                          Row(
+                            children: [
+                              Text('Hasta:', style: TextStyle(fontSize: 16, color: KGrey2),),
+                              SizedBox(width: 100,)
+                            ],
+                          ),
+                          SizedBox(height: 2,),
+                          button(
+                              text: '16:00',
+                              fontSize: 16,
+                              iconLeft: Icons.calendar_today,
+                              iconRight: Icons.keyboard_arrow_down,
+                              function: (){
+                                setState(() {
+                                  isToVisible = !isToVisible;
+                                });
+                              },
+                              height: 40,
+                              width: 140,
+                              content: Container()
                           ),
                         ],
-                      ),
-                    ),
-                  ],
-                ) : Container(),
-
-                isFromVisible? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Column(
+                      )
+                  ),*/
+                  //eventDayFromAndTo(150, isFromVisible, KBlack, context),
+                  //eventDayFromAndTo(50, isEventDayVisible, KRed, context),
+                  Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 150,),
+                          SizedBox(width: 10,),
+                          Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: KGrey2),),
+                          SizedBox(width: 140,)
+                        ],
+                      ),
+                      //Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: KGrey2),),
+                      const SizedBox(height: 5,),
+                      button(
+                          iconLeftFlex: 1,
+                          iconRightFlex: 1,
+                          textFlex: 6,
+                          contentFlex: 3,
+                          text:' ${formatDate(initialDate.day)}'
+                               '/${formatDate(initialDate.month)}'
+                               '/${formatDate(initialDate.year)}',
+                          fontSize: 16,
+                          iconLeft: Icons.calendar_today,
+                          iconRight: Icons.keyboard_arrow_down,
+                          function: (){
+                            setState(() {
+                              isEventDayVisible = !isEventDayVisible;
+                            });
+                          },
+                        height: 40,
+                        width: 300,
+                        content: Container()
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              const Row(
+                                children: [
+                                  Text('Desde:', style: TextStyle(fontSize: 16, color: KGrey2),),
+                                  SizedBox(width: 95,)
+                                ],
+                              ),
+                              SizedBox(height: 2,),
+                              button(
+                                  iconRightFlex: 1,
+                                  iconLeftFlex: 1,
+                                  textFlex: 2,
+                                  contentFlex: 0,
+                                  text: '${formatDate(initialTime.hour)}:${formatDate(initialTime.minute)}',
+                                  fontSize: 16,
+                                  iconLeft: Icons.access_time,
+                                  iconRight: Icons.keyboard_arrow_down,
+                                  iconLeftSize: 22,
+                                  iconRightSize: 22,
+                                  function: (){
+                                    setState(() {
+                                      isFromVisible = !isFromVisible;
+                                    });
+                                  },
+                                  height: 40,
+                                  width: 140,
+                                  content: Container()
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 20,),
+                          Column(
+                            children: [
+                              const Row(
+                                children: [
+                                  Text('Hasta:', style: TextStyle(fontSize: 16, color: KGrey2),),
+                                  SizedBox(width: 100,)
+                                ],
+                              ),
+                              const SizedBox(height: 2,),
+                              button(
+                                  iconRightFlex: 1,
+                                  iconLeftFlex: 1,
+                                  textFlex: 2,
+                                  contentFlex: 0,
+                                  text: '${formatDate(initialTime.hour + 1)}:${formatDate(initialTime.minute)}',
+                                  fontSize: 16,
+                                  iconLeft: Icons.access_time,
+                                  iconRight: Icons.keyboard_arrow_down,
+                                  iconLeftSize: 22,
+                                  iconRightSize: 22,
+                                  function: (){
+                                    setState(() {
+                                      isToVisible = !isToVisible;
+                                      //showSpinnerTimePicker(context);
+                                    });
+                                  },
+                                  height: 40,
+                                  width: 140,
+                                  content: Container()
+                              ),
+                            ],
+                          ),
+
+                        ],
+                      ),
+                      SizedBox(height: 380,),
+                      buttons()
+                    ],
+                  ),
+
+                  isToVisible? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 15,),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 150,),
+                            Container(
+                              width: 290,
+                              height: 400,
+                              decoration: BoxDecoration(
+                                color: KWhite,
+                                border: Border.all(color: KSecondary,),
+                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                                boxShadow: const [
+                                  BoxShadow(color: KGray, blurRadius: 12, offset: Offset(0, 4))],
+                              ),
+                              child: Stack(
+                                children: [
+                                  timeCapsule(100, 48),
+                                  Positioned(
+                                    top: 100,
+                                    left: 50,
+                                    child: TimePickerSpinner(
+                                      highlightedTextStyle: TextStyle(fontSize: 40, color: KBlack),
+                                      normalTextStyle: TextStyle(fontSize: 38, color: KBlack.withOpacity(0.2)),
+                                      itemHeight: 60,
+                                      itemWidth: 50,
+                                      spacing: 25,
+                                      isForce2Digits: true,
+                                      time: initialDate.add(const Duration(hours: 1)),
+                                      is24HourMode: true,
+                                    ),
+                                  ),
+                                  Positioned(
+                                      top: 350,
+                                      left: 10,
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.keyboard_alt_outlined,size: 38,),
+                                          const SizedBox(width: 95,),
+                                          Container(
+                                            height: 30,
+                                            width: 65,
+                                            decoration: BoxDecoration(
+                                              color: KWhite,
+                                              border: Border.all(color: KBlack),
+                                              borderRadius: BorderRadius.circular(5)
+                                            ),
+                                            child: Center(child: Text('Cancelar')),
+                                          ),
+                                          const SizedBox(width: 10,),
+                                          Container(
+                                            height: 30,
+                                            width: 60,
+                                            decoration: BoxDecoration(
+                                              color: KWhite,
+                                              border: Border.all(color: KBlack),
+                                              borderRadius: BorderRadius.circular(5)
+                                            ),
+                                            child: Center(child: Text('Aceptar')),
+                                          ),
+                                        ],
+                                      )
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ) : Container(),
+
+                  isFromVisible? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 150,),
+                            Container(
+                              width: 290,
+                              height: 400,
+                              decoration: BoxDecoration(
+                                color: KWhite,
+                                border: Border.all(color: KSecondary),
+                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                                boxShadow: const [
+                                  BoxShadow(color: KGray, blurRadius: 12, offset: Offset(0, 4))],
+                              ),
+                              child: Stack(
+                                children: [
+                                  timeCapsule(100, 48),
+                                  Positioned(
+                                    top: 100,
+                                    left: 50,
+                                    child: TimePickerSpinner(
+                                      highlightedTextStyle: TextStyle(fontSize: 40, color: KBlack),
+                                      normalTextStyle: TextStyle(fontSize: 40, color: KBlack.withOpacity(0.2)),
+                                      itemHeight: 60,
+                                      itemWidth: 50,
+                                      spacing: 25,
+                                      isForce2Digits: true,
+                                      time: initialDate,
+                                      is24HourMode: true,
+                                    ),
+                                  ),
+                                  Positioned(
+                                      top: 350,
+                                      left: 10,
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.keyboard_alt_outlined,size: 38,),
+                                          const SizedBox(width: 95,),
+                                          Container(
+                                            height: 30,
+                                            width: 65,
+                                            decoration: BoxDecoration(
+                                              color: KWhite,
+                                              border: Border.all(color: KBlack),
+                                              borderRadius: BorderRadius.circular(5)
+                                            ),
+                                            child: const Center(child: Text('Cancelar')),
+                                          ),
+                                          const SizedBox(width: 10,),
+                                          Container(
+                                            height: 30,
+                                            width: 60,
+                                            decoration: BoxDecoration(
+                                              color: KWhite,
+                                              border: Border.all(color: KBlack),
+                                              borderRadius: BorderRadius.circular(5)
+                                            ),
+                                            child: Center(child: Text('Aceptar')),
+                                          ),
+                                        ],
+                                      )
+                                  )
+                                ],
+                              )
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 15,),
+                    ],
+                  ) : Container(),
+
+                  isEventDayVisible? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          const SizedBox(height: 80,),
                           Container(
-                            width: 290,
+                            width: 300,
                             height: 400,
                             decoration: BoxDecoration(
                                 color: KWhite,
                                 border: Border.all(color: KSecondary),
-                                borderRadius: BorderRadius.all(Radius.circular(5))
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: KGray,
+                                      blurRadius: 12,
+                                      offset: Offset(0, 4))],
+                                borderRadius: const BorderRadius.all(Radius.circular(5))
                             ),
-                            child: TimePickerSpinner(
-                              time: initialDate,
-                              is24HourMode: false,
+                            child: CalendarDatePicker2(
+                                config: CalendarDatePicker2Config(
+                                  selectedDayHighlightColor: KSecondary
+                                ),
+                                value: [initialDate],
                             )
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(width: 15,),
-                  ],
-                ) : Container(),
+                    ],
+                  ) : Container(),
 
-                isEventDayVisible? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        SizedBox(height: 80,),
-                        Container(
-                          width: 300,
-                          height: 400,
-                          decoration: BoxDecoration(
-                              color: KWhite,
-                              border: Border.all(color: KSecondary),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: KGray,
-                                    blurRadius: 12,
-                                    offset: Offset(0, 4))],
-                              borderRadius: BorderRadius.all(Radius.circular(5))
-                          ),
-                          child: CalendarDatePicker2(
-                              config: CalendarDatePicker2Config(
-                                selectedDayHighlightColor: KSecondary
-                              ),
-                              value: [initialDate],
-                          )
-                        ),
-                      ],
-                    ),
-                  ],
-                ) : Container(),
-
-                /*Positioned(
-                  child: Container(),
-                )*/
-              ],
+                  /*Positioned(
+                    child: Container(),
+                  )*/
+                ],
+              ),
             ),
           ),
         ),
@@ -462,6 +575,47 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     );
   }
 
+  Widget timeCapsule(double? top, double? left){
+    Decoration? decorationOfCapsules = BoxDecoration(
+        color: KWhite,
+        border: Border.all(color: KBlack),
+        borderRadius: BorderRadius.circular(5)
+    );
+    double? heightCapsulesExt = 50;
+    double? heightCapsulesMidl = 80;
+    double? widthCapsules = 60;
+    return Positioned(
+      top: top,
+      left: left,
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsules,),
+              Container(height: heightCapsulesMidl, width: widthCapsules, decoration: decorationOfCapsules,),
+              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsules,),
+            ],
+          ),
+          Column(
+            children: [
+              Container(height: 10, width: 10, decoration: BoxDecoration(color: KWhite, border: Border.all(color: KBlack), borderRadius: const BorderRadius.all(Radius.circular(20))),),
+              Container(height: 10, width: 15, color: KTransparent,),
+              Container(height: 10, width: 10, decoration: BoxDecoration(color: KWhite, border: Border.all(color: KBlack), borderRadius: const BorderRadius.all(Radius.circular(20))),),
+            ],
+          ),
+          Column(
+            children: [
+              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsules,),
+              Container(height: heightCapsulesMidl, width: widthCapsules, decoration: decorationOfCapsules,),
+              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsules,),
+            ],
+          ),
+
+        ],
+      ),
+    );
+  }
+
   Widget button({
     required String text,
     required int iconLeftFlex,
@@ -498,15 +652,35 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     );
   }
 
-  Widget buttons(IconData? iconLeft, String textContent, IconData? iconRight){
-    return Container(
-      child: Row(
-        children: [
-          IconButton(icon: Icon(iconLeft), onPressed: (){},),
-          Text(textContent),
-          IconButton(icon: Icon(iconRight), onPressed: (){},),
-        ],
-      ),
+  Widget buttons (){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        ButtonMultifunction(
+          text: Text('Cancelar', style: TextStyle(fontSize: 20, color: KDefault_Text),),
+          onTap: (){
+            _con.onPressedCancel(context);
+          },
+          withIcon: true,
+          iconRight: true,
+          width: 140,
+          backgroundColor: KTransparent,
+          icon: Icon(Icons.clear, color: KCancel, size: 30,),
+          withBorder: true,
+        ),
+        ButtonMultifunction(
+          text: Text('Siguiente', style: TextStyle(fontSize: 20),),
+          onTap: (){
+            _con.onPressedFollowing(context);
+          },
+          withIcon: true,
+          iconRight: true,
+          width: 140,
+          backgroundColor: KTransparent,
+          icon: const Icon(Icons.check, color: KAccept, size: 30,),
+          withBorder: true,
+        ),
+      ],
     );
   }
 }

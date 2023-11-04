@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:my_evento/src/ui/screens/title_and_description_screen.dart';
 
 import '../../interfaces/i_view_controller.dart';
 import '../../managers/data_manager.dart';
@@ -48,12 +49,12 @@ class ChooseDayAndTimeScreenController extends ControllerMVC implements IViewCon
 
   onPressedFollowing(context){
     return Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const CreateEventScreen())
+        builder: (context) => const TitleAndDescriptionScreen())
     );
   }
 
   onPressedCancel(context){
-    return Navigator.push(context, MaterialPageRoute(
+    return Navigator.pop(context, MaterialPageRoute(
         builder: (context) => const MyHomeScreen(null))
     );
   }

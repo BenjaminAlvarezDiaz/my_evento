@@ -1,5 +1,6 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/screens/choose_date_screen.dart';
+import 'package:my_evento/src/ui/screens/choose_day_and_time_screen.dart';
 import 'package:my_evento/src/ui/screens/create_event_screen.dart';
 import 'package:my_evento/src/ui/screens/my_home_screen.dart';
 import 'package:my_evento/src/managers/data_manager.dart';
@@ -7,6 +8,7 @@ import 'package:my_evento/src/models/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:my_evento/src/utils/screen_args.dart';
 import '../../interfaces/i_view_controller.dart';
+import '../screens/title_and_description_screen.dart';
 
 class MyHomeScreenController extends ControllerMVC implements IViewController{
   late List<Event> events;
@@ -55,7 +57,7 @@ class MyHomeScreenController extends ControllerMVC implements IViewController{
 
   onPressedCreateEvent(context){
     return Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const ChooseDateScreen())
+        builder: (context) => const ChooseDayAndTimeScreen(null))
     );
   }
 }

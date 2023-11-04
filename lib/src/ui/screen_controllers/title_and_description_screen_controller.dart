@@ -47,7 +47,7 @@ class TitleAndDescriptionScreenController extends ControllerMVC{
   }
 
   onPressedCancel(context){
-    return Navigator.push(context, MaterialPageRoute(
+    return Navigator.pop(context, MaterialPageRoute(
         builder: (context) => const MyHomeScreen(null))
     );
   }
