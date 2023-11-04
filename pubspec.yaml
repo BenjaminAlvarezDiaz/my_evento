@@ -51,7 +51,9 @@ dependencies:
   dropdown_button2: ^2.3.7
   flutter_time_picker_spinner: ^2.0.0
   time_pickerr: ^1.0.6
-
+  flutter_spinner_time_picker: ^0.0.5
+  flutter_spinner_picker: ^0.0.7
+  time_picker_spinner: ^0.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

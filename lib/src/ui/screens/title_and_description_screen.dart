@@ -55,7 +55,7 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
 
   Widget body(){
     return Container(
-      color: KWhite,
+      color: KTransparent,
       child: Center(
         child: ScrollConfiguration(
           behavior: MyBehavior(),
@@ -64,7 +64,7 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
               children: [
                 title(_con.getTitleEditingController()),
                 description(_con.getDescriptionUpEditingController()),
-                SizedBox(height: 250,),
+                SizedBox(height: 110,),
                 buttons(),
                 SizedBox(height: 20,),
               ],
@@ -139,32 +139,35 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
   }
 
   Widget buttons (){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        ButtonMultifunction(
-          text: Text('Cancelar', style: TextStyle(fontSize: 20, color: KDefault_Text),),
-          onTap: (){
-            _con.onPressedCancel(context);
-          },
-          withIcon: true,
-          iconRight: true,
-          width: 200,
-          backgroundColor: KWhite,
-          icon: Icon(Icons.clear, color: KCancel, size: 30,),
-        ),
-        ButtonMultifunction(
-          text: Text('Siguiente', style: TextStyle(fontSize: 20),),
-          onTap: (){
-            _con.onPressedFollowing(context);
-          },
-          withIcon: true,
-          iconRight: true,
-          width: 200,
-          backgroundColor: KWhite,
-          icon: const Icon(Icons.check, color: KAccept, size: 30,),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ButtonMultifunction(
+            text: Text('Cancelar', style: TextStyle(fontSize: 20, color: KDefault_Text),),
+            onTap: (){
+              _con.onPressedCancel(context);
+            },
+            withIcon: true,
+            iconRight: true,
+            width: 160,
+            backgroundColor: KTransparent,
+            icon: Icon(Icons.clear, color: KCancel, size: 30,),
+          ),
+          ButtonMultifunction(
+            text: Text('Siguiente', style: TextStyle(fontSize: 20),),
+            onTap: (){
+              _con.onPressedFollowing(context);
+            },
+            withIcon: true,
+            iconRight: true,
+            width: 160,
+            backgroundColor: KTransparent,
+            icon: const Icon(Icons.check, color: KAccept, size: 30,),
+          ),
+        ],
+      ),
     );
   }
 }

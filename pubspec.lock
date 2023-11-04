@@ -278,6 +278,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.8"
+  flutter_spinner_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_spinner_picker
+      sha256: c9ca4cb5d022a90aa54e5b8c893d2b7e4029fc788875efd678e8be6e55ffa2b4
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
+  flutter_spinner_time_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_spinner_time_picker
+      sha256: f3d1cd434cf7144ba439073ea5f816185e04d6a98f3734720f40c01f8865205d
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -677,6 +693,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+  time_picker_spinner:
+    dependency: "direct main"
+    description:
+      name: time_picker_spinner
+      sha256: "4e6c2615ace21119262be4cc92f50b379e3db6fc91679371e768ed84240aa700"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   time_pickerr:
     dependency: "direct main"
     description:

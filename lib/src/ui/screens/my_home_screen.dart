@@ -17,7 +17,7 @@ class MyHomeScreen extends StatefulWidget {
   StateMVC<MyHomeScreen> createState() => _MyHomeScreenState(this.args);
 }
 
-class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
+class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderStateMixin  {
   late MyHomeScreenController _con;
   ScreenArgs? args;
   late List<Event> events;
@@ -30,10 +30,12 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
 
   int _selectedIndex = 0;
   PageController pageController = PageController();
+  late final TabController tabController;
 
   @override
   void initState(){
     _con.initScreen(arguments: args);
+    tabController = TabController(length: 4, vsync: this);
     super.initState();
 
     refreshEvents();
@@ -77,8 +79,8 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: barItems(),
         backgroundColor: KWhite,
-        selectedItemColor: KSecondary_D1,
-        unselectedItemColor: KSecondary,
+        selectedIconTheme: const IconThemeData(color: KSecondary, size: 30),
+        unselectedIconTheme: IconThemeData(color: KSecondary.withOpacity(0.4)),
         currentIndex: _selectedIndex,
         onTap: onTaped,
         showSelectedLabels: false,
@@ -87,11 +89,26 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> {
     );
   }
 
+  Widget tapBarNotUse(){
+    return TabBar(tabs: const [
+      Tab(icon: Icon(Icons.home),),
+      Tab(icon: Icon(Icons.calendar_month),),
+      Tab(icon: Icon(Icons.add),),
+      Tab(icon: Icon(Icons.person),),
+    ],
+      controller: TabController(length: 4, vsync: this),
+      indicator: const BoxDecoration(
+          border: Border(top: BorderSide(color: KSecondary, width: 2.0))
+      ),
+      onTap: onTaped,
+    );
+  }
+
   List<BottomNavigationBarItem> barItems(){
     return <BottomNavigationBarItem>[
       const BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: ''
+          label: '',
       ),
       const BottomNavigationBarItem(
           icon: Icon(Icons.calendar_month),

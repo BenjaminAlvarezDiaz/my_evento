@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_evento/values/k_colors.dart';
 
 class ButtonMultifunction extends StatefulWidget {
   final bool withIcon;
@@ -11,6 +12,7 @@ class ButtonMultifunction extends StatefulWidget {
   final double height;
   final double width;
   final Color? backgroundColor;
+  final Color borderColor;
   const ButtonMultifunction({
     Key? key,
     this.withIcon = false,
@@ -22,7 +24,8 @@ class ButtonMultifunction extends StatefulWidget {
     required this.onTap,
     this.height = 50,
     this.width = 150,
-    this.backgroundColor = const Color(0xff7F0432)
+    this.backgroundColor = const Color(0xff7F0432),
+    this.borderColor = KTransparent
   }) : super(key: key);
 
   @override
@@ -38,7 +41,7 @@ class _ButtonMultifunctionState extends State<ButtonMultifunction> {
         decoration: BoxDecoration(
           color: widget.backgroundColor,
           borderRadius: widget.withBorder ? BorderRadius.circular(5) : null,
-          border: widget.withBorder ? Border.all(color: const Color(0xff7F0432)
+          border: widget.withBorder ? Border.all(color: widget.borderColor
           ) : null
         ),
         height: widget.height,
@@ -46,11 +49,11 @@ class _ButtonMultifunctionState extends State<ButtonMultifunction> {
         child: widget.withIcon ? widget.iconRight ? Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(width: 20,),
+            //const SizedBox(width: 20,),
             widget.text,
             const SizedBox(width: 10,),
             widget.icon!,
-            const SizedBox(width: 20,)
+            const SizedBox(width: 10,)
           ],
         ) :
         Row(
