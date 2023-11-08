@@ -4,18 +4,30 @@ import 'package:my_evento/values/k_colors.dart';
 class Dropdown extends StatefulWidget {
   final Widget? button;
   final Widget? content;
-  late final double? heightClose;
-  late final double? widthClose;
-  late final double? heightOpen;
-  late final double? widthOpen;
-  Dropdown({
+  final double? heightButton;
+  final double? widthButton;
+  final double? heightOpen;
+  final double? widthOpen;
+  final bool oneItem;
+  final Function()? buttonOnTap;
+  final String textInside;
+  final TextStyle? textInsideTheme;
+  final Decoration? buttonDecoration;
+  final Color? iconColor;
+  const Dropdown({
     Key? key,
-    required this.button,
-    required this.content,
-    this.heightClose = 50,
-    this.widthClose = 200,
+    this.button,
+    this.content,
+    this.heightButton = 50,
+    this.widthButton = 200,
     this.heightOpen = 500,
     this.widthOpen = 200,
+    this.oneItem = false,
+    this.buttonOnTap,
+    this.textInside = '',
+    this.textInsideTheme,
+    this.buttonDecoration = const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+    this.iconColor = Colors.black54,
   }) : super (key: key);
 
   @override
@@ -28,7 +40,42 @@ class _DropdownState extends State<Dropdown> {
   bool activated = false;
   @override
   Widget build(BuildContext context) {
-    return _dropdown();
+    return widget.oneItem ? _dropdownOneItem() : _dropdown();
+  }
+
+  Widget _dropdownOneItem(){
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 200),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: (){
+              setState(() {
+                activated = !activated;
+                /*if (activated) {
+                  final RenderBox renderBox = containerOpenKey
+                      .currentContext?.findRenderObject() as RenderBox;
+                  final Size size = renderBox.size;
+                  widget.heightOpen = size.height;
+                  widget.widthOpen = size.width;
+                } else {
+                  final RenderBox renderBox = containerCloseKey.currentContext?.findRenderObject() as RenderBox;
+                  final Size size = renderBox.size;
+                  widget.heightClose = size.height;
+                  //widget.widthClose = size.width;
+                }*/
+              });
+            },
+            child: widget.button ?? _button(),
+          ),
+          activated ? Container(
+              height: widget.heightOpen,
+              width: widget.widthOpen,
+              child: widget.content
+          ) : Container(color: KTransparent,)
+        ],
+      ),
+    );
   }
 
   Widget _dropdown(){
@@ -56,8 +103,8 @@ class _DropdownState extends State<Dropdown> {
             },
             child: Container(
                 key: containerCloseKey,
-                height: widget.heightClose,
-                width: widget.widthClose,
+                height: widget.heightButton,
+                width: widget.widthButton,
                 child: widget.button
             ),
           ),
@@ -79,8 +126,21 @@ class _DropdownState extends State<Dropdown> {
     );
   }
 
-
-
+  Widget _button(){
+    return InkWell(
+        onTap: widget.buttonOnTap,
+        child: Container(
+          decoration: widget.buttonDecoration,
+          child: Row(
+            children: [
+              SizedBox(width: 20,),
+              Expanded(flex: 3, child: Text(widget.textInside, style: widget.textInsideTheme,)),
+              Expanded(flex: 1, child: Icon(Icons.keyboard_arrow_down, color: widget.iconColor,))
+            ],
+          ),
+        )
+    );
+  }
   /*Widget _a(){
     return _cardExpanded(
         Container(
