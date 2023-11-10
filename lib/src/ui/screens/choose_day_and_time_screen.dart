@@ -415,12 +415,15 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                       ),
                     ],
                   ) : Container(),
-                  
+
                   Positioned(
-                      top: 300,
+                      top: 170,
+                      left: 15,
                       child: Dropdown(
+                        oneItem: true,
                         textInside: 'aaaaaa',
                         textInsideTheme: TextStyle(color: KBlack),
+                        content: Container(color: KRed, height: 500, width: 290,),
                       )
                   )
                   
