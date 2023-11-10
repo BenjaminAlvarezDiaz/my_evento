@@ -6,7 +6,11 @@ class Dropdown extends StatefulWidget {
   final Widget? content;
   final double? heightButton;
   final double? widthButton;
+  final double? heightDropdownList;
+  final double widthDropdownList;
   final bool oneItem;
+  final bool dropdownListLeft;
+  final bool dropdownListRight;
   //final Function()? buttonOnTap;
   final String textInside;
   final TextStyle? textInsideTheme;
@@ -18,7 +22,11 @@ class Dropdown extends StatefulWidget {
     this.content,
     this.heightButton = 50,
     this.widthButton = 200,
+    this.heightDropdownList = 100,
+    this.widthDropdownList = 100,
     this.oneItem = false,
+    this.dropdownListLeft = false,
+    this.dropdownListRight = false,
     //this.buttonOnTap,
     this.textInside = '',
     this.textInsideTheme,
@@ -31,9 +39,9 @@ class Dropdown extends StatefulWidget {
 }
 
 class _DropdownState extends State<Dropdown> {
-  final GlobalKey containerOpenKey = GlobalKey();
+  //final GlobalKey _containerOpenKey = GlobalKey();
   //GlobalKey _containerCloseKey = GlobalKey();
-  Size _containerOpenSize = const Size(0, 0);
+  //Size _containerOpenSize = const Size(0, 0);
   bool isDropdownOpen = false;
 
   Widget? _withDefaultButton(){
@@ -63,15 +71,17 @@ class _DropdownState extends State<Dropdown> {
       duration: Duration(milliseconds: 200),
       child: Column(
         children: [
-          Row(
+          widget.dropdownListLeft &&! widget.dropdownListRight? Row(
             children: [
+              widget.dropdownListRight? SizedBox(width: (31 / 100) * widget.widthDropdownList) : const SizedBox(),
               Container(child: _withDefaultButton()),
-              SizedBox(width: (31 / 100) * _containerOpenSize.width),
+              widget.dropdownListLeft? SizedBox(width: (31 / 100) * widget.widthDropdownList) : const SizedBox(),
             ],
-          ),
+          ) : Container(child: _withDefaultButton()),
           SizedBox(height: 5,),
-          isDropdownOpen ? RepaintBoundary(
-              key: containerOpenKey,
+          isDropdownOpen ? Container(
+              height: widget.heightDropdownList,
+              width: widget.widthDropdownList,
               child: widget.content) :
           Container(color: Colors.transparent,)
         ],
@@ -83,15 +93,15 @@ class _DropdownState extends State<Dropdown> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      final RenderBox renderBox = containerOpenKey.currentContext!.findRenderObject() as RenderBox;
+    /*WidgetsBinding.instance!.addPostFrameCallback((_) {
+      final RenderBox renderBox = _containerOpenKey.currentContext!.findRenderObject() as RenderBox;
       setState(() {
         _containerOpenSize = renderBox.size;
         print(_containerOpenSize.width);
       });
       print(_containerOpenSize.width);
     });
-    print(_containerOpenSize.width);
+    print(_containerOpenSize.width);*/
   }
 
   Widget _dropdown(){
