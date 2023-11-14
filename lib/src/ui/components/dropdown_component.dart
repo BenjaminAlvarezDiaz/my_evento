@@ -4,10 +4,12 @@ import 'package:my_evento/values/k_colors.dart';
 class Dropdown extends StatefulWidget {
   final Widget? button;
   final Widget? content;
+  final Widget? oneItemContent;
   final double? heightButton;
   final double? widthButton;
   final double? heightDropdownList;
   final double widthDropdownList;
+  final double? horizontalAlignment;
   final bool oneItem;
   final bool dropdownListLeft;
   final bool dropdownListRight;
@@ -20,10 +22,12 @@ class Dropdown extends StatefulWidget {
     Key? key,
     this.button,
     this.content,
+    this.oneItemContent,
     this.heightButton = 50,
     this.widthButton = 200,
     this.heightDropdownList = 100,
     this.widthDropdownList = 100,
+    this.horizontalAlignment = 90,
     this.oneItem = false,
     this.dropdownListLeft = false,
     this.dropdownListRight = false,
@@ -46,13 +50,35 @@ class _DropdownState extends State<Dropdown> {
 
   Widget? _withDefaultButton(){
     if(widget.button == null){
-      return _button();
+      return InkWell(
+        onTap: (){
+          setState(() {
+            isDropdownOpen = !isDropdownOpen;
+          });
+        },
+        child: Container(
+          height: widget.heightButton,
+          width: widget.widthButton,
+          decoration: _defaultButtonDecoration(),
+          child: Row(
+            children: [
+              SizedBox(width: 20,),
+              Expanded(flex: 3, child: Text(widget.textInside, style: widget.textInsideTheme,)),
+              isDropdownOpen ?
+              Expanded(flex: 1, child: Icon(Icons.keyboard_arrow_up, color: widget.iconColor,)) :
+              Expanded(flex: 1, child: Icon(Icons.keyboard_arrow_down, color: widget.iconColor,))
+            ],
+          ),
+        ),
+      );
     }
-    return widget.button;
+    return _button();
   }
 
   Decoration? _defaultButtonDecoration(){
-    if(widget.buttonDecoration == null){
+    if(widget.buttonDecoration == null && widget.button != null){
+      return const BoxDecoration();
+    }else if(widget.buttonDecoration == null){
      return BoxDecoration(
          color: Colors.white,
          borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -71,22 +97,34 @@ class _DropdownState extends State<Dropdown> {
       duration: Duration(milliseconds: 200),
       child: Column(
         children: [
-          widget.dropdownListLeft &&! widget.dropdownListRight? Row(
-            children: [
-              widget.dropdownListRight? SizedBox(width: (31 / 100) * widget.widthDropdownList) : const SizedBox(),
-              Container(child: _withDefaultButton()),
-              widget.dropdownListLeft? SizedBox(width: (31 / 100) * widget.widthDropdownList) : const SizedBox(),
-            ],
-          ) : Container(child: _withDefaultButton()),
+          Container(child: _withDefaultButton()),
           SizedBox(height: 5,),
-          isDropdownOpen ? Container(
-              height: widget.heightDropdownList,
-              width: widget.widthDropdownList,
-              child: widget.content) :
-          Container(color: Colors.transparent,)
+          _dropdownItem(),
         ],
       ),
     );
+  }
+
+  Widget _dropdownItem(){
+    if(isDropdownOpen && (widget.dropdownListLeft && widget.dropdownListRight) != null){
+      return Row(
+        children: [
+          widget.dropdownListRight? SizedBox(width: widget.horizontalAlignment) : const SizedBox(),
+          Container(
+              height: widget.heightDropdownList,
+              width: widget.widthDropdownList,
+              child: widget.oneItemContent),
+          widget.dropdownListLeft? SizedBox(width: widget.horizontalAlignment) : const SizedBox(),
+        ],
+      );
+    } else if(isDropdownOpen != null && (widget.dropdownListLeft && widget.dropdownListRight) == null){
+      return Container(
+          height: widget.heightDropdownList,
+          width: widget.widthDropdownList,
+          child: widget.oneItemContent);
+    }
+    return Container(color: Colors.transparent,);
+
   }
 
   @override
@@ -136,6 +174,28 @@ class _DropdownState extends State<Dropdown> {
     );
   }
 
+  Widget _dropdownItems(){
+    if((isDropdownOpen && widget.dropdownListLeft && widget.dropdownListRight) != null){
+      return Row(
+        children: [
+          widget.dropdownListRight? SizedBox(width: widget.horizontalAlignment) : const SizedBox(),
+          Container(
+              height: widget.heightDropdownList,
+              width: widget.widthDropdownList,
+              child: widget.oneItemContent),
+          widget.dropdownListLeft? SizedBox(width: widget.horizontalAlignment) : const SizedBox(),
+        ],
+      );
+    } else if(isDropdownOpen != null && (widget.dropdownListLeft && widget.dropdownListRight) == null){
+      return Container(
+          height: widget.heightDropdownList,
+          width: widget.widthDropdownList,
+          child: widget.oneItemContent);
+    }
+    return Container(color: Colors.transparent,);
+
+  }
+
   Widget _button(){
     return InkWell(
         onTap: (){
@@ -147,15 +207,7 @@ class _DropdownState extends State<Dropdown> {
           height: widget.heightButton,
           width: widget.widthButton,
           decoration: _defaultButtonDecoration(),
-          child: Row(
-            children: [
-              SizedBox(width: 20,),
-              Expanded(flex: 3, child: Text(widget.textInside, style: widget.textInsideTheme,)),
-              isDropdownOpen ?
-              Expanded(flex: 1, child: Icon(Icons.keyboard_arrow_up, color: widget.iconColor,)) :
-                  Expanded(flex: 1, child: Icon(Icons.keyboard_arrow_down, color: widget.iconColor,))
-            ],
-          ),
+          child: widget.button,
         )
     );
   }

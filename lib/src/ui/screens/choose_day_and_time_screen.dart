@@ -139,25 +139,20 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                       ),
                       //Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: KGrey2),),
                       const SizedBox(height: 5,),
-                      button(
-                          iconLeftFlex: 1,
-                          iconRightFlex: 1,
+                      eventDayFromAndTo(
                           textFlex: 6,
                           contentFlex: 3,
                           text:' ${formatDate(initialDate.day)}'
                                '/${formatDate(initialDate.month)}'
                                '/${formatDate(initialDate.year)}',
-                          fontSize: 16,
                           iconLeft: Icons.calendar_today,
-                          iconRight: Icons.keyboard_arrow_down,
-                          function: (){
+                        height: 40,
+                        width: 300,
+                        onTap: (){
                             setState(() {
                               isEventDayVisible = !isEventDayVisible;
                             });
-                          },
-                        height: 40,
-                        width: 300,
-                        content: Container()
+                        }
                       ),
                       SizedBox(height: 10,),
                       Row(
@@ -172,25 +167,19 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                 ],
                               ),
                               SizedBox(height: 2,),
-                              button(
-                                  iconRightFlex: 1,
-                                  iconLeftFlex: 1,
+                              eventDayFromAndTo(
                                   textFlex: 2,
                                   contentFlex: 0,
                                   text: '${formatDate(initialTime.hour)}:${formatDate(initialTime.minute)}',
-                                  fontSize: 16,
                                   iconLeft: Icons.access_time,
-                                  iconRight: Icons.keyboard_arrow_down,
-                                  iconLeftSize: 22,
-                                  iconRightSize: 22,
-                                  function: (){
+                                  iconsSize: 22,
+                                  height: 40,
+                                  width: 140,
+                                  onTap: (){
                                     setState(() {
                                       isFromVisible = !isFromVisible;
                                     });
-                                  },
-                                  height: 40,
-                                  width: 140,
-                                  content: Container()
+                                  }
                               ),
                             ],
                           ),
@@ -204,26 +193,20 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                 ],
                               ),
                               const SizedBox(height: 2,),
-                              button(
-                                  iconRightFlex: 1,
-                                  iconLeftFlex: 1,
+                              eventDayFromAndTo(
                                   textFlex: 2,
                                   contentFlex: 0,
-                                  text: '${formatDate(initialTime.hour + 1)}:${formatDate(initialTime.minute)}',
-                                  fontSize: 16,
+                                  text: '${formatDate(initialTime.hour + 1)}:'
+                                      '${formatDate(initialTime.minute)}',
                                   iconLeft: Icons.access_time,
-                                  iconRight: Icons.keyboard_arrow_down,
-                                  iconLeftSize: 22,
-                                  iconRightSize: 22,
-                                  function: (){
-                                    setState(() {
-                                      isToVisible = !isToVisible;
-                                      //showSpinnerTimePicker(context);
-                                    });
-                                  },
+                                  iconsSize: 22,
                                   height: 40,
                                   width: 140,
-                                  content: Container()
+                                  onTap: (){
+                                    setState(() {
+                                      isToVisible = !isToVisible;
+                                    });
+                                  }
                               ),
                             ],
                           ),
@@ -415,22 +398,6 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                       ),
                     ],
                   ) : Container(),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Dropdown(
-                        oneItem: true,
-                        textInside: 'aaaaaa',
-                        dropdownListLeft: true,
-                        textInsideTheme: TextStyle(color: KBlack),
-                        heightDropdownList: 500,
-                        widthDropdownList: 290,
-                        content: Container(color: KRed),
-                      ),
-                      SizedBox(width: 15,)
-                    ],
-                  )
                   
                   /*Positioned(
                     child: Container(),
@@ -441,153 +408,6 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget dropdownMenuNormal(){
-    DateTime initialDate = DateTime.now();
-    return DropdownButton(
-      menuMaxHeight: 800,
-      itemHeight: 100,
-      value: 1,
-      items: [
-        DropdownMenuItem(value: 1, child: Text('1')),
-        //DropdownMenuItem(value: 2, child: Text('2')),
-        DropdownMenuItem(
-          value: 2,
-          child: Container(
-            height: 800,
-            width: 400,
-            color: KWhite,
-            child: CalendarDatePicker(
-                initialDate: initialDate,
-                firstDate: initialDate,
-                lastDate: initialDate,
-                onDateChanged: (date){}
-            ),
-          ),
-        ),
-      ],
-      onChanged: (item) {
-
-      },
-    );
-  }
-
-  /*Widget dropdownMenu(String title, String text){
-    DateTime initialDate = DateTime.now();
-    List <DropdownMenuItem> items = [
-      DropdownMenuItem(
-          child: CalendarDatePicker(
-              initialDate: initialDate,
-              firstDate: initialDate,
-              lastDate: initialDate,
-              onDateChanged: (date){}
-          ),
-        value: 1,
-      )
-    ];
-
-    return Column(
-      children: [
-        Text(title),
-        Dropdown(
-            button: button('a', Icons.add, Icons.abc_outlined, (){}),
-            content: CalendarDatePicker(
-                initialDate: initialDate,
-                firstDate: initialDate,
-                lastDate: initialDate,
-                onDateChanged: (date){}
-            ),
-          widthOpen: 200,
-          heightOpen: 500,
-        ),
-      ],
-    );
-  }*/
-  
-  Widget dropdownExt(){
-    DateTime initialDate = DateTime.now();
-    return DropdownButton2(
-        customButton: Center(
-          child: Container(
-              decoration: BoxDecoration(color: KWhite),
-              child: Row(children: [Text('a'), Icon(Icons.add, color: KBlack,)],)),
-        ),
-        hint: Text('a'),
-        style: TextStyle(color: KBlack),
-        dropdownStyleData: DropdownStyleData(maxHeight: 400, width: 400),
-        menuItemStyleData: MenuItemStyleData(height: 400),
-        items:[
-          //DropdownMenuItem(value: 1, child: Text('1')),
-          //DropdownMenuItem(value: 2, child: Text('2')),
-          DropdownMenuItem(
-            value: 1,
-            child: Container(
-              height: 800,
-              width: 400,
-              color: KWhite,
-              child: CalendarDatePicker(
-                  initialDate: initialDate,
-                  firstDate: initialDate,
-                  lastDate: initialDate,
-                  onDateChanged: (date){}
-              ),
-            ),
-          ),
-        ],
-      onChanged: (item) {
-
-      },
-    );
-  }
-
-  Widget trueDropdown(){
-    DateTime initialDate = DateTime.now();
-    return Container(
-      height: 400,
-      width: 200,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned(
-              top: 50,
-              child: ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      isWidgetVisible = !isWidgetVisible;
-                    });
-                  },
-                  child: Text('a', style: TextStyle(color: KBlack),)
-              )
-          ),
-          isWidgetVisible? Positioned(
-            top: 100,
-            child: Container(
-              width: 400,
-              height: 400,
-              color: KBlack,
-              child: Center(
-                child: Text('Widget Superpuesto'),
-              ),
-            ),
-          ) : Container(),
-        ],
-      ),
-    );
-  }
-
-  Widget eventDayFromAndTo(double positioned, bool isWidgetVisible, Color? color, context){
-    return Positioned(
-        top: positioned,
-        child: ElevatedButton(
-            onPressed: (){
-              setState(() {
-                isWidgetVisible = !isWidgetVisible;
-              });
-            },
-            child: Text('a', style: TextStyle(color: color),)
-        )
     );
   }
 
@@ -632,35 +452,30 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     );
   }
 
-  Widget button({
+  Widget eventDayFromAndTo({
     required String text,
-    required int iconLeftFlex,
-    double? iconLeftSize,
-    double? iconRightSize,
-    required int iconRightFlex,
-    required int textFlex,
-    required int contentFlex,
-    IconData? iconLeft,
-    iconRight, function,
+    Function()? onTap,
+    int textFlex = 4,
+    int contentFlex = 3,
+    double? iconsSize = 24.0,
     double? height,
     double? width,
-    content,
-    double? fontSize
+    IconData? iconLeft,
   }){
     return InkWell(
-      onTap: function,
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(color: KPrimary_L1, borderRadius: BorderRadius.all(Radius.circular(5))),
         height: height,
         width: width,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Row(
             children: [
-              Expanded(flex: iconLeftFlex, child: Icon(iconLeft, color: KGrey5, size: iconLeftSize,)),
-              Expanded(flex: textFlex, child: Text(text, style: TextStyle(fontSize: fontSize, color: KGrey5),)),
-              Expanded(flex: contentFlex, child: content),
-              Expanded(flex: iconRightFlex, child: Icon(iconRight, color: KGrey5, size: iconRightSize,)),
+              Expanded(flex: 1, child: Icon(iconLeft, color: KGrey5, size: iconsSize,)),
+              Expanded(flex: textFlex, child: Text(text, style: TextStyle(fontSize: 16, color: KGrey5),)),
+              Expanded(flex: contentFlex, child: const SizedBox(width: 1,)),
+              Expanded(flex: 1, child: Icon(Icons.keyboard_arrow_down, color: KGrey5, size: iconsSize,)),
             ],
           ),
         ),
@@ -699,4 +514,191 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
       ],
     );
   }
+
+/*Widget dropdownMenuNormal(){
+    DateTime initialDate = DateTime.now();
+    return DropdownButton(
+      menuMaxHeight: 800,
+      itemHeight: 100,
+      value: 1,
+      items: [
+        DropdownMenuItem(value: 1, child: Text('1')),
+        //DropdownMenuItem(value: 2, child: Text('2')),
+        DropdownMenuItem(
+          value: 2,
+          child: Container(
+            height: 800,
+            width: 400,
+            color: KWhite,
+            child: CalendarDatePicker(
+                initialDate: initialDate,
+                firstDate: initialDate,
+                lastDate: initialDate,
+                onDateChanged: (date){}
+            ),
+          ),
+        ),
+      ],
+      onChanged: (item) {
+
+      },
+    );
+  }*/
+
+/*Widget dropdownMenu(String title, String text){
+    DateTime initialDate = DateTime.now();
+    List <DropdownMenuItem> items = [
+      DropdownMenuItem(
+          child: CalendarDatePicker(
+              initialDate: initialDate,
+              firstDate: initialDate,
+              lastDate: initialDate,
+              onDateChanged: (date){}
+          ),
+        value: 1,
+      )
+    ];
+
+    return Column(
+      children: [
+        Text(title),
+        Dropdown(
+            button: button('a', Icons.add, Icons.abc_outlined, (){}),
+            content: CalendarDatePicker(
+                initialDate: initialDate,
+                firstDate: initialDate,
+                lastDate: initialDate,
+                onDateChanged: (date){}
+            ),
+          widthOpen: 200,
+          heightOpen: 500,
+        ),
+      ],
+    );
+  }*/
+
+/*Widget dropdownExt(){
+    DateTime initialDate = DateTime.now();
+    return DropdownButton2(
+        customButton: Center(
+          child: Container(
+              decoration: BoxDecoration(color: KWhite),
+              child: Row(children: [Text('a'), Icon(Icons.add, color: KBlack,)],)),
+        ),
+        hint: Text('a'),
+        style: TextStyle(color: KBlack),
+        dropdownStyleData: DropdownStyleData(maxHeight: 400, width: 400),
+        menuItemStyleData: MenuItemStyleData(height: 400),
+        items:[
+          //DropdownMenuItem(value: 1, child: Text('1')),
+          //DropdownMenuItem(value: 2, child: Text('2')),
+          DropdownMenuItem(
+            value: 1,
+            child: Container(
+              height: 800,
+              width: 400,
+              color: KWhite,
+              child: CalendarDatePicker(
+                  initialDate: initialDate,
+                  firstDate: initialDate,
+                  lastDate: initialDate,
+                  onDateChanged: (date){}
+              ),
+            ),
+          ),
+        ],
+      onChanged: (item) {
+
+      },
+    );
+  }*/
+
+/*Widget trueDropdown(){
+    DateTime initialDate = DateTime.now();
+    return Container(
+      height: 400,
+      width: 200,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+              top: 50,
+              child: ElevatedButton(
+                  onPressed: (){
+                    setState(() {
+                      isWidgetVisible = !isWidgetVisible;
+                    });
+                  },
+                  child: Text('a', style: TextStyle(color: KBlack),)
+              )
+          ),
+          isWidgetVisible? Positioned(
+            top: 100,
+            child: Container(
+              width: 400,
+              height: 400,
+              color: KBlack,
+              child: Center(
+                child: Text('Widget Superpuesto'),
+              ),
+            ),
+          ) : Container(),
+        ],
+      ),
+    );
+  }*/
+
+/*Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Dropdown(
+                        oneItem: true,
+                        textInside: 'aaaaaa',
+                        dropdownListLeft: true,
+                        horizontalAlignment: 60,
+                        textInsideTheme: TextStyle(color: KBlack),
+                        heightDropdownList: 500,
+                        widthDropdownList: 290,
+                        heightButton: 40,
+                        widthButton: 140,
+                        oneItemContent: Container(color: KRed),
+                        button: eventDayFromAndTo(
+                          textFlex: 2,
+                          contentFlex: 0,
+                          text: '${formatDate(initialTime.hour + 1)}:'
+                              '${formatDate(initialTime.minute)}',
+                          iconLeft: Icons.access_time,
+                          iconsSize: 22,
+                          height: 40,
+                          width: 140,
+                        ),
+                      ),
+                      SizedBox(width: 15,),
+                      Dropdown(
+                        oneItem: true,
+                        textInside: 'aaaaaa',
+                        dropdownListLeft: true,
+                        horizontalAlignment: 60,
+                        textInsideTheme: TextStyle(color: KBlack),
+                        heightDropdownList: 500,
+                        widthDropdownList: 290,
+                        heightButton: 40,
+                        widthButton: 140,
+                        oneItemContent: Container(color: KRed),
+                        button: eventDayFromAndTo(
+                          textFlex: 2,
+                          contentFlex: 0,
+                          text: '${formatDate(initialTime.hour + 1)}:'
+                              '${formatDate(initialTime.minute)}',
+                          iconLeft: Icons.access_time,
+                          iconsSize: 22,
+                          height: 40,
+                          width: 140,
+                        ),
+                      ),
+                      SizedBox(width: 15,)
+
+                    ],
+                  )*/
 }
+
