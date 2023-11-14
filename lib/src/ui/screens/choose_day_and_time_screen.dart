@@ -145,14 +145,16 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                           text:' ${formatDate(initialDate.day)}'
                                '/${formatDate(initialDate.month)}'
                                '/${formatDate(initialDate.year)}',
-                          iconLeft: Icons.calendar_today,
-                        height: 40,
-                        width: 300,
-                        onTap: (){
+
+                          height: 40,
+                          width: 300,
+                          onTap: (){
                             setState(() {
                               isEventDayVisible = !isEventDayVisible;
                             });
-                        }
+                          },
+                          iconLeft: Icons.calendar_today,
+                          iconRight: isEventDayVisible? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                       ),
                       SizedBox(height: 10,),
                       Row(
@@ -171,7 +173,6 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                   textFlex: 2,
                                   contentFlex: 0,
                                   text: '${formatDate(initialTime.hour)}:${formatDate(initialTime.minute)}',
-                                  iconLeft: Icons.access_time,
                                   iconsSize: 22,
                                   height: 40,
                                   width: 140,
@@ -179,7 +180,9 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                     setState(() {
                                       isFromVisible = !isFromVisible;
                                     });
-                                  }
+                                  },
+                                  iconLeft: Icons.access_time,
+                                  iconRight: isFromVisible? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                               ),
                             ],
                           ),
@@ -198,7 +201,6 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                   contentFlex: 0,
                                   text: '${formatDate(initialTime.hour + 1)}:'
                                       '${formatDate(initialTime.minute)}',
-                                  iconLeft: Icons.access_time,
                                   iconsSize: 22,
                                   height: 40,
                                   width: 140,
@@ -206,7 +208,9 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                     setState(() {
                                       isToVisible = !isToVisible;
                                     });
-                                  }
+                                  },
+                                  iconLeft: Icons.access_time,
+                                  iconRight: isToVisible? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                               ),
                             ],
                           ),
@@ -461,6 +465,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     double? height,
     double? width,
     IconData? iconLeft,
+    IconData? iconRight,
   }){
     return InkWell(
       onTap: onTap,
@@ -475,7 +480,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
               Expanded(flex: 1, child: Icon(iconLeft, color: KGrey5, size: iconsSize,)),
               Expanded(flex: textFlex, child: Text(text, style: TextStyle(fontSize: 16, color: KGrey5),)),
               Expanded(flex: contentFlex, child: const SizedBox(width: 1,)),
-              Expanded(flex: 1, child: Icon(Icons.keyboard_arrow_down, color: KGrey5, size: iconsSize,)),
+              Expanded(flex: 1, child: Icon(iconRight, color: KGrey5, size: iconsSize,)),
             ],
           ),
         ),
