@@ -31,7 +31,10 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   ScreenArgs? args;
   DateTime initialDate = DateTime.now();
   TimeOfDay initialTime = TimeOfDay.now();
+  TimeOfDay timeFrom = TimeOfDay.now();
   TimeOfDay timeTo = TimeOfDay.now();
+  DateTime onTimeChangedFrom = DateTime.now();
+  DateTime onTimeChangedTo = DateTime.now();
 
   _ChooseDayAndTimeScreenState(ScreenArgs? arguments) : super (ChooseDayAndTimeScreenController(arguments)) {
     _con = ChooseDayAndTimeScreenController.con;
@@ -132,7 +135,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(width: 10,),
+                          SizedBox(width: 5,),
                           Text('Elija día del evento:', style: TextStyle(fontSize: 20, color: KGrey2),),
                           SizedBox(width: 140,)
                         ],
@@ -145,9 +148,8 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                           text:' ${formatDate(initialDate.day)}'
                                '/${formatDate(initialDate.month)}'
                                '/${formatDate(initialDate.year)}',
-
                           height: 40,
-                          width: 300,
+                          width: 305,
                           onTap: (){
                             setState(() {
                               isEventDayVisible = !isEventDayVisible;
@@ -172,7 +174,8 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                               eventDayFromAndTo(
                                   textFlex: 2,
                                   contentFlex: 0,
-                                  text: '${formatDate(initialTime.hour)}:${formatDate(initialTime.minute)}',
+                                  text: '${formatDate(onTimeChangedFrom.hour)}:'
+                                      '${formatDate(onTimeChangedFrom.minute)}',
                                   iconsSize: 22,
                                   height: 40,
                                   width: 140,
@@ -199,8 +202,8 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                               eventDayFromAndTo(
                                   textFlex: 2,
                                   contentFlex: 0,
-                                  text: '${formatDate(initialTime.hour + 1)}:'
-                                      '${formatDate(initialTime.minute)}',
+                                  text: '${formatDate(onTimeChangedTo.hour + 1)}:'
+                                      '${formatDate(onTimeChangedTo.minute)}',
                                   iconsSize: 22,
                                   height: 40,
                                   width: 140,
@@ -255,37 +258,26 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                       isForce2Digits: true,
                                       time: initialDate.add(const Duration(hours: 1)),
                                       is24HourMode: true,
+                                      onTimeChange: (onTimeChanged){
+                                        onTimeChangedTo = onTimeChanged;
+                                      },
                                     ),
                                   ),
                                   Positioned(
                                       top: 350,
                                       left: 10,
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.keyboard_alt_outlined,size: 38,),
-                                          const SizedBox(width: 95,),
-                                          Container(
-                                            height: 30,
-                                            width: 65,
-                                            decoration: BoxDecoration(
-                                              color: KWhite,
-                                              border: Border.all(color: KBlack),
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                            child: Center(child: Text('Cancelar')),
-                                          ),
-                                          const SizedBox(width: 10,),
-                                          Container(
-                                            height: 30,
-                                            width: 60,
-                                            decoration: BoxDecoration(
-                                              color: KWhite,
-                                              border: Border.all(color: KBlack),
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                            child: Center(child: Text('Aceptar')),
-                                          ),
-                                        ],
+                                      child: buttonsOfFromAndTo(
+                                          onTapCancel: (){
+                                            setState(() {
+                                              isToVisible = !isToVisible;
+                                              onTimeChangedTo = DateTime.now();
+                                            });
+                                          },
+                                          onTapAccept: (){
+                                            setState(() {
+                                              isToVisible = !isToVisible;
+                                            });
+                                          }
                                       )
                                   )
                                 ],
@@ -327,39 +319,28 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                       itemWidth: 50,
                                       spacing: 25,
                                       isForce2Digits: true,
-                                      time: initialDate,
+                                      time: onTimeChangedFrom,
                                       is24HourMode: true,
+                                      onTimeChange: (onTimeChanged){
+                                        onTimeChangedFrom = onTimeChanged;
+                                      },
                                     ),
                                   ),
                                   Positioned(
                                       top: 350,
                                       left: 10,
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.keyboard_alt_outlined,size: 38,),
-                                          const SizedBox(width: 95,),
-                                          Container(
-                                            height: 30,
-                                            width: 65,
-                                            decoration: BoxDecoration(
-                                              color: KWhite,
-                                              border: Border.all(color: KBlack),
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                            child: const Center(child: Text('Cancelar')),
-                                          ),
-                                          const SizedBox(width: 10,),
-                                          Container(
-                                            height: 30,
-                                            width: 60,
-                                            decoration: BoxDecoration(
-                                              color: KWhite,
-                                              border: Border.all(color: KBlack),
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                            child: Center(child: Text('Aceptar')),
-                                          ),
-                                        ],
+                                      child: buttonsOfFromAndTo(
+                                          onTapCancel: (){
+                                            setState(() {
+                                              isFromVisible = !isFromVisible;
+                                              onTimeChangedFrom = DateTime.now();
+                                            });
+                                          },
+                                          onTapAccept: (){
+                                            setState(() {
+                                              isFromVisible = !isFromVisible;
+                                            });
+                                          }
                                       )
                                   )
                                 ],
@@ -415,47 +396,6 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     );
   }
 
-  Widget timeCapsule(double? top, double? left){
-    Decoration? decorationOfCapsules = BoxDecoration(
-        color: KWhite,
-        border: Border.all(color: KBlack),
-        borderRadius: BorderRadius.circular(5)
-    );
-    double? heightCapsulesExt = 50;
-    double? heightCapsulesMidl = 80;
-    double? widthCapsules = 60;
-    return Positioned(
-      top: top,
-      left: left,
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsules,),
-              Container(height: heightCapsulesMidl, width: widthCapsules, decoration: decorationOfCapsules,),
-              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsules,),
-            ],
-          ),
-          Column(
-            children: [
-              Container(height: 10, width: 10, decoration: BoxDecoration(color: KWhite, border: Border.all(color: KBlack), borderRadius: const BorderRadius.all(Radius.circular(20))),),
-              Container(height: 10, width: 15, color: KTransparent,),
-              Container(height: 10, width: 10, decoration: BoxDecoration(color: KWhite, border: Border.all(color: KBlack), borderRadius: const BorderRadius.all(Radius.circular(20))),),
-            ],
-          ),
-          Column(
-            children: [
-              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsules,),
-              Container(height: heightCapsulesMidl, width: widthCapsules, decoration: decorationOfCapsules,),
-              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsules,),
-            ],
-          ),
-
-        ],
-      ),
-    );
-  }
-
   Widget eventDayFromAndTo({
     required String text,
     Function()? onTap,
@@ -485,6 +425,107 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget timeCapsule(double? top, double? left){
+    Decoration? decorationOfCapsules = BoxDecoration(
+        color: KWhite,
+        border: Border.all(color: KSecondary_D1),
+        borderRadius: BorderRadius.circular(5)
+    );
+
+    Decoration? decorationOfCapsulesUpAndDown = BoxDecoration(
+        color: KWhite,
+        border: Border.all(color: KSecondary_D1.withOpacity(0.5)),
+        borderRadius: BorderRadius.circular(5)
+    );
+
+    double? heightCapsulesExt = 50;
+    double? heightCapsulesMidl = 80;
+    double? widthCapsules = 60;
+    return Positioned(
+      top: top,
+      left: left,
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsulesUpAndDown,),
+              Container(height: heightCapsulesMidl, width: widthCapsules, decoration: decorationOfCapsules,),
+              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsulesUpAndDown,),
+            ],
+          ),
+          Column(
+            children: [
+              Container(height: 10, width: 10, decoration: BoxDecoration(color: KWhite, border: Border.all(color: KBlack), borderRadius: const BorderRadius.all(Radius.circular(20))),),
+              Container(height: 10, width: 15, color: KTransparent,),
+              Container(height: 10, width: 10, decoration: BoxDecoration(color: KWhite, border: Border.all(color: KBlack), borderRadius: const BorderRadius.all(Radius.circular(20))),),
+            ],
+          ),
+          Column(
+            children: [
+              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsulesUpAndDown,),
+              Container(height: heightCapsulesMidl, width: widthCapsules, decoration: decorationOfCapsules,),
+              Container(height: heightCapsulesExt, width: widthCapsules, decoration: decorationOfCapsulesUpAndDown,),
+            ],
+          ),
+
+        ],
+      ),
+    );
+  }
+
+  Widget buttonsOfFromAndTo({
+    Function()? onTapCancel,
+    Function()? onTapAccept,
+  }){
+    IconData? iconLeft = Icons.keyboard_alt_outlined;
+    bool isKeyBoard = true;
+    return Row(
+      children: [
+        InkWell(
+            onTap: (){
+              setState(() {
+                isKeyBoard = !isKeyBoard;
+                if(!isKeyBoard){
+                  iconLeft = Icons.swipe;
+                }else{
+                  iconLeft = Icons.keyboard_alt_outlined;
+                }
+              });
+            },
+            child: Icon(iconLeft,size: 38,)
+        ),
+        const SizedBox(width: 95,),
+        InkWell(
+          onTap: onTapCancel,
+          child: Container(
+            height: 30,
+            width: 65,
+            decoration: BoxDecoration(
+                color: KWhite,
+                border: Border.all(color: KBlack),
+                borderRadius: BorderRadius.circular(5)
+            ),
+            child: const Center(child: Text('Cancelar')),
+          ),
+        ),
+        const SizedBox(width: 10,),
+        InkWell(
+          onTap: onTapAccept,
+          child: Container(
+            height: 30,
+            width: 60,
+            decoration: BoxDecoration(
+                color: KWhite,
+                border: Border.all(color: KBlack),
+                borderRadius: BorderRadius.circular(5)
+            ),
+            child: Center(child: Text('Aceptar')),
+          ),
+        ),
+      ],
     );
   }
 
