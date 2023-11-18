@@ -28,6 +28,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   bool isEventDayVisible = false;
   bool isFromVisible = false;
   bool isToVisible = false;
+  bool changesInUp = true;
   ScreenArgs? args;
   DateTime initialDate = DateTime.now();
   TimeOfDay initialTime = TimeOfDay.now();
@@ -58,6 +59,10 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     if(dateTime == 24){
       return '00';
     }
+    /*if(!changesInUp && dateTime == initialDate.hour + 1){
+      String date = dateTime.toString().padLeft(2, '0');
+      return date;
+    }*/
     String date = dateTime.toString().padLeft(2, '0');
     return date;
   }
@@ -202,7 +207,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                               eventDayFromAndTo(
                                   textFlex: 2,
                                   contentFlex: 0,
-                                  text: '${formatDate(onTimeChangedTo.hour + 1)}:'
+                                  text: '${changesInUp? formatDate(onTimeChangedTo.hour + 1) : formatDate(onTimeChangedTo.hour)}:'
                                       '${formatDate(onTimeChangedTo.minute)}',
                                   iconsSize: 22,
                                   height: 40,
@@ -210,6 +215,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                   onTap: (){
                                     setState(() {
                                       isToVisible = !isToVisible;
+                                      onTimeChangedTo = DateTime.now();
                                     });
                                   },
                                   iconLeft: Icons.access_time,
@@ -276,6 +282,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                           onTapAccept: (){
                                             setState(() {
                                               isToVisible = !isToVisible;
+                                              changesInUp = !changesInUp;
                                             });
                                           }
                                       )
