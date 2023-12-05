@@ -1,15 +1,10 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinner_picker/flutter_spinner_picker.dart';
-import 'package:flutter_spinner_time_picker/flutter_spinner_time_picker.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
-//import 'package:time_picker_spinner/time_picker_spinner.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
-import 'package:my_evento/src/ui/components/dropdown_component.dart';
-import 'package:my_evento/src/ui/components/hour_picker_component.dart';
 import 'package:my_evento/src/ui/screen_controllers/choose_day_and_time_screen_controller.dart';
+import 'package:my_evento/values/k_images.dart';
 import '../../../values/k_colors.dart';
 import '../../utils/screen_args.dart';
 import '../components/my_behavior.dart';
@@ -28,6 +23,8 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   bool isFromVisible = false;
   bool isToVisible = false;
   bool changesInUp = true;
+  bool allDay = false;
+  bool isKeyBoard = true;
   ScreenArgs? args;
   DateTime timeEventDay = DateTime.now();
   DateTime onTimeChangedFrom = DateTime.now();
@@ -62,6 +59,16 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   String formatDate(int dateTime){
     String date = dateTime.toString().padLeft(2, '0');
     return date;
+  }
+
+  bool validateUntil(){
+    if((onTimeChangedTo.minute > onTimeChangedFrom.minute) ||
+        (onTimeChangedTo.hour > onTimeChangedFrom.hour) ||
+        allDay){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   @override
@@ -190,8 +197,30 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 380,),
-                      buttons()
+                      SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              setState(() {
+                                allDay = !allDay;
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                allDay? Icon(Icons.radio_button_checked_outlined, color: KSecondary,) :
+                                Icon(Icons.radio_button_off_outlined, color: KSecondary_L1,),
+                                SizedBox(width: 5,),
+                                Text('Todo el dia', style: TextStyle(fontSize: 16, color: KGrey2),),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 200,)
+                        ],
+                      ),
+                      SizedBox(height: 350,),
+                      buttonsCancelAndContinue()
                     ],
                   ),
 
@@ -246,7 +275,6 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                           onTapAccept: (){
                                             setState(() {
                                               isToVisible = !isToVisible;
-                                              changesInUp = !changesInUp;
                                             });
                                           }
                                       )
@@ -343,11 +371,62 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                       offset: Offset(0, 4))],
                                 borderRadius: const BorderRadius.all(Radius.circular(5))
                             ),
-                            child: CalendarDatePicker2(
-                                config: CalendarDatePicker2Config(
-                                  selectedDayHighlightColor: KSecondary
+                            child: Column(
+                              children: [
+                                CalendarDatePicker2(
+                                  config: CalendarDatePicker2Config(
+                                      selectedDayHighlightColor: KSecondary,
+                                      calendarType: CalendarDatePicker2Type.single,
+                                  ),
+                                  value: [timeEventDay],
+                                  onValueChanged: (onValueChanged){
+                                    timeEventDay = onValueChanged.elementAt(0)!;
+                                    print(timeEventDay);
+                                    setState(() {
+                                      isEventDayVisible = !isEventDayVisible;
+                                    });
+                                  },
                                 ),
-                                value: [timeEventDay],
+                                /*Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(children: [
+                                    Expanded(flex: 3, child: SizedBox(width: 2,)),
+                                    Expanded(flex: 2, child: InkWell(
+                                      onTap: (){
+                                        setState(() {
+                                          isEventDayVisible = !isEventDayVisible;
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 65,
+                                        decoration: BoxDecoration(
+                                            color: KWhite,
+                                            border: Border.all(color: KBlack),
+                                            borderRadius: BorderRadius.circular(5)
+                                        ),
+                                        child: const Center(child: Text('Cancelar')),
+                                      ),
+                                    ),),
+                                    SizedBox(width: 10,),
+                                    Expanded(flex: 2, child: InkWell(
+                                      onTap: (){
+                                        isEventDayVisible = !isEventDayVisible;
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                            color: KWhite,
+                                            border: Border.all(color: KBlack),
+                                            borderRadius: BorderRadius.circular(5)
+                                        ),
+                                        child: Center(child: Text('Aceptar')),
+                                      ),
+                                    ),)
+                                  ],),
+                                ),*/
+                              ],
                             )
                           ),
                         ],
@@ -448,21 +527,15 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     Function()? onTapAccept,
   }){
     IconData? iconLeft = Icons.keyboard_alt_outlined;
-    bool isKeyBoard = true;
     return Row(
       children: [
         InkWell(
             onTap: (){
               setState(() {
                 isKeyBoard = !isKeyBoard;
-                if(!isKeyBoard){
-                  iconLeft = Icons.swipe;
-                }else{
-                  iconLeft = Icons.keyboard_alt_outlined;
-                }
               });
             },
-            child: Icon(iconLeft,size: 38,)
+            child: Icon(isKeyBoard? Icons.keyboard_alt_outlined : Icons.swipe, size: 38,)
         ),
         const SizedBox(width: 95,),
         InkWell(
@@ -496,7 +569,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     );
   }
 
-  Widget buttons(){
+  Widget buttonsCancelAndContinue(){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -513,21 +586,21 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
           withBorder: true,
         ),
         ButtonMultifunction(
-          text: Text('Siguiente', style: TextStyle(fontSize: 20),),
+          text: Text('Siguiente', style: TextStyle(fontSize: 20, color: validateUntil()? null : KGrey3),),
           onTap: (){
-            _con.onPressedFollowing(context);
+            validateUntil()? _con.onPressedFollowing(context) : null;
           },
           withIcon: true,
           iconRight: true,
           width: 140,
           backgroundColor: KTransparent,
-          icon: const Icon(Icons.check, color: KAccept, size: 30,),
+          icon: Icon(Icons.check, color: validateUntil()? KAccept : KGrey3, size: 30,),
           withBorder: true,
         ),
       ],
     );
   }
 
-  
+
 }
 
