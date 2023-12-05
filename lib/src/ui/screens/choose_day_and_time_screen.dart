@@ -55,14 +55,15 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
     super.dispose();
   }
 
-  String formatDate(int dateTime) {
+  String formatHour(int dateTime) {
     if(dateTime == 24){
       return '00';
     }
-    /*if(!changesInUp && dateTime == initialDate.hour + 1){
-      String date = dateTime.toString().padLeft(2, '0');
-      return date;
-    }*/
+    String date = dateTime.toString().padLeft(2, '0');
+    return date;
+  }
+
+  String formatDate(int dateTime){
     String date = dateTime.toString().padLeft(2, '0');
     return date;
   }
@@ -179,7 +180,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                               eventDayFromAndTo(
                                   textFlex: 2,
                                   contentFlex: 0,
-                                  text: '${formatDate(onTimeChangedFrom.hour)}:'
+                                  text: '${formatHour(onTimeChangedFrom.hour)}:'
                                       '${formatDate(onTimeChangedFrom.minute)}',
                                   iconsSize: 22,
                                   height: 40,
@@ -207,7 +208,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                               eventDayFromAndTo(
                                   textFlex: 2,
                                   contentFlex: 0,
-                                  text: '${changesInUp? formatDate(onTimeChangedTo.hour + 1) : formatDate(onTimeChangedTo.hour)}:'
+                                  text: '${changesInUp? formatHour(onTimeChangedTo.hour) : formatHour(onTimeChangedTo.hour)}:'
                                       '${formatDate(onTimeChangedTo.minute)}',
                                   iconsSize: 22,
                                   height: 40,
@@ -215,7 +216,10 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                   onTap: (){
                                     setState(() {
                                       isToVisible = !isToVisible;
-                                      onTimeChangedTo = DateTime.now();
+                                      //changesInUp = !changesInUp;
+                                      //onTimeChangedTo.add(const Duration(hours: 1));
+                                      //print(onTimeChangedTo.hour);
+                                      //changesInUp = !changesInUp;
                                     });
                                   },
                                   iconLeft: Icons.access_time,
