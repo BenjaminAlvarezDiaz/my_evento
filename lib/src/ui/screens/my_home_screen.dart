@@ -338,8 +338,8 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
               Row(
                 children: [
                   const Expanded(flex: 1, child: SizedBox()),
-                  Expanded(flex: 20 , child: Text('${_con.getListEvent()[index].date.day.toString()} '
-                      '/ ${_con.getListEvent()[index].date.month.toString()}'
+                  Expanded(flex: 20 , child: Text('${_con.getListEvent()[index].date.day.toString()}'
+                      '/${_con.getListEvent()[index].date.month.toString()}'
                       ' de ${_con.getListEvent()[index].startHour}'
                       ' a ${_con.getListEvent()[index].endHour}',
                       style: const TextStyle(fontSize: 16, color: KDefault_Text))),
