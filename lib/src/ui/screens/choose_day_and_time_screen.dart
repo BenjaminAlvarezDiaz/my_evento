@@ -62,10 +62,30 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   }
 
   bool validateUntil(){
-    if((onTimeChangedTo.minute > onTimeChangedFrom.minute) ||
-        (onTimeChangedTo.hour > onTimeChangedFrom.hour) ||
-        allDay){
+    if(allDay){
       return true;
+    }
+    DateTime currentDay = DateTime.now();
+    if(currentDay.day < timeEventDay.day){
+      if((onTimeChangedTo.hour > onTimeChangedFrom.hour) ||
+          (onTimeChangedTo.minute > onTimeChangedFrom.minute)){
+        return true;
+      }else{
+        return false;
+      }
+    }else if(currentDay.day == timeEventDay.day){
+      if((onTimeChangedFrom.hour == currentDay.hour) || (onTimeChangedFrom.isAfter(currentDay))){
+        print('aaaaaaaaaaaaaaaaaaaaaaaaa');
+        if((onTimeChangedTo.hour > onTimeChangedFrom.hour) ||
+            (onTimeChangedTo.minute > onTimeChangedFrom.minute)){
+          return true;
+        }else{
+          print('siuu');
+          return false;
+        }
+      }else{
+        return false;
+      }
     }else{
       return false;
     }
@@ -381,7 +401,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                   value: [timeEventDay],
                                   onValueChanged: (onValueChanged){
                                     timeEventDay = onValueChanged.elementAt(0)!;
-                                    print(timeEventDay);
+                                    //print(timeEventDay);
                                     setState(() {
                                       isEventDayVisible = !isEventDayVisible;
                                     });
