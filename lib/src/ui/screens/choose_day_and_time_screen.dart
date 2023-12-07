@@ -22,7 +22,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   bool isEventDayVisible = false;
   bool isFromVisible = false;
   bool isToVisible = false;
-  bool changesInUp = true;
+  //bool changesInUp = true;
   bool allDay = false;
   bool isKeyBoard = true;
   ScreenArgs? args;
@@ -62,10 +62,32 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   }
 
   bool validateUntil(){
-    if((onTimeChangedTo.minute > onTimeChangedFrom.minute) ||
-        (onTimeChangedTo.hour > onTimeChangedFrom.hour) ||
-        allDay){
+    DateTime currentDay = DateTime.now();
+    if(allDay && (timeEventDay.day >= currentDay.day)){
       return true;
+    }
+
+    if(timeEventDay.day > currentDay.day){
+      if((onTimeChangedTo.hour > onTimeChangedFrom.hour) ||
+          (onTimeChangedTo.minute > onTimeChangedFrom.minute)){
+        return true;
+      }else{
+        return false;
+      }
+    }else if(currentDay.day == timeEventDay.day){
+      if((onTimeChangedFrom.hour >= currentDay.hour) && (onTimeChangedFrom.minute >= currentDay.minute)){
+        print(onTimeChangedFrom.hour);
+        print(onTimeChangedFrom.minute);
+        if((onTimeChangedTo.hour >= onTimeChangedFrom.hour) &&
+            (onTimeChangedTo.minute > onTimeChangedFrom.minute)){
+          print('aaaaa');
+          return true;
+        }else{
+          return false;
+        }
+      }else{
+        return false;
+      }
     }else{
       return false;
     }
@@ -381,7 +403,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
                                   value: [timeEventDay],
                                   onValueChanged: (onValueChanged){
                                     timeEventDay = onValueChanged.elementAt(0)!;
-                                    print(timeEventDay);
+                                    //print(timeEventDay);
                                     setState(() {
                                       isEventDayVisible = !isEventDayVisible;
                                     });
@@ -588,7 +610,10 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
         ButtonMultifunction(
           text: Text('Siguiente', style: TextStyle(fontSize: 20, color: validateUntil()? null : KGrey3),),
           onTap: (){
-            validateUntil()? _con.onPressedFollowing(context) : null;
+            validateUntil()? _con.onPressedFollowing(context) :
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('ERROR, es probable que la hora de \"Desde\" esté mal puesta.'),
+            ));
           },
           withIcon: true,
           iconRight: true,
@@ -600,7 +625,6 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
       ],
     );
   }
-
 
 }
 
