@@ -42,7 +42,7 @@ class TitleAndDescriptionScreenController extends ControllerMVC{
 
   onPressedFollowing(context){
     return Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const CreateEventScreen())
+        builder: (context) => CreateEventScreen(titleEditingController: titleEditingController, descriptionEditingController: descriptionUpEditingController,))
     );
   }
 
@@ -53,12 +53,10 @@ class TitleAndDescriptionScreenController extends ControllerMVC{
   }
 
   TextEditingController getTitleEditingController(){
-    titleEditingController = TextEditingController();
     return titleEditingController;
   }
 
   TextEditingController getDescriptionUpEditingController(){
-    descriptionUpEditingController = TextEditingController();
     return descriptionUpEditingController;
   }
 

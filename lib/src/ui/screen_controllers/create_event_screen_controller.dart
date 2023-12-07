@@ -7,6 +7,7 @@ class CreateEventScreenController extends ControllerMVC{
   late DataManager dataManager;
   late TextEditingController textEditingController;
   late TextEditingController titleEditingController;
+  late TextEditingController descriptionEditingController;
   late TextEditingController descriptionUpEditingController;
   late TextEditingController descriptionDownEditingController;
   late String valueTitle;
@@ -37,9 +38,20 @@ class CreateEventScreenController extends ControllerMVC{
     super.dispose();
   }
 
+  setTitleEditingController(setTitleEditingController){
+    titleEditingController = setTitleEditingController;
+  }
+
+  setDescriptionEditingController(setDescriptionEditingController){
+    descriptionEditingController = setDescriptionEditingController;
+  }
+
   TextEditingController getTitleEditingController(){
-    titleEditingController = TextEditingController();
     return titleEditingController;
+  }
+
+  TextEditingController getDescriptionEditingController(){
+    return descriptionEditingController;
   }
 
   TextEditingController getDescriptionUpEditingController(){
@@ -52,10 +64,12 @@ class CreateEventScreenController extends ControllerMVC{
     return descriptionDownEditingController;
   }
 
+  //No se usa
   void onSubmittedTitle(String value){
     valueTitle = value;
   }
 
+  //No se usa
   void onSubmittedDescription(String value){
     valueDescription = value;
   }

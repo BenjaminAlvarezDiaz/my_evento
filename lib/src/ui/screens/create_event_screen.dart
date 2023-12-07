@@ -7,7 +7,9 @@ import 'package:my_evento/src/ui/screen_controllers/create_event_screen_controll
 import 'package:my_evento/values/k_colors.dart';
 
 class CreateEventScreen extends StatefulWidget {
-  const CreateEventScreen({Key? key}) : super(key: key);
+  final TextEditingController titleEditingController;
+  final TextEditingController descriptionEditingController;
+  const CreateEventScreen({Key? key, required this.titleEditingController, required this.descriptionEditingController}) : super(key: key);
 
   @override
   StateMVC<CreateEventScreen> createState() => _CreateEventScreenState();
@@ -25,9 +27,16 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _con.setTitleEditingController(widget.titleEditingController);
+    _con.setDescriptionEditingController(widget.descriptionEditingController);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: KWhite,
       extendBodyBehindAppBar: true,
       appBar: appBar(context),
       body: body(),
@@ -37,7 +46,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
 
   AppBar appBar(context){
     return AppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: KTransparent,
       leading: IconButton(
           onPressed: (){
             _con.onPressedBack(context);
@@ -71,24 +80,9 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 20, right: 200, bottom: 10),
-                  child: TextField(
-                    controller: _con.getTitleEditingController(),
-                    /*onSubmitted: (String value){
-                      _con.onSubmittedTitle(value);
-                    },*/
-                    strutStyle: StrutStyle(),
-                    style: TextStyle(fontSize: 18),
-                    maxLines: 1,
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: InputDecoration(
-                        isDense: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        hintText: 'Titulo evento',
-                        contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5)),
-                  ),
+                  child: title(_con.getTitleEditingController()),
                 ),
-                description(_con.getDescriptionUpEditingController()),
+                description(_con.getDescriptionEditingController()),
                 const SizedBox(height: 200,),
                 //description(_con.getDescriptionDownEditingController()),
                 //const SizedBox(height: 10,),
@@ -98,6 +92,25 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget title(TextEditingController? textEditingController){
+    return TextField(
+      controller: textEditingController,
+      /*onSubmitted: (String value){
+                      _con.onSubmittedTitle(value);
+                    },*/
+      strutStyle: StrutStyle(),
+      style: TextStyle(fontSize: 18),
+      maxLines: 1,
+      textAlignVertical: TextAlignVertical.top,
+      decoration: InputDecoration(
+          isDense: true,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5)),
+          hintText: 'Titulo evento',
+          contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5)),
     );
   }
 
