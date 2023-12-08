@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:my_evento/src/models/event_temporal_data_model.dart';
 import 'package:my_evento/src/ui/screens/create_event_screen.dart';
 import 'package:my_evento/src/managers/data_manager.dart';
 
@@ -8,6 +9,10 @@ class CreateEventScreenController extends ControllerMVC{
   late TextEditingController textEditingController;
   late TextEditingController titleEditingController;
   late TextEditingController descriptionEditingController;
+  late DateTime dateTime;
+  late DateTime startTime;
+  late DateTime endTime;
+  late EventTemporalData eventTemporalData;
   late TextEditingController descriptionUpEditingController;
   late TextEditingController descriptionDownEditingController;
   late String valueTitle;
@@ -24,7 +29,6 @@ class CreateEventScreenController extends ControllerMVC{
   @override
   void initState() {
     super.initState();
-    textEditingController = TextEditingController();
     descriptionUpEditingController = TextEditingController();
     descriptionDownEditingController = TextEditingController();
 
@@ -32,9 +36,9 @@ class CreateEventScreenController extends ControllerMVC{
 
   @override
   void dispose() {
-    textEditingController.dispose();
     descriptionUpEditingController.dispose();
     descriptionDownEditingController.dispose();
+    eventTemporalData;
     super.dispose();
   }
 
@@ -46,12 +50,28 @@ class CreateEventScreenController extends ControllerMVC{
     descriptionEditingController = setDescriptionEditingController;
   }
 
+  setEventTemporalData(setEventTemporalData){
+    eventTemporalData = setEventTemporalData;
+  }
+
   TextEditingController getTitleEditingController(){
-    return titleEditingController;
+    return eventTemporalData.title;
   }
 
   TextEditingController getDescriptionEditingController(){
-    return descriptionEditingController;
+    return eventTemporalData.description;
+  }
+
+  DateTime getDateTime(){
+    return eventTemporalData.dateTime;
+  }
+
+  DateTime getStartTime(){
+    return eventTemporalData.startTime;
+  }
+
+  DateTime getEndTime(){
+    return eventTemporalData.endTime;
   }
 
   TextEditingController getDescriptionUpEditingController(){

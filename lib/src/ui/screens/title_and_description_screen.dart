@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:my_evento/src/models/event_temporal_data_model.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
 import 'package:my_evento/src/ui/screen_controllers/title_and_description_screen_controller.dart';
 import 'package:my_evento/values/k_colors.dart';
@@ -7,7 +8,8 @@ import 'package:my_evento/values/k_colors.dart';
 import '../components/button_multifunction_component.dart';
 
 class TitleAndDescriptionScreen extends StatefulWidget {
-  const TitleAndDescriptionScreen({super.key});
+  final EventTemporalData eventTemporalData;
+  const TitleAndDescriptionScreen({super.key, required this.eventTemporalData});
 
   @override
   StateMVC<TitleAndDescriptionScreen> createState() => _TitleAndDescriptionScreenState();
@@ -22,6 +24,7 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
 
   @override
   void initState(){
+    _con.setEventTemporalData(widget.eventTemporalData);
     super.initState();
   }
 

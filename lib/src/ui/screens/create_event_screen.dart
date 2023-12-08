@@ -2,14 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:my_evento/src/models/event_temporal_data_model.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
 import 'package:my_evento/src/ui/screen_controllers/create_event_screen_controller.dart';
 import 'package:my_evento/values/k_colors.dart';
 
 class CreateEventScreen extends StatefulWidget {
-  final TextEditingController titleEditingController;
-  final TextEditingController descriptionEditingController;
-  const CreateEventScreen({Key? key, required this.titleEditingController, required this.descriptionEditingController}) : super(key: key);
+  final EventTemporalData eventTemporalData;
+  const CreateEventScreen({Key? key, required this.eventTemporalData}) : super(key: key);
 
   @override
   StateMVC<CreateEventScreen> createState() => _CreateEventScreenState();
@@ -29,8 +29,20 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   @override
   void initState() {
     super.initState();
-    _con.setTitleEditingController(widget.titleEditingController);
-    _con.setDescriptionEditingController(widget.descriptionEditingController);
+    _con.setEventTemporalData(widget.eventTemporalData);
+  }
+
+  String formatHour(int dateTime) {
+    if(dateTime == 24){
+      return '00';
+    }
+    String date = dateTime.toString().padLeft(2, '0');
+    return date;
+  }
+
+  String formatDate(int dateTime){
+    String date = dateTime.toString().padLeft(2, '0');
+    return date;
   }
 
   @override
@@ -79,8 +91,21 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 20, right: 200, bottom: 10),
-                  child: title(_con.getTitleEditingController()),
+                  padding: const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
+                  child: Row(
+                    children: [
+                      Expanded(flex: 6, child: SizedBox(width: 20, child: title(_con.getTitleEditingController()),)),
+                      SizedBox(width: 20,),
+                      Text('${formatDate(_con.getDateTime().day)}'
+                          '/${formatDate(_con.getDateTime().month)}'
+                          ' de ${formatHour(_con.getStartTime().hour)}:${formatHour(_con.getStartTime().minute)}'
+                          ' a ${formatHour(_con.getEndTime().hour)}:${formatHour(_con.getEndTime().minute)}',
+                          style: const TextStyle(color: KGrey2),
+                      ),
+                      SizedBox(width: 10,),
+                      editButton()
+                    ],
+                  ),
                 ),
                 description(_con.getDescriptionEditingController()),
                 const SizedBox(height: 200,),
@@ -137,16 +162,33 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
     );
   }
 
+  Widget editButton(){
+    return InkWell(
+      onTap: (){
+      },
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        height: 20,
+        width: 20,
+        decoration: BoxDecoration(
+            color: KSecondary_L1,
+            borderRadius: BorderRadius.circular(10)
+        ),
+        child: Center(child: Icon(Icons.edit, size: 14, color: KWhite,),),
+      ),
+    );
+  }
+
   Widget button(){
     return InkWell(
       onTap: (){
         setState((){
-          displayTextTitle = _con.getTitle();
+          /*displayTextTitle = _con.getTitle();
           displayTextDescriptionUp = _con.getDescriptionUp();
           displayTextDescriptionDown = _con.getDescriptionDown();
           print(displayTextTitle);
           print(displayTextDescriptionUp);
-          print(displayTextDescriptionDown);
+          print(displayTextDescriptionDown);*/
         });
         //print(_con.getTitle());
         //print(_con.getDescription());
