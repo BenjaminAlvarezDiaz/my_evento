@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EventTemporalData{
   final DateTime dateTime;
@@ -6,6 +7,7 @@ class EventTemporalData{
   final DateTime endTime;
   final TextEditingController title;
   final TextEditingController description;
+  final ImagePicker? image;
 
   EventTemporalData({
     required this.dateTime,
@@ -13,6 +15,7 @@ class EventTemporalData{
     required this.endTime,
     required this.title,
     required this.description,
+    this.image,
   });
 
 }

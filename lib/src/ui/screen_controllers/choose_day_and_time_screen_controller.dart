@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/models/event_temporal_data_model.dart';
 import 'package:my_evento/src/ui/screens/title_and_description_screen.dart';
@@ -16,6 +17,7 @@ class ChooseDayAndTimeScreenController extends ControllerMVC implements IViewCon
   DateTime endTime = DateTime.now();
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
+  ImagePicker image = ImagePicker();
   late EventTemporalData eventTemporalData;
   static late ChooseDayAndTimeScreenController _this;
   ChooseDayAndTimeScreenController._privateConstruct(this.dataManager);
@@ -47,7 +49,8 @@ class ChooseDayAndTimeScreenController extends ControllerMVC implements IViewCon
         startTime: startTime,
         endTime: endTime,
         title: title,
-        description: description
+        description: description,
+        image: image
     );
   }
 

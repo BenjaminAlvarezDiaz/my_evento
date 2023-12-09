@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/models/event_temporal_data_model.dart';
 import 'package:my_evento/src/ui/screens/create_event_screen.dart';
@@ -13,6 +14,7 @@ class CreateEventScreenController extends ControllerMVC{
   late DateTime startTime;
   late DateTime endTime;
   late EventTemporalData eventTemporalData;
+  //late ImagePicker image;
   late TextEditingController descriptionUpEditingController;
   late TextEditingController descriptionDownEditingController;
   late String valueTitle;
@@ -72,6 +74,10 @@ class CreateEventScreenController extends ControllerMVC{
 
   DateTime getEndTime(){
     return eventTemporalData.endTime;
+  }
+
+  ImagePicker? getImage(){
+    return eventTemporalData.image;
   }
 
   TextEditingController getDescriptionUpEditingController(){

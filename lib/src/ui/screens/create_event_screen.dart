@@ -6,6 +6,9 @@ import 'package:my_evento/src/models/event_temporal_data_model.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
 import 'package:my_evento/src/ui/screen_controllers/create_event_screen_controller.dart';
 import 'package:my_evento/values/k_colors.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../popups/select_image_popup.dart';
 
 class CreateEventScreen extends StatefulWidget {
   final EventTemporalData eventTemporalData;
@@ -21,7 +24,6 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   String displayTextTitle = "";
   String displayTextDescriptionUp = "";
   String displayTextDescriptionDown = "";
-
   _CreateEventScreenState() : super (CreateEventScreenController()) {
     _con = CreateEventScreenController();
   }
@@ -79,13 +81,23 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
-              height: 400,
-              decoration: const BoxDecoration(
-                color: KWhite,
-                image: DecorationImage(image: AssetImage('assets/FkhJZuIWIAALYHi.jpg'),
-                  fit: BoxFit.cover,
-                )
+            GestureDetector(
+            onTap: (){
+              SelectedImage(
+                  context: context,
+                  iconLeft: Icons.camera_alt_outlined,
+                  iconRight: Icons.image_outlined,
+                  labelItemsStyle: TextStyle(fontSize: 16),
+              ).show();
+            },
+              child: Container(
+                height: 400,
+                decoration: const BoxDecoration(
+                  color: KWhite,
+                  image: DecorationImage(image: AssetImage('assets/FkhJZuIWIAALYHi.jpg'),
+                    fit: BoxFit.cover,
+                  )
+                ),
               ),
             ),
             Column(
