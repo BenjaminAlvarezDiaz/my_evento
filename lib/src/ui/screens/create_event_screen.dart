@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -24,6 +25,9 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   String displayTextTitle = "";
   String displayTextDescriptionUp = "";
   String displayTextDescriptionDown = "";
+  File? image;
+  File? photo;
+
   _CreateEventScreenState() : super (CreateEventScreenController()) {
     _con = CreateEventScreenController();
   }
@@ -45,6 +49,22 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   String formatDate(int dateTime){
     String date = dateTime.toString().padLeft(2, '0');
     return date;
+  }
+
+  pickImage(){
+    if(_con.imagePicker != null){
+      setState(() {
+        image = File(_con.imagePicker!.path);
+      });
+    }
+  }
+
+  pickPhoto(){
+    if(_con.photoPicker != null){
+      setState(() {
+        photo = File(_con.photoPicker!.path);
+      });
+    }
   }
 
   @override
@@ -82,14 +102,9 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             GestureDetector(
-            onTap: (){
-              SelectedImage(
-                  context: context,
-                  iconLeft: Icons.camera_alt_outlined,
-                  iconRight: Icons.image_outlined,
-                  labelItemsStyle: TextStyle(fontSize: 16),
-              ).show();
-            },
+              onTap: (){
+                _con.onUploadImage(context);
+                },
               child: Container(
                 height: 400,
                 decoration: const BoxDecoration(

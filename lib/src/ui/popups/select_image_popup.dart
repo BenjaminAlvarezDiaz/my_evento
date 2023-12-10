@@ -15,6 +15,7 @@ class SelectedImage{
   final BoxDecoration? itemsDecoration;
   final Widget? button;
   final Color? backgroundColor;
+  final Color? iconsColors;
   final Function()? onTapLeft;
   final Function()? onTapRight;
 
@@ -30,6 +31,7 @@ class SelectedImage{
     this.itemsDecoration,
     this.button,
     this.backgroundColor,
+    this.iconsColors,
     this.onTapLeft,
     this.onTapRight,
   });
@@ -50,16 +52,15 @@ class SelectedImage{
       children: [
         Container(
           padding: const EdgeInsets.all(30),
-          color: backgroundColor,
         ),
         Center(
           child: Container(
             child: _body(),
-            width: 300,
-            height: 200,
+            width: 200,
+            height: 100,
             margin: const EdgeInsets.all(30),
             decoration: BoxDecoration(
-              color: KFontColor,
+              color: backgroundColor,
               borderRadius: BorderRadius.circular(radius),
             ),
           ),
@@ -71,14 +72,21 @@ class SelectedImage{
   _body(){
     return Column(
       children: [
-        Row(
-          children: [
-            _itemLeft(),
-            _itemRight()
-          ],
+        SizedBox(height: 20,),
+        Expanded(
+          flex: 3,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _itemLeft(),
+              SizedBox(width: 50,),
+              _itemRight()
+            ],
+          ),
         ),
-        SizedBox(height: 5,),
-        _confirmButton()
+        //Expanded(flex: 2, child: Material(type: MaterialType.transparency, child: _confirmButton(),)),
+        //SizedBox(height: 20,),
+        //Expanded(flex: 1, child: SizedBox(height: 5,)),
       ],
     );
   }
@@ -96,12 +104,13 @@ class SelectedImage{
           onTap: onTapLeft,
           child: Container(
               decoration: itemsDecoration == null? _itemsDefaultDecoration() : itemsDecoration,
+              height: itemsSize,
               width: itemsSize,
               child: Center(
-                  child: Icon(iconLeft, size: iconsSize, color: backgroundColor,))
+                  child: Icon(iconLeft, size: iconsSize, color: iconsColors,))
           ),
         ),
-        Material(child: Text(labelLeft, style: labelItemsStyle,)),
+        Material(type: MaterialType.transparency, child: Text(labelLeft, style: labelItemsStyle,)),
       ],
     );
   }
@@ -113,12 +122,13 @@ class SelectedImage{
           onTap: onTapRight,
           child: Container(
               decoration: itemsDecoration == null? _itemsDefaultDecoration() : itemsDecoration,
+              height: itemsSize,
               width: itemsSize,
               child: Center(
-                  child: Icon(iconRight, size: iconsSize, color: backgroundColor,))
+                  child: Icon(iconRight, size: iconsSize, color: iconsColors,))
           ),
         ),
-        Material(child: Text(labelRight, style: labelItemsStyle,)),
+        Material(type: MaterialType.transparency, child: Text(labelRight, style: labelItemsStyle,)),
       ],
     );
   }
