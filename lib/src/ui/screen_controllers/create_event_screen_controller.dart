@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -15,8 +17,8 @@ class CreateEventScreenController extends ControllerMVC{
   late DateTime startTime;
   late DateTime endTime;
   late EventTemporalData eventTemporalData;
-  late XFile? imagePicker;
-  late XFile? photoPicker;
+  late File? imagePicker = null;
+  late File? photoPicker = null;
   //late ImagePicker image;
   late TextEditingController descriptionUpEditingController;
   late TextEditingController descriptionDownEditingController;
@@ -79,25 +81,11 @@ class CreateEventScreenController extends ControllerMVC{
     return eventTemporalData.endTime;
   }
 
-  getImageTaken(){
-    return imagePicker;
-  }
-
-  getPhotoTaken(){
-    return photoPicker;
-  }
-
   onUploadImage(context) async {
     await ScreenManager().openSelectedImagePopUp(
         context, 
-        onTapLeft: () async {
-          photoPicker = await eventTemporalData.image?.pickImage(source: ImageSource.camera);
-          Navigator.pop(context);
-        },
-        onTapRight: () async {
-          imagePicker = await eventTemporalData.image?.pickImage(source: ImageSource.gallery);
-          Navigator.pop(context);
-        }
+        onTapLeft: (){pickPhoto(context);},
+        onTapRight: (){pickImage(context);}
     );
   }
 
@@ -131,6 +119,45 @@ class CreateEventScreenController extends ControllerMVC{
 
   String getDescriptionDown(){
     return descriptionDownEditingController.text;
+  }
+
+  File? getImage(){
+    return imagePicker;
+  }
+
+  File? getPhoto(){
+    return photoPicker;
+  }
+
+  Future<void> pickPhoto(context) async {
+    final ImagePicker selectedImage = ImagePicker();
+    eventTemporalData.image = (await selectedImage.pickImage(source: ImageSource.camera))!;
+    if(eventTemporalData.image != null){
+      setState(() {
+        photoPicker = File(eventTemporalData.image!.path);
+        Navigator.pop(context);
+      });
+    }else{
+      //print('NOOOOOOOOOOOOO');
+      Navigator.pop(context);
+    }
+  }
+
+  Future<void> pickImage(context) async {
+    //print('NOOOOOOOOOOOOO');
+    final ImagePicker selectedImage = ImagePicker();
+    //print('Siuuuuuuuuu');
+    eventTemporalData.image = (await selectedImage.pickImage(source: ImageSource.gallery))!;
+    //print('Siuuuuuuuuu');
+    if(eventTemporalData.image != null){
+      setState(() {
+        //print('NOOOOOOOOOOOOO');
+        imagePicker = File(eventTemporalData.image.path);
+        Navigator.pop(context);
+      });
+    }else{
+      Navigator.pop(context);
+    }
   }
 
   onPressedBack(context){

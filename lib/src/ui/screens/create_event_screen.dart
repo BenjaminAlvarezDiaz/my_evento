@@ -37,7 +37,6 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   void initState() {
     super.initState();
     _con.setEventTemporalData(widget.eventTemporalData);
-    pickImage();
   }
 
   String formatHour(int dateTime) {
@@ -51,24 +50,6 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   String formatDate(int dateTime){
     String date = dateTime.toString().padLeft(2, '0');
     return date;
-  }
-
-  Future<void> pickImage() async {
-    if(_con.getImageTaken() != null){
-      setState(() {
-        image = File(_con.getImageTaken().path);
-      });
-    }else{
-      print('NOOOOOOOOOOOOO');
-    }
-  }
-
-  pickPhoto(){
-    if(_con.photoPicker != null){
-      setState(() {
-        photo = File(_con.photoPicker!.path);
-      });
-    }
   }
 
   @override
@@ -108,10 +89,8 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
             GestureDetector(
               onTap: (){
                 _con.onUploadImage(context);
-                //print('aaaaa');
                 },
-              child: image != null? Image.file(image!, fit: BoxFit.cover, height: 400,) :
-              /*Image.file(imageDefault, fit: BoxFit.cover,)*/
+              child: _con.getImage() != null? Image.file(_con.getImage()!, fit: BoxFit.cover, height: 400,) :
               Container(
                 color: KGrey5,
                 height: 400,

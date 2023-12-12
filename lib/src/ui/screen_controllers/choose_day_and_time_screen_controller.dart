@@ -17,7 +17,7 @@ class ChooseDayAndTimeScreenController extends ControllerMVC implements IViewCon
   DateTime endTime = DateTime.now();
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
-  ImagePicker image = ImagePicker();
+  XFile image = XFile('assets/FkhJZuIWIAALYHi.jpg');
   late EventTemporalData eventTemporalData;
   static late ChooseDayAndTimeScreenController _this;
   ChooseDayAndTimeScreenController._privateConstruct(this.dataManager);
