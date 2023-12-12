@@ -152,7 +152,7 @@ class CreateEventScreenController extends ControllerMVC{
     if(eventTemporalData.image != null){
       setState(() {
         //print('NOOOOOOOOOOOOO');
-        imagePicker = File(eventTemporalData.image.path);
+        imagePicker = File(eventTemporalData.image!.path);
         Navigator.pop(context);
       });
     }else{

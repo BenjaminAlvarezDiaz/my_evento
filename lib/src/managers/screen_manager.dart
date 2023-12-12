@@ -173,7 +173,7 @@ class ScreenManager {
     onTapLeft: onTapLeft,
     onTapRight: onTapRight,
     itemsSize: 40,
-    iconsColors: KSecondary_L1,
+    iconsColors: KSecondary,
     itemsDecoration: BoxDecoration(color: KGrey5, borderRadius: BorderRadius.circular(5), border: Border.all(color: KSecondary_L1)),
     labelItemsStyle: TextStyle(fontSize: 16),
     backgroundColor: KGrey5,

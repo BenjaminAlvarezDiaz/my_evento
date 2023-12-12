@@ -7,7 +7,7 @@ class EventTemporalData{
   final DateTime endTime;
   final TextEditingController title;
   final TextEditingController description;
-  XFile image;
+  XFile? image;
 
   EventTemporalData({
     required this.dateTime,
@@ -15,7 +15,7 @@ class EventTemporalData{
     required this.endTime,
     required this.title,
     required this.description,
-    required this.image,
+    this.image,
   });
 
 

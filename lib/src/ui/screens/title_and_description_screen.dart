@@ -97,8 +97,17 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
             style: TextStyle(fontSize: 18),
             maxLines: 1,
             textAlignVertical: TextAlignVertical.top,
+            cursorColor: KPrimary,
             decoration: InputDecoration(
                 isDense: true,
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: KSecondary, width: 1.5)
+                ),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: KSecondary_L1.withOpacity(0.5), width: 1.5)
+                ),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5)),
                 hintText: 'Titulo evento',
@@ -128,8 +137,17 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
             minLines: 14,
             strutStyle: StrutStyle(),
             style: TextStyle(fontSize: 16,),
+            cursorColor: KPrimary,
             decoration: InputDecoration(
               isDense: true,
+              focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: KSecondary, width: 1.5)
+              ),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: KSecondary_L1.withOpacity(0.5), width: 1.5)
+              ),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5)),
               hintText: 'Descripción',

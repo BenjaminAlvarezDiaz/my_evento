@@ -95,7 +95,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
                 color: KGrey5,
                 height: 400,
                 child: const Center(
-                  child: Icon(Icons.image, size: 40, color: KGrey3),
+                  child: Icon(Icons.image, size: 40, color: KSecondary),
                 ),
               ),
             ),
@@ -141,8 +141,17 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
       style: TextStyle(fontSize: 18),
       maxLines: 1,
       textAlignVertical: TextAlignVertical.top,
+      cursorColor: KPrimary,
       decoration: InputDecoration(
           isDense: true,
+          focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: KSecondary, width: 1.5)
+          ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: KSecondary_L1.withOpacity(0.5), width: 1.5)
+          ),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5)),
           hintText: 'Titulo evento',
@@ -162,8 +171,17 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
         minLines: 10,
         strutStyle: StrutStyle(),
         style: TextStyle(fontSize: 16,),
+        cursorColor: KPrimary,
         decoration: InputDecoration(
             isDense: true,
+            focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: KSecondary, width: 1.5)
+            ),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: KSecondary_L1.withOpacity(0.5), width: 1.5)
+            ),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5)),
             hintText: 'Descripción',

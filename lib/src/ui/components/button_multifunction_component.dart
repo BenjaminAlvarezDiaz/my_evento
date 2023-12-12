@@ -13,6 +13,8 @@ class ButtonMultifunction extends StatefulWidget {
   final double width;
   final Color? backgroundColor;
   final Color borderColor;
+  final bool withSplash;
+  final Color? splashColor;
   const ButtonMultifunction({
     Key? key,
     this.withIcon = false,
@@ -25,7 +27,9 @@ class ButtonMultifunction extends StatefulWidget {
     this.height = 50,
     this.width = 150,
     this.backgroundColor = const Color(0xff7F0432),
-    this.borderColor = KTransparent
+    this.borderColor = KTransparent,
+    this.withSplash = true,
+    this.splashColor = Colors.grey,
   }) : super(key: key);
 
   @override
@@ -37,6 +41,8 @@ class _ButtonMultifunctionState extends State<ButtonMultifunction> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.onTap,
+      //splashColor: widget.splashColor,
+      //highlightColor: widget.withSplash? widget.splashColor?.withOpacity(0.8) : Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           color: widget.backgroundColor,
