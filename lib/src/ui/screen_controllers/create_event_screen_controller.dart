@@ -92,9 +92,11 @@ class CreateEventScreenController extends ControllerMVC{
         context, 
         onTapLeft: () async {
           photoPicker = await eventTemporalData.image?.pickImage(source: ImageSource.camera);
-        }, 
+          Navigator.pop(context);
+        },
         onTapRight: () async {
           imagePicker = await eventTemporalData.image?.pickImage(source: ImageSource.gallery);
+          Navigator.pop(context);
         }
     );
   }

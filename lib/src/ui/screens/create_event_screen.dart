@@ -26,6 +26,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   String displayTextDescriptionUp = "";
   String displayTextDescriptionDown = "";
   File? image;
+  File imageDefault = File('assets/FkhJZuIWIAALYHi.jpg');
   File? photo;
 
   _CreateEventScreenState() : super (CreateEventScreenController()) {
@@ -36,6 +37,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   void initState() {
     super.initState();
     _con.setEventTemporalData(widget.eventTemporalData);
+    pickImage();
   }
 
   String formatHour(int dateTime) {
@@ -51,11 +53,13 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
     return date;
   }
 
-  pickImage(){
-    if(_con.imagePicker != null){
+  Future<void> pickImage() async {
+    if(_con.getImageTaken() != null){
       setState(() {
-        image = File(_con.imagePicker!.path);
+        image = File(_con.getImageTaken().path);
       });
+    }else{
+      print('NOOOOOOOOOOOOO');
     }
   }
 
@@ -104,14 +108,15 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
             GestureDetector(
               onTap: (){
                 _con.onUploadImage(context);
+                //print('aaaaa');
                 },
-              child: Container(
+              child: image != null? Image.file(image!, fit: BoxFit.cover, height: 400,) :
+              /*Image.file(imageDefault, fit: BoxFit.cover,)*/
+              Container(
+                color: KGrey5,
                 height: 400,
-                decoration: const BoxDecoration(
-                  color: KWhite,
-                  image: DecorationImage(image: AssetImage('assets/FkhJZuIWIAALYHi.jpg'),
-                    fit: BoxFit.cover,
-                  )
+                child: const Center(
+                  child: Icon(Icons.image, size: 40, color: KGrey3),
                 ),
               ),
             ),
