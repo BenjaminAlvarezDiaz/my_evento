@@ -90,7 +90,13 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
               onTap: (){
                 _con.onUploadImage(context);
                 },
-              child: _con.getImage() != null? Image.file(_con.getImage()!, fit: BoxFit.cover, height: 400,) :
+              child: _con.getImage() != null? Container(
+                  height: 400,
+                  decoration: BoxDecoration(
+                      color: KWhite,
+                      image: DecorationImage(image: FileImage(_con.getImage()!), fit: BoxFit.cover)
+                  )
+              ) :
               Container(
                 color: KGrey5,
                 height: 400,
@@ -292,7 +298,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
           Expanded(flex: 1, child: SizedBox(width: 10,)),
           Row(
             children: [
-              Icon(Icons.location_on, color: KSecondary_L1, size: 18,),
+              Icon(Icons.location_on, color: KSecondary_L1, size: 14,),
               Text('Argentina, Salta', style: TextStyle(fontSize: 12),)
             ],
           )
