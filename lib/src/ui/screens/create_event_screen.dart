@@ -124,19 +124,19 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
 
   Widget profileTitleDateAndShare(TextEditingController? textEditingController,) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, top: 10, right: 20,),
+      padding: const EdgeInsets.only(left: 20, top: 10, bottom: 5, right: 20,),
       child: Row(
         children: [
           profile(),
           titleAndDate(textEditingController),
-          Expanded(flex: 1, child: SizedBox(width: 10,)),
+          const Expanded(flex: 1, child: SizedBox(width: 10,)),
           Column(
             children: [
               GestureDetector(
                   onTap: (){},
-                  child: Icon(Icons.share, size: 26, color: KSecondary_L1,)
+                  child: const Icon(Icons.share, size: 26, color: KSecondary_L1,)
               ),
-              SizedBox(height: 30,)
+              const SizedBox(height: 20,)
             ],
           ),
         ],
@@ -156,7 +156,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
             color: KPrimary_L1,
             borderRadius: BorderRadius.circular(20)
         ),
-        child: Center(child: Icon(Icons.person, size: 20, color: KWhite,),),
+        child: const Center(child: Icon(Icons.person, size: 20, color: KWhite,),),
       ),
     );
   }
@@ -176,8 +176,8 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
                   /*onSubmitted: (String value){
                                   _con.onSubmittedTitle(value);
                                 },*/
-                  strutStyle: StrutStyle(),
-                  style: TextStyle(fontSize: 18),
+                  strutStyle: const StrutStyle(),
+                  style: const TextStyle(fontSize: 18),
                   maxLines: 1,
                   textAlignVertical: TextAlignVertical.center,
                   cursorColor: KPrimary,
@@ -194,11 +194,11 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5)),
                       hintText: 'Titulo evento',
-                      contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5)),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5)),
                 ),
               ),
             ),
-            SizedBox(width: 60,),
+            const SizedBox(width: 60,),
           ],
         ),
         Row(
@@ -209,7 +209,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
                 ' a ${formatHour(_con.getEndTime().hour)}:${formatHour(_con.getEndTime().minute)}',
               style: const TextStyle(color: KGrey2, fontSize: 12),
             ),
-            SizedBox(width: 10,),
+            const SizedBox(width: 10,),
             editButton()
           ],
         ),
@@ -229,7 +229,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
             color: KSecondary_L1,
             borderRadius: BorderRadius.circular(10)
         ),
-        child: Center(child: Icon(Icons.edit, size: 14, color: KWhite,),),
+        child: const Center(child: Icon(Icons.edit, size: 14, color: KWhite,),),
       ),
     );
   }
@@ -239,7 +239,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 50,
             child: Stack(
               children: [
@@ -251,7 +251,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
                         color: KPrimary_L1,
                         borderRadius: BorderRadius.circular(10)
                     ),
-                    child: Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
+                    child: const Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
                   ),
                 ),
                 Positioned(
@@ -263,7 +263,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
                         color: KPrimary_L1,
                         borderRadius: BorderRadius.circular(10)
                     ),
-                    child: Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
+                    child: const Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
                   ),
                 ),
                 Positioned(
@@ -275,7 +275,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
                         color: KPrimary_L1,
                         borderRadius: BorderRadius.circular(10)
                     ),
-                    child: Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
+                    child: const Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
                   ),
                 ),
                 Positioned(
@@ -287,19 +287,19 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
                         color: KPrimary_L1,
                         borderRadius: BorderRadius.circular(10)
                     ),
-                    child: Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
+                    child: const Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(width: 5,),
-          Text('0 Personas notificadas', style: TextStyle(fontSize: 12),),
-          Expanded(flex: 1, child: SizedBox(width: 10,)),
-          Row(
+          const SizedBox(width: 5,),
+          const Text('0 Personas notificadas', style: TextStyle(fontSize: 12, color: KGrey2),),
+          const Expanded(flex: 1, child: SizedBox(width: 10,)),
+          const Row(
             children: [
               Icon(Icons.location_on, color: KSecondary_L1, size: 14,),
-              Text('Argentina, Salta', style: TextStyle(fontSize: 12),)
+              Text('Argentina, Salta', style: TextStyle(fontSize: 12, color: KGrey2),)
             ],
           )
         ],
@@ -317,8 +317,8 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
           },*/
         maxLines: null,
         minLines: 10,
-        strutStyle: StrutStyle(),
-        style: TextStyle(fontSize: 14,),
+        strutStyle: const StrutStyle(),
+        style: const TextStyle(fontSize: 14,),
         cursorColor: KPrimary,
         decoration: InputDecoration(
             isDense: true,
@@ -365,7 +365,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
         child: Padding(padding: const EdgeInsets.only(left: 40, top: 10, right: 40, bottom: 20),
           child: Container(
             color: KPrimary,
-            child: Center(
+            child: const Center(
               child: Text(
                 'Crear evento',
                 style: TextStyle(color: KWhite, fontSize: 16, fontWeight: FontWeight.bold),
@@ -378,7 +378,7 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
   }
   
   Widget bottomSheet(){
-    return BottomSheet(onClosing: (){}, builder: (BuildContext) => Container(color: KRed, height: 200,)
+    return BottomSheet(onClosing: (){}, builder: (buildContext) => Container(color: KRed, height: 200,)
     );
   }
   
