@@ -101,23 +101,8 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
             ),
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
-                  child: Row(
-                    children: [
-                      Expanded(flex: 6, child: SizedBox(width: 20, child: title(_con.getTitleEditingController()),)),
-                      SizedBox(width: 20,),
-                      Text('${formatDate(_con.getDateTime().day)}'
-                          '/${formatDate(_con.getDateTime().month)}'
-                          ' de ${formatHour(_con.getStartTime().hour)}:${formatHour(_con.getStartTime().minute)}'
-                          ' a ${formatHour(_con.getEndTime().hour)}:${formatHour(_con.getEndTime().minute)}',
-                          style: const TextStyle(color: KGrey2),
-                      ),
-                      SizedBox(width: 10,),
-                      editButton()
-                    ],
-                  ),
-                ),
+                profileTitleDateAndShare(_con.getTitleEditingController()),
+                peopleNotifiedAndLocation(),
                 description(_con.getDescriptionEditingController()),
                 const SizedBox(height: 200,),
                 //description(_con.getDescriptionDownEditingController()),
@@ -131,63 +116,98 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
     );
   }
 
-  Widget title(TextEditingController? textEditingController){
-    return TextField(
-      controller: textEditingController,
-      /*onSubmitted: (String value){
-                      _con.onSubmittedTitle(value);
-                    },*/
-      strutStyle: StrutStyle(),
-      style: TextStyle(fontSize: 18),
-      maxLines: 1,
-      textAlignVertical: TextAlignVertical.top,
-      cursorColor: KPrimary,
-      decoration: InputDecoration(
-          isDense: true,
-          focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: KSecondary, width: 1.5)
+  Widget profileTitleDateAndShare(TextEditingController? textEditingController,) {
+    return Padding(
+      padding: EdgeInsets.only(left: 20, top: 10, right: 20,),
+      child: Row(
+        children: [
+          profile(),
+          titleAndDate(textEditingController),
+          Expanded(flex: 1, child: SizedBox(width: 10,)),
+          Column(
+            children: [
+              GestureDetector(
+                  onTap: (){},
+                  child: Icon(Icons.share, size: 26, color: KSecondary_L1,)
+              ),
+              SizedBox(height: 30,)
+            ],
           ),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: KSecondary_L1.withOpacity(0.5), width: 1.5)
-          ),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5)),
-          hintText: 'Titulo evento',
-          contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5)),
+        ],
+      ),
     );
   }
 
-  Widget description(TextEditingController? textEditingController){
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: TextField(
-        controller: textEditingController,
-        /*onSubmitted: (String value){
-          _con.onSubmittedDescription(value);
-          },*/
-        maxLines: null,
-        minLines: 10,
-        strutStyle: StrutStyle(),
-        style: TextStyle(fontSize: 16,),
-        cursorColor: KPrimary,
-        decoration: InputDecoration(
-            isDense: true,
-            focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: KSecondary, width: 1.5)
-            ),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: KSecondary_L1.withOpacity(0.5), width: 1.5)
-            ),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5)),
-            hintText: 'Descripción',
-            contentPadding: EdgeInsets.all(10),
+  Widget profile(){
+    return InkWell(
+      onTap: (){
+      },
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+            color: KPrimary_L1,
+            borderRadius: BorderRadius.circular(20)
         ),
+        child: Center(child: Icon(Icons.person, size: 20, color: KWhite,),),
       ),
+    );
+  }
+
+  Widget titleAndDate(TextEditingController? textEditingController){
+    return Column(
+      children: [
+        Row(
+          children: [
+            SizedBox(
+              height: 34,
+              width: 140,
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: TextField(
+                  controller: textEditingController,
+                  /*onSubmitted: (String value){
+                                  _con.onSubmittedTitle(value);
+                                },*/
+                  strutStyle: StrutStyle(),
+                  style: TextStyle(fontSize: 18),
+                  maxLines: 1,
+                  textAlignVertical: TextAlignVertical.center,
+                  cursorColor: KPrimary,
+                  decoration: InputDecoration(
+                      isDense: true,
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: KSecondary, width: 1)
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: KSecondary_L1.withOpacity(0.5), width: 1)
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      hintText: 'Titulo evento',
+                      contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5)),
+                ),
+              ),
+            ),
+            SizedBox(width: 60,),
+          ],
+        ),
+        Row(
+          children: [
+            Text('${formatDate(_con.getDateTime().day)}'
+                ' de Diciembre'
+                ' ${formatHour(_con.getStartTime().hour)}:${formatHour(_con.getStartTime().minute)}'
+                ' a ${formatHour(_con.getEndTime().hour)}:${formatHour(_con.getEndTime().minute)}',
+              style: const TextStyle(color: KGrey2, fontSize: 12),
+            ),
+            SizedBox(width: 10,),
+            editButton()
+          ],
+        ),
+      ],
     );
   }
 
@@ -204,6 +224,111 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
             borderRadius: BorderRadius.circular(10)
         ),
         child: Center(child: Icon(Icons.edit, size: 14, color: KWhite,),),
+      ),
+    );
+  }
+
+  Widget peopleNotifiedAndLocation(){
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+      child: Row(
+        children: [
+          Container(
+            width: 50,
+            child: Stack(
+              children: [
+                Positioned(
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: BoxDecoration(
+                        color: KPrimary_L1,
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
+                  ),
+                ),
+                Positioned(
+                  left: 10,
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: BoxDecoration(
+                        color: KPrimary_L1,
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
+                  ),
+                ),
+                Positioned(
+                  left: 20,
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: BoxDecoration(
+                        color: KPrimary_L1,
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
+                  ),
+                ),
+                Positioned(
+                  left: 30,
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: BoxDecoration(
+                        color: KPrimary_L1,
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Center(child: Icon(Icons.person, size: 14, color: KWhite,),),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 5,),
+          Text('0 Personas notificadas', style: TextStyle(fontSize: 12),),
+          Expanded(flex: 1, child: SizedBox(width: 10,)),
+          Row(
+            children: [
+              Icon(Icons.location_on, color: KSecondary_L1, size: 18,),
+              Text('Argentina, Salta', style: TextStyle(fontSize: 12),)
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget description(TextEditingController? textEditingController){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: TextField(
+        controller: textEditingController,
+        /*onSubmitted: (String value){
+          _con.onSubmittedDescription(value);
+          },*/
+        maxLines: null,
+        minLines: 10,
+        strutStyle: StrutStyle(),
+        style: TextStyle(fontSize: 14,),
+        cursorColor: KPrimary,
+        decoration: InputDecoration(
+            isDense: true,
+            focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: KSecondary, width: 1)
+            ),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: KSecondary_L1.withOpacity(0.5), width: 1.5)
+            ),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5)),
+            hintText: 'Descripción',
+            contentPadding: EdgeInsets.all(10),
+        ),
       ),
     );
   }

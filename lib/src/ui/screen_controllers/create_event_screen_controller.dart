@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/managers/screen_manager.dart';
 import 'package:my_evento/src/models/event_temporal_data_model.dart';
@@ -131,6 +132,10 @@ class CreateEventScreenController extends ControllerMVC{
 
   Future<void> pickPhoto(context) async {
     final ImagePicker selectedImage = ImagePicker();
+    var status = await Permission.storage.status;
+    if (status.isDenied) {
+      await Permission.storage.request();
+    }
     eventTemporalData.image = (await selectedImage.pickImage(source: ImageSource.camera))!;
     if(eventTemporalData.image != null){
       setState(() {
@@ -146,9 +151,13 @@ class CreateEventScreenController extends ControllerMVC{
   Future<void> pickImage(context) async {
     //print('NOOOOOOOOOOOOO');
     final ImagePicker selectedImage = ImagePicker();
-    //print('Siuuuuuuuuu');
-    eventTemporalData.image = (await selectedImage.pickImage(source: ImageSource.gallery))!;
-    //print('Siuuuuuuuuu');
+    print('JAKSJDKAS');
+    var status = await Permission.storage.status;
+    if (status.isDenied) {
+      await Permission.storage.request();
+    }
+    eventTemporalData.image = await selectedImage.pickImage(source: ImageSource.gallery);
+    print('Siuuuuuuuuu');
     if(eventTemporalData.image != null){
       setState(() {
         //print('NOOOOOOOOOOOOO');
