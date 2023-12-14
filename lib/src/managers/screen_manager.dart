@@ -7,6 +7,7 @@ import 'package:my_evento/src/utils/functions_utils.dart';
 import '../../values/k_colors.dart';
 import '../../values/k_values.dart';
 import '../enums/page_names.dart';
+import '../ui/popups/select_image_popup.dart';
 import '../ui/screens/my_home_screen.dart';
 import '../ui/popups/form_popup.dart';
 import '../ui/popups/information_alert_popup.dart';
@@ -159,6 +160,23 @@ class ScreenManager {
       onCancel: () {},
       isCancellable: true,
       hasExitButton: false,
+    ).show();
+  }
+
+  openSelectedImagePopUp(context, {required Function()? onTapLeft, required Function()? onTapRight}) async {
+    await SelectedImage(
+      context: context,
+    iconLeft: Icons.camera_alt,
+    iconRight: Icons.image,
+    labelLeft: 'Cámara',
+    labelRight: 'Galería',
+    onTapLeft: onTapLeft,
+    onTapRight: onTapRight,
+    itemsSize: 40,
+    iconsColors: KSecondary,
+    itemsDecoration: BoxDecoration(color: KGrey5, borderRadius: BorderRadius.circular(5), border: Border.all(color: KSecondary_L1)),
+    labelItemsStyle: TextStyle(fontSize: 16),
+    backgroundColor: KGrey5,
     ).show();
   }
 

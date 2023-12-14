@@ -26,9 +26,9 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   bool allDay = false;
   bool isKeyBoard = true;
   ScreenArgs? args;
-  DateTime timeEventDay = DateTime.now();
-  DateTime onTimeChangedFrom = DateTime.now();
-  DateTime onTimeChangedTo = DateTime.now();
+  late DateTime timeEventDay;
+  late DateTime onTimeChangedFrom;
+  late DateTime onTimeChangedTo;
 
   _ChooseDayAndTimeScreenState(ScreenArgs? arguments) : super (ChooseDayAndTimeScreenController(arguments)) {
     _con = ChooseDayAndTimeScreenController.con;
@@ -38,6 +38,9 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
   @override
   void initState(){
     _con.initScreen(arguments: args);
+    timeEventDay = _con.getDateTime();
+    onTimeChangedFrom = _con.getStartTime();
+    onTimeChangedTo = _con.getEndTime();
     super.initState();
   }
 
@@ -612,7 +615,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
           onTap: (){
             validateUntil()? _con.onPressedFollowing(context) :
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('ERROR, es probable que la hora de \"Desde\" esté mal puesta.'),
+              content: Text('ERROR, comprobar la fecha y duración del evento.'),
             ));
           },
           withIcon: true,

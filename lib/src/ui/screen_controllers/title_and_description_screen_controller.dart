@@ -1,6 +1,7 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/managers/data_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:my_evento/src/models/event_temporal_data_model.dart';
 import 'package:my_evento/src/ui/screens/create_event_screen.dart';
 
 import '../screens/my_home_screen.dart';
@@ -8,8 +9,9 @@ import '../screens/my_home_screen.dart';
 class TitleAndDescriptionScreenController extends ControllerMVC{
 
   late DataManager dataManager;
-  late TextEditingController titleEditingController;
-  late TextEditingController descriptionUpEditingController;
+  late EventTemporalData eventTemporalData;
+  //late TextEditingController titleEditingController;
+  //late TextEditingController descriptionUpEditingController;
 
   late String valueTitle;
   late String valueDescription;
@@ -24,15 +26,16 @@ class TitleAndDescriptionScreenController extends ControllerMVC{
 
   @override
   void initState(){
-    titleEditingController = TextEditingController();
-    descriptionUpEditingController = TextEditingController();
+    //titleEditingController = TextEditingController();
+    //descriptionUpEditingController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose(){
-    titleEditingController.dispose();
-    descriptionUpEditingController.dispose();
+    //titleEditingController.dispose();
+    //descriptionUpEditingController.dispose();
+    //eventTemporalData;
     super.dispose();
   }
 
@@ -42,7 +45,7 @@ class TitleAndDescriptionScreenController extends ControllerMVC{
 
   onPressedFollowing(context){
     return Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const CreateEventScreen())
+        builder: (context) => CreateEventScreen(eventTemporalData: eventTemporalData,))
     );
   }
 
@@ -52,14 +55,16 @@ class TitleAndDescriptionScreenController extends ControllerMVC{
     );
   }
 
+  setEventTemporalData(setEventTemporalData){
+    eventTemporalData = setEventTemporalData;
+  }
+
   TextEditingController getTitleEditingController(){
-    titleEditingController = TextEditingController();
-    return titleEditingController;
+    return eventTemporalData.title;
   }
 
   TextEditingController getDescriptionUpEditingController(){
-    descriptionUpEditingController = TextEditingController();
-    return descriptionUpEditingController;
+    return eventTemporalData.description;
   }
 
   void onSubmittedTitle(String value){
@@ -69,12 +74,12 @@ class TitleAndDescriptionScreenController extends ControllerMVC{
   void onSubmittedDescription(String value){
     valueDescription = value;
   }
-
+//No se usa
   String getTitle(){
-    return titleEditingController.text;
+    return eventTemporalData.title.text;
   }
-
+//No se usa
   String getDescriptionUp(){
-    return descriptionUpEditingController.text;
+    return eventTemporalData.description.text;
   }
 }
