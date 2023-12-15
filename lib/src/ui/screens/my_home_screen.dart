@@ -152,7 +152,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
               : eventListHome(),
           calendar(),
           myEventList(context),
-          Container(color: Colors.redAccent,)
+          Container(color: KRed,)
         ],
       ),
     );
@@ -262,6 +262,9 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
 
   Widget itemBuilder(BuildContext context, int index){
     return InkWell(
+      onTap: (){
+        _con.onPressedEvent(context, index, events);
+      },
       child: Container(
         height: 200,
         color: KWhite,
@@ -272,7 +275,6 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
           ],
         ),
       ),
-      onTap: (){},
     );
   }
 

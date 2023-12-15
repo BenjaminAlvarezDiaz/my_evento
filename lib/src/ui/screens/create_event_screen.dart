@@ -59,7 +59,6 @@ class _CreateEventScreenState extends StateMVC<CreateEventScreen> {
       extendBodyBehindAppBar: true,
       appBar: appBar(context),
       body: body(),
-      
     );
   }
 
