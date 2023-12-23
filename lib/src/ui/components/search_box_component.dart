@@ -98,12 +98,7 @@ class SearchBoxState extends State<SearchBox> {
                 widget.onClearSearchTap!();
               }
             },
-            child: Image.asset(
-              KIconSearchPath,
-              width: 22,
-              height: 22,
-              color: KGray,
-            ),
+            child: const Icon(KSearch, size: 22,)
           ),
         ],
       ),

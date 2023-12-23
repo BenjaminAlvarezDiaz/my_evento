@@ -127,7 +127,7 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
           child: Padding(
             padding: EdgeInsets.all(20),
             child: Container(
-              height: 580,
+              height: 600,
               width: double.infinity,
               child: Stack(
                 children: [

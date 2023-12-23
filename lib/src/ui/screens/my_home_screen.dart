@@ -3,9 +3,12 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
 import 'package:my_evento/src/ui/components/calendar_picker.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
+import 'package:my_evento/src/ui/components/search_box_component.dart';
 import 'package:my_evento/src/ui/screen_controllers/my_home_screen_controller.dart';
 import 'package:my_evento/src/models/event_model.dart';
+import 'package:my_evento/src/ui/screens/test.dart';
 import 'package:my_evento/values/k_colors.dart';
+import 'package:my_evento/values/k_icons.dart';
 
 import '../../utils/screen_args.dart';
 
@@ -67,11 +70,12 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shadowColor: KTransparent,
         leading: leading(),
         actions: [
           actions()
         ],
-        centerTitle: true,
+        //centerTitle: false,
         title: titlePage(),
         backgroundColor: KPrimary,
       ),
@@ -128,16 +132,16 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   Widget leading(){
     return IconButton(
         onPressed: (){},
-        icon: const Icon(Icons.notifications),
-        tooltip: ('Notificaciones')
+        icon: const Icon(KOptions),
+        tooltip: ('Opciones')
     );
   }
 
   Widget actions(){
     return IconButton(
       onPressed: (){},
-      icon: const Icon(Icons.more_vert),
-      tooltip: ('Opciones'),
+      icon: const Icon(KNotifications),
+      tooltip: ('Notificaciones'),
     );
   }
 
@@ -176,23 +180,41 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
     );
   }
 
+  Widget home(){
+    return Container();
+  }
+
   Widget eventListHome(){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 10,),
-          ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-                itemCount: events.length,
-                itemBuilder: itemBuilder,
-                separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
+    return Column(
+      children: [
+        SizedBox(height: 20,),
+        SearchBox(),
+        Container(
+          height: 200,
+          width: 400,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                const SizedBox(height: 10,),
+                ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                      itemCount: events.length,
+                      itemBuilder: itemBuilder,
+                      separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+
+        Container()
+      ],
     );
   }
 
@@ -267,6 +289,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
       },
       child: Container(
         height: 200,
+        width: 400,
         color: KWhite,
         child: Stack(
           children: [

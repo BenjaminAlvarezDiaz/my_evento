@@ -1,10 +1,7 @@
-const String KIconGraphPath = "assets/images/icon_graph.png";
-const String KIconTimePath = "assets/images/icon_time.png";
-const String KIconSavePath = "assets/images/icon_save.png";
-const String KIconSettingsPath = "assets/images/icon_settings.png";
-const String KIconAddPath = "assets/images/icon_add.png";
-const String KIconNpiPath = "assets/images/icon_npi_logo.png";
-const String KIconSearchPath = "assets/images/icon_search.png";
-const String KLogoTransparentPath = "assets/images/app_logo_color.png";
-const String KAppNameTransparentPath = "assets/images/app_logo_name_color.png";
-const String KUpIconPath = "assets/images/up_icon.png";
+// ignore_for_file: constant_identifier_names
+
+import 'package:flutter/material.dart';
+
+const IconData KSearch = Icons.search;
+const IconData KNotifications = Icons.notifications;
+const IconData KOptions = Icons.notes;

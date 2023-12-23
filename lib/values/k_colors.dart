@@ -18,6 +18,7 @@ const Color KPrimary_D1 = Color(0xFF4D000A);
 const Color KSecondary = Color(0xFF231142);
 const Color KSecondary_L1 = Color(0xFF4E386D);
 const Color KSecondary_D1 = Color(0xFF00001D);
+const Color KBackgroundColor = Color(0xFFFFFFFF);
 
 const Color KDefault_Text = Color(0xFF424242);
 const Color KGrey1 = Color(0xFF212121);

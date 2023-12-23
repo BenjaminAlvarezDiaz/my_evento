@@ -41,45 +41,48 @@ class _ButtonMultifunctionState extends State<ButtonMultifunction> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.onTap,
-      //splashColor: widget.splashColor,
-      //highlightColor: widget.withSplash? widget.splashColor?.withOpacity(0.8) : Colors.transparent,
-      child: Container(
+      splashColor: KGrey4.withOpacity(0.1),
+      highlightColor: KGrey4.withOpacity(0.1),
+      hoverColor: KGrey4.withOpacity(0.1),
+      child: Ink(
         decoration: BoxDecoration(
-          color: widget.backgroundColor,
-          borderRadius: widget.withBorder ? BorderRadius.circular(5) : null,
-          border: widget.withBorder ? Border.all(color: widget.borderColor
-          ) : null
+            color: widget.backgroundColor,
+            borderRadius: widget.withBorder ? BorderRadius.circular(5) : null,
+            border: widget.withBorder ? Border.all(color: widget.borderColor
+            ) : null
         ),
-        height: widget.height,
-        width: widget.width,
-        child: widget.withIcon ? widget.iconRight ? Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //const SizedBox(width: 20,),
-            widget.text,
-            const SizedBox(width: 10,),
-            widget.icon!,
-            const SizedBox(width: 10,)
-          ],
-        ) :
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(width: 20,),
-            widget.icon!,
-            const SizedBox(width: 10,),
-            widget.text,
-            const SizedBox(width: 20,)
-          ],
-        ) :
-        Row(
+        child: Container(
+          height: widget.height,
+          width: widget.width,
+          child: widget.withIcon ? widget.iconRight ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //const SizedBox(width: 20,),
+              widget.text,
+              const SizedBox(width: 10,),
+              widget.icon!,
+              const SizedBox(width: 10,)
+            ],
+          ) :
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(width: 20,),
+              widget.icon!,
+              const SizedBox(width: 10,),
               widget.text,
-              const SizedBox(width: 20,),
-            ]
-        )
+              const SizedBox(width: 20,)
+            ],
+          ) :
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(width: 20,),
+                widget.text,
+                const SizedBox(width: 20,),
+              ]
+          )
+        ),
       ),
     );
   }
