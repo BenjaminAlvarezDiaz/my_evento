@@ -185,66 +185,94 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   }
 
   Widget eventListHome(){
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: SearchBox(
-            placeHolder: 'Buscar',
-            textStyle: const TextStyle(
-              color: KGray,
-              fontWeight: FontWeight.w400,
-              fontSize: 18,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Container(
-            height: 200,
-            width: 600,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  const SizedBox(height: 10,),
-                  ScrollConfiguration(
-                    behavior: MyBehavior(),
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                        itemCount: events.length,
-                        itemBuilder: itemBuilder,
-                        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
-                    ),
-                  ),
-                ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: SearchBox(
+              placeHolder: 'Buscar',
+              textStyle: const TextStyle(
+                color: KGrey4,
+                fontWeight: FontWeight.w400,
+                fontSize: 18,
               ),
             ),
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Text('Por Categoria', style: TextStyle(fontSize: 20),),
-            ],
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Align(
+                alignment: Alignment.topLeft,
+                child: Text('Mas populares', style: TextStyle(fontSize: 20, color: KGrey2),)),
           ),
-        ),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              eventsCategory(KMusic, 'Musica'),
-              eventsCategory(KTech, 'Tech'),
-              eventsCategory(KSports, 'Deportes'),
-              eventsCategory(KFashion, 'Moda'),
-              eventsCategory(KCulture, 'Cultura'),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 20),
+            child: eventList(),
           ),
-        )
-      ],
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Text('Por Categoria', style: TextStyle(fontSize: 20, color: KGrey2),),
+                Expanded(child: SizedBox()),
+                GestureDetector(
+                    onTap: (){},
+                    child: Text('Ver todo', style: TextStyle(fontSize: 16, color: KPrimary),)
+                )
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                eventsCategory(KMusic, 'Musica'),
+                eventsCategory(KTech, 'Tech'),
+                eventsCategory(KSports, 'Deportes'),
+                eventsCategory(KFashion, 'Moda'),
+                eventsCategory(KCulture, 'Cultura'),
+              ],
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Align(
+                alignment: Alignment.topLeft,
+                child: Text('Mas recientes', style: TextStyle(fontSize: 20, color: KGrey2),)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: eventList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget eventList(){
+    return Container(
+      height: 200,
+      width: 600,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            const SizedBox(height: 10,),
+            ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: events.length,
+                itemBuilder: itemBuilder,
+                separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -258,7 +286,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
               child: Icon(icon, color: KBackgroundColor,),
               decoration: BoxDecoration(color: KPrimary, borderRadius: BorderRadius.circular(10)),
           ),
-          Text(text, style: TextStyle(fontSize: 16)),
+          Text(text, style: TextStyle(fontSize: 16, color: KGrey2)),
         ],
       ),
     );
