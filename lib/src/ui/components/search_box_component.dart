@@ -14,6 +14,7 @@ class SearchBox extends StatefulWidget {
     this.onTextChange,
     this.height = 38,
     this.placeHolder,
+    this.textStyle,
     this.controller,
     this.onClearSearchTap,
     this.backgroundColor,
@@ -26,6 +27,7 @@ class SearchBox extends StatefulWidget {
   final Function(String)? onTextChange;
   final double height;
   final String? placeHolder;
+  final TextStyle? textStyle;
   final TextEditingController? controller;
   Color? backgroundColor;
   Color? borderColor;
@@ -69,11 +71,7 @@ class SearchBoxState extends State<SearchBox> {
               cursorColor: KGray,
               textAlign: TextAlign.start,
               maxLines: 1,
-              style: const TextStyle(
-                color: KGray,
-                fontWeight: FontWeight.normal,
-                fontSize: KFontSize25,
-              ),
+              style: widget.textStyle,
               onChanged: (value) {
                 if (widget.onTextChange != null) {
                   widget.onTextChange!(value);
@@ -82,11 +80,7 @@ class SearchBoxState extends State<SearchBox> {
               decoration: InputDecoration(
                 isDense: true,
                 hintText: widget.placeHolder,
-                hintStyle: const TextStyle(
-                  color: KGray,
-                  fontWeight: FontWeight.w400,
-                  fontSize: KFontSize25,
-                ),
+                hintStyle: widget.textStyle,
                 border: InputBorder.none,
               ),
             ),

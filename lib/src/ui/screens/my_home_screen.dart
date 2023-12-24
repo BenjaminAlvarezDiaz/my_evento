@@ -187,34 +187,80 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   Widget eventListHome(){
     return Column(
       children: [
-        SizedBox(height: 20,),
-        SearchBox(),
-        Container(
-          height: 200,
-          width: 400,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                const SizedBox(height: 10,),
-                ScrollConfiguration(
-                  behavior: MyBehavior(),
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                      itemCount: events.length,
-                      itemBuilder: itemBuilder,
-                      separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
-                  ),
-                ),
-              ],
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: SearchBox(
+            placeHolder: 'Buscar',
+            textStyle: const TextStyle(
+              color: KGray,
+              fontWeight: FontWeight.w400,
+              fontSize: 18,
             ),
           ),
         ),
-
-        Container()
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Container(
+            height: 200,
+            width: 600,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  const SizedBox(height: 10,),
+                  ScrollConfiguration(
+                    behavior: MyBehavior(),
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                        itemCount: events.length,
+                        itemBuilder: itemBuilder,
+                        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Text('Por Categoria', style: TextStyle(fontSize: 20),),
+            ],
+          ),
+        ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              eventsCategory(KMusic, 'Musica'),
+              eventsCategory(KTech, 'Tech'),
+              eventsCategory(KSports, 'Deportes'),
+              eventsCategory(KFashion, 'Moda'),
+              eventsCategory(KCulture, 'Cultura'),
+            ],
+          ),
+        )
       ],
+    );
+  }
+
+  Widget eventsCategory(IconData icon, String text){
+    return Container(
+      child: Column(
+        children: [
+          Container(
+              height: 50,
+              width: 50,
+              child: Icon(icon, color: KBackgroundColor,),
+              decoration: BoxDecoration(color: KPrimary, borderRadius: BorderRadius.circular(10)),
+          ),
+          Text(text, style: TextStyle(fontSize: 16)),
+        ],
+      ),
     );
   }
 

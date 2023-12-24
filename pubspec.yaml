@@ -56,6 +56,7 @@ dependencies:
   flutter_spinner_time_picker: ^0.0.5
   flutter_spinner_picker: ^0.0.7
   time_picker_spinner: ^0.0.1
+  material_design_icons_flutter: ^7.0.7296
 dev_dependencies:
   flutter_test:
     sdk: flutter
