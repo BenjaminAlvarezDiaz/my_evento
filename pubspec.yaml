@@ -56,6 +56,7 @@ dependencies:
   flutter_spinner_time_picker: ^0.0.5
   flutter_spinner_picker: ^0.0.7
   time_picker_spinner: ^0.0.1
+  material_design_icons_flutter: ^7.0.7296
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -82,6 +83,17 @@ flutter:
   assets:
     - assets/74297472_p0_master1200.jpg
     - assets/FkhJZuIWIAALYHi.jpg
+    - assets/glorieta.png
+    - assets/micro_estadio_delmi.png
+    - assets/monumento_a_guemes.png
+    - assets/plaza_espana.png
+    - assets/teatro_provincial.png
+    - assets/centro_cultural_holver_martinez.png
+    - assets/hotel_alejandro.png
+    - assets/parque_bicentenario.png
+    - assets/salon_auditorium.png
+    - assets/unsa.png
+    -
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

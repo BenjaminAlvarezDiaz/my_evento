@@ -2,6 +2,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/screens/choose_date_screen.dart';
 import 'package:my_evento/src/ui/screens/choose_day_and_time_screen.dart';
 import 'package:my_evento/src/ui/screens/create_event_screen.dart';
+import 'package:my_evento/src/ui/screens/event_screen.dart';
 import 'package:my_evento/src/ui/screens/my_home_screen.dart';
 import 'package:my_evento/src/managers/data_manager.dart';
 import 'package:my_evento/src/models/event_model.dart';
@@ -53,6 +54,10 @@ class MyHomeScreenController extends ControllerMVC implements IViewController{
 
   getListEvent(){
     return DataManager().getListEvent();
+  }
+
+  onPressedEvent(context, index, event){
+    return Navigator.push(context, MaterialPageRoute(builder: (context) => EventScreen(eventData: event[index])));
   }
 
   onPressedCreateEvent(context){

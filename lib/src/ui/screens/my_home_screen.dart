@@ -3,9 +3,12 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
 import 'package:my_evento/src/ui/components/calendar_picker.dart';
 import 'package:my_evento/src/ui/components/my_behavior.dart';
+import 'package:my_evento/src/ui/components/search_box_component.dart';
 import 'package:my_evento/src/ui/screen_controllers/my_home_screen_controller.dart';
 import 'package:my_evento/src/models/event_model.dart';
+import 'package:my_evento/src/ui/screens/test.dart';
 import 'package:my_evento/values/k_colors.dart';
+import 'package:my_evento/values/k_icons.dart';
 
 import '../../utils/screen_args.dart';
 
@@ -67,11 +70,12 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shadowColor: KTransparent,
         leading: leading(),
         actions: [
           actions()
         ],
-        centerTitle: true,
+        //centerTitle: false,
         title: titlePage(),
         backgroundColor: KPrimary,
       ),
@@ -128,16 +132,16 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   Widget leading(){
     return IconButton(
         onPressed: (){},
-        icon: const Icon(Icons.notifications),
-        tooltip: ('Notificaciones')
+        icon: const Icon(KOptions),
+        tooltip: ('Opciones')
     );
   }
 
   Widget actions(){
     return IconButton(
       onPressed: (){},
-      icon: const Icon(Icons.more_vert),
-      tooltip: ('Opciones'),
+      icon: const Icon(KNotifications),
+      tooltip: ('Notificaciones'),
     );
   }
 
@@ -152,7 +156,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
               : eventListHome(),
           calendar(),
           myEventList(context),
-          Container(color: Colors.redAccent,)
+          Container(color: KRed,)
         ],
       ),
     );
@@ -176,21 +180,85 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
     );
   }
 
+  Widget home(){
+    return Container();
+  }
+
   Widget eventListHome(){
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 10,),
-          ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-                itemCount: events.length,
-                itemBuilder: itemBuilder,
-                separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: SearchBox(
+            placeHolder: 'Buscar',
+            textStyle: const TextStyle(
+              color: KGray,
+              fontWeight: FontWeight.w400,
+              fontSize: 18,
             ),
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Container(
+            height: 200,
+            width: 600,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  const SizedBox(height: 10,),
+                  ScrollConfiguration(
+                    behavior: MyBehavior(),
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                        itemCount: events.length,
+                        itemBuilder: itemBuilder,
+                        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Text('Por Categoria', style: TextStyle(fontSize: 20),),
+            ],
+          ),
+        ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              eventsCategory(KMusic, 'Musica'),
+              eventsCategory(KTech, 'Tech'),
+              eventsCategory(KSports, 'Deportes'),
+              eventsCategory(KFashion, 'Moda'),
+              eventsCategory(KCulture, 'Cultura'),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget eventsCategory(IconData icon, String text){
+    return Container(
+      child: Column(
+        children: [
+          Container(
+              height: 50,
+              width: 50,
+              child: Icon(icon, color: KBackgroundColor,),
+              decoration: BoxDecoration(color: KPrimary, borderRadius: BorderRadius.circular(10)),
+          ),
+          Text(text, style: TextStyle(fontSize: 16)),
         ],
       ),
     );
@@ -262,8 +330,12 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
 
   Widget itemBuilder(BuildContext context, int index){
     return InkWell(
+      onTap: (){
+        _con.onPressedEvent(context, index, events);
+      },
       child: Container(
         height: 200,
+        width: 400,
         color: KWhite,
         child: Stack(
           children: [
@@ -272,7 +344,6 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
           ],
         ),
       ),
-      onTap: (){},
     );
   }
 

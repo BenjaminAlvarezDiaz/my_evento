@@ -5,7 +5,7 @@ import 'package:my_evento/src/models/event_model.dart';
 class Dummy implements IDataAccess {
   //late EventModel eventModel;
   List<Event> listEventModel = <Event>[
-    Event( 1, 'Game Over', 'assets/74297472_p0_master1200.jpg', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
+    Event( 1, 'Game Over', 'assets/glorieta.png', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus nibh velit, '
         'nec molestie lorem hendrerit ac. Morbi tempor ligula in condimentum viverra. '
         'In semper nisl tellus, eu fringilla orci pharetra eget. Quisque malesuada auctor ullamcorper. '
@@ -13,7 +13,7 @@ class Dummy implements IDataAccess {
         'nec tincidunt sem imperdiet vitae. Maecenas ac mauris diam. Nam sed sollicitudin nibh, vel semper dolor. '
         'Integer at elit ultricies, feugiat erat at, pellentesque neque. Duis ut mi elementum magna viverra iaculis. '
         'Proin consequat ultricies nunc rhoncus condimentum. Nulla quis tortor consectetur, vestibulum tellus sit amet, euismod velit. '),
-    Event( 1,'Game Oaaaaaa', 'assets/74297472_p0_master1200.jpg', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
+    Event( 1,'Game Oaaaaaa', 'assets/micro_estadio_delmi.png', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus nibh velit, '
             'nec molestie lorem hendrerit ac. Morbi tempor ligula in condimentum viverra. '
             'In semper nisl tellus, eu fringilla orci pharetra eget. Quisque malesuada auctor ullamcorper. '
@@ -21,7 +21,7 @@ class Dummy implements IDataAccess {
             'nec tincidunt sem imperdiet vitae. Maecenas ac mauris diam. Nam sed sollicitudin nibh, vel semper dolor. '
             'Integer at elit ultricies, feugiat erat at, pellentesque neque. Duis ut mi elementum magna viverra iaculis. '
             'Proin consequat ultricies nunc rhoncus condimentum. Nulla quis tortor consectetur, vestibulum tellus sit amet, euismod velit. '),
-    Event( 1,'Game Ovesdasdasr', 'assets/74297472_p0_master1200.jpg', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
+    Event( 1,'Game Ovesdasdasr', 'assets/monumento_a_guemes.png', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus nibh velit, '
             'nec molestie lorem hendrerit ac. Morbi tempor ligula in condimentum viverra. '
             'In semper nisl tellus, eu fringilla orci pharetra eget. Quisque malesuada auctor ullamcorper. '
@@ -29,7 +29,7 @@ class Dummy implements IDataAccess {
             'nec tincidunt sem imperdiet vitae. Maecenas ac mauris diam. Nam sed sollicitudin nibh, vel semper dolor. '
             'Integer at elit ultricies, feugiat erat at, pellentesque neque. Duis ut mi elementum magna viverra iaculis. '
             'Proin consequat ultricies nunc rhoncus condimentum. Nulla quis tortor consectetur, vestibulum tellus sit amet, euismod velit. '),
-    Event( 1,'Game Over', 'assets/74297472_p0_master1200.jpg', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
+    Event( 1,'Game Over', 'assets/plaza_espana.png', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus nibh velit, '
             'nec molestie lorem hendrerit ac. Morbi tempor ligula in condimentum viverra. '
             'In semper nisl tellus, eu fringilla orci pharetra eget. Quisque malesuada auctor ullamcorper. '
@@ -37,7 +37,7 @@ class Dummy implements IDataAccess {
             'nec tincidunt sem imperdiet vitae. Maecenas ac mauris diam. Nam sed sollicitudin nibh, vel semper dolor. '
             'Integer at elit ultricies, feugiat erat at, pellentesque neque. Duis ut mi elementum magna viverra iaculis. '
             'Proin consequat ultricies nunc rhoncus condimentum. Nulla quis tortor consectetur, vestibulum tellus sit amet, euismod velit. '),
-    Event( 1,'Game Over', 'assets/74297472_p0_master1200.jpg', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
+    Event( 1,'Game Over', 'assets/teatro_provincial.png', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus nibh velit, '
             'nec molestie lorem hendrerit ac. Morbi tempor ligula in condimentum viverra. '
             'In semper nisl tellus, eu fringilla orci pharetra eget. Quisque malesuada auctor ullamcorper. '
@@ -45,7 +45,7 @@ class Dummy implements IDataAccess {
             'nec tincidunt sem imperdiet vitae. Maecenas ac mauris diam. Nam sed sollicitudin nibh, vel semper dolor. '
             'Integer at elit ultricies, feugiat erat at, pellentesque neque. Duis ut mi elementum magna viverra iaculis. '
             'Proin consequat ultricies nunc rhoncus condimentum. Nulla quis tortor consectetur, vestibulum tellus sit amet, euismod velit. '),
-    Event( 1,'Game Overaasdasdasdasdasdasdasasd', 'assets/74297472_p0_master1200.jpg', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
+    Event( 1,'Game Overaasdasdasdasdasdasdasasd', 'assets/centro_cultural_holver_martinez.png', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus nibh velit, '
             'nec molestie lorem hendrerit ac. Morbi tempor ligula in condimentum viverra. '
             'In semper nisl tellus, eu fringilla orci pharetra eget. Quisque malesuada auctor ullamcorper. '
@@ -53,7 +53,7 @@ class Dummy implements IDataAccess {
             'nec tincidunt sem imperdiet vitae. Maecenas ac mauris diam. Nam sed sollicitudin nibh, vel semper dolor. '
             'Integer at elit ultricies, feugiat erat at, pellentesque neque. Duis ut mi elementum magna viverra iaculis. '
             'Proin consequat ultricies nunc rhoncus condimentum. Nulla quis tortor consectetur, vestibulum tellus sit amet, euismod velit. '),
-    Event( 1,'Game Over', 'assets/74297472_p0_master1200.jpg', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
+    Event( 1,'Game Over', 'assets/hotel_alejandro.png', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus nibh velit, '
             'nec molestie lorem hendrerit ac. Morbi tempor ligula in condimentum viverra. '
             'In semper nisl tellus, eu fringilla orci pharetra eget. Quisque malesuada auctor ullamcorper. '
@@ -61,7 +61,7 @@ class Dummy implements IDataAccess {
             'nec tincidunt sem imperdiet vitae. Maecenas ac mauris diam. Nam sed sollicitudin nibh, vel semper dolor. '
             'Integer at elit ultricies, feugiat erat at, pellentesque neque. Duis ut mi elementum magna viverra iaculis. '
             'Proin consequat ultricies nunc rhoncus condimentum. Nulla quis tortor consectetur, vestibulum tellus sit amet, euismod velit. '),
-    Event( 1,'Game Over', 'assets/74297472_p0_master1200.jpg', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
+    Event( 1,'Game Over', 'assets/parque_bicentenario.png', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus nibh velit, '
             'nec molestie lorem hendrerit ac. Morbi tempor ligula in condimentum viverra. '
             'In semper nisl tellus, eu fringilla orci pharetra eget. Quisque malesuada auctor ullamcorper. '
@@ -69,7 +69,7 @@ class Dummy implements IDataAccess {
             'nec tincidunt sem imperdiet vitae. Maecenas ac mauris diam. Nam sed sollicitudin nibh, vel semper dolor. '
             'Integer at elit ultricies, feugiat erat at, pellentesque neque. Duis ut mi elementum magna viverra iaculis. '
             'Proin consequat ultricies nunc rhoncus condimentum. Nulla quis tortor consectetur, vestibulum tellus sit amet, euismod velit. '),
-    Event( 1,'Game Over', 'assets/74297472_p0_master1200.jpg', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
+    Event( 1,'Game Over', 'assets/unsa.png', DateTime(2023, 2, 19), '4:30', '5:30', 'Micro estadio delmi',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus nibh velit, '
             'nec molestie lorem hendrerit ac. Morbi tempor ligula in condimentum viverra. '
             'In semper nisl tellus, eu fringilla orci pharetra eget. Quisque malesuada auctor ullamcorper. '
