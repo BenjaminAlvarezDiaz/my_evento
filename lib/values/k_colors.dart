@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 const Color KBlack = Color(0xFF000000);
 const Color KWhite = Color(0xFFFFFFFF);
@@ -18,7 +19,15 @@ const Color KPrimary_D1 = Color(0xFF4D000A);
 const Color KSecondary = Color(0xFF231142);
 const Color KSecondary_L1 = Color(0xFF4E386D);
 const Color KSecondary_D1 = Color(0xFF00001D);
-const Color KBackgroundColor = Color(0xFFFFFFFF);
+const Color KBackgroundColor = Color(0xFFF5F5F5);
+const Color KBackgroundColorNotUse = Color(0xFFECEFF1);
+
+var MYsystemTheme = SystemUiOverlayStyle.light.copyWith(
+  //systemNavigationBarColor: KBackgroundColor,
+  statusBarColor: KBackgroundColor,
+  //systemNavigationBarIconBrightness: Brightness.dark,
+  statusBarIconBrightness: Brightness.dark,
+);
 
 const Color KDefault_Text = Color(0xFF424242);
 const Color KGrey1 = Color(0xFF212121);

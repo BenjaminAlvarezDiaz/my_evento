@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
 import 'package:my_evento/src/ui/components/calendar_picker.dart';
@@ -68,27 +70,31 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        shadowColor: KTransparent,
-        leading: leading(),
-        actions: [
-          actions()
-        ],
-        //centerTitle: false,
-        title: titlePage(),
-        backgroundColor: KPrimary,
-      ),
-      body: body(context),
-      bottomNavigationBar: BottomNavigationBar(
-        items: barItems(),
-        backgroundColor: KWhite,
-        selectedIconTheme: const IconThemeData(color: KSecondary, size: 30),
-        unselectedIconTheme: IconThemeData(color: KSecondary.withOpacity(0.4)),
-        currentIndex: _selectedIndex,
-        onTap: onTaped,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+    return Material(
+      child: Scaffold(
+        appBar: AppBar(
+          systemOverlayStyle: MYsystemTheme,
+          shadowColor: KTransparent,
+          elevation: 0,
+          leading: leading(),
+          actions: [
+            actions()
+          ],
+          //centerTitle: false,
+          title: titlePage(),
+          backgroundColor: KTransparent,
+        ),
+        body: body(context),
+        bottomNavigationBar: BottomNavigationBar(
+          items: barItems(),
+          backgroundColor: KWhite,
+          selectedIconTheme: const IconThemeData(color: KSecondary, size: 30),
+          unselectedIconTheme: IconThemeData(color: KSecondary.withOpacity(0.4)),
+          currentIndex: _selectedIndex,
+          onTap: onTaped,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+        ),
       ),
     );
   }
@@ -132,7 +138,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   Widget leading(){
     return IconButton(
         onPressed: (){},
-        icon: const Icon(KOptions),
+        icon: const Icon(KOptions, color: KPrimary,),
         tooltip: ('Opciones')
     );
   }
@@ -140,7 +146,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   Widget actions(){
     return IconButton(
       onPressed: (){},
-      icon: const Icon(KNotifications),
+      icon: const Icon(KNotifications, color: KPrimary,),
       tooltip: ('Notificaciones'),
     );
   }
@@ -172,10 +178,10 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
     return IndexedStack(
       index: _selectedIndex,
       children: const [
-        Center(child: Text('Inicio')),
-        Center(child: Text('Calendario de eventos')),
-        Center(child: Text('Tus eventos')),
-        Center(child: Text('Tu perfil'))
+        Text('Inicio', style: TextStyle(color: KPrimary, fontSize: 26),),
+        Text('Calendario', style: TextStyle(color: KPrimary, fontSize: 26),),
+        Text('Tus eventos', style: TextStyle(color: KPrimary, fontSize: 26),),
+        Text('Tu perfil', style: TextStyle(color: KPrimary, fontSize: 26),)
       ],
     );
   }
@@ -191,6 +197,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
           Padding(
             padding: const EdgeInsets.all(20),
             child: SearchBox(
+              borderColor: KGrey5,
               placeHolder: 'Buscar',
               textStyle: const TextStyle(
                 color: KGrey4,
@@ -203,7 +210,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Align(
                 alignment: Alignment.topLeft,
-                child: Text('Mas populares', style: TextStyle(fontSize: 20, color: KGrey2),)),
+                child: Text('Mas populares', style: TextStyle(fontSize: 20, color: KGrey3, fontWeight: FontWeight.w500),)),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 20),
@@ -213,7 +220,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
             padding: EdgeInsets.all(20),
             child: Row(
               children: [
-                Text('Por Categoria', style: TextStyle(fontSize: 20, color: KGrey2),),
+                Text('Por Categoria', style: TextStyle(fontSize: 20, color: KGrey3),),
                 Expanded(child: SizedBox()),
                 GestureDetector(
                     onTap: (){},
@@ -239,7 +246,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Align(
                 alignment: Alignment.topLeft,
-                child: Text('Mas recientes', style: TextStyle(fontSize: 20, color: KGrey2),)),
+                child: Text('Mas recientes', style: TextStyle(fontSize: 20, color: KGrey3, fontWeight: FontWeight.w500),)),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20),
@@ -277,18 +284,16 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   }
 
   Widget eventsCategory(IconData icon, String text){
-    return Container(
-      child: Column(
-        children: [
-          Container(
-              height: 50,
-              width: 50,
-              child: Icon(icon, color: KBackgroundColor,),
-              decoration: BoxDecoration(color: KPrimary, borderRadius: BorderRadius.circular(10)),
-          ),
-          Text(text, style: TextStyle(fontSize: 16, color: KGrey2)),
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(color: KPrimary, borderRadius: BorderRadius.circular(10)),
+            child: Icon(icon, color: KBackgroundColor,),
+        ),
+        Text(text, style: TextStyle(fontSize: 16, color: KGrey2)),
+      ],
     );
   }
 
@@ -318,21 +323,19 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
 
   Widget calendar(){
     late int? daySelected = 0;
-    return Container(
-        color: KWhite,
-        child: CalendarPicker(
-          daysWithBorder: false,
-          nameDaysWithBorder: false,
-          fontWeightOfNameDay: FontWeight.w500,
-          fontWeightOfDay: FontWeight.normal,
-          fontWeightOfMonth: FontWeight.w500,
-          onDaySelected: (date){
-            setState(() {
-              daySelected = date.day;
-              print(daySelected);
-            });
-          },
-        )
+    return CalendarPicker(
+      backgroundColor: KBackgroundColor,
+      daysWithBorder: false,
+      nameDaysWithBorder: false,
+      fontWeightOfNameDay: FontWeight.w500,
+      fontWeightOfDay: FontWeight.normal,
+      fontWeightOfMonth: FontWeight.w500,
+      onDaySelected: (date){
+        setState(() {
+          daySelected = date.day;
+          print(daySelected);
+        });
+      },
     );
   }
 
@@ -364,7 +367,6 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
       child: Container(
         height: 200,
         width: 400,
-        color: KWhite,
         child: Stack(
           children: [
             imageItemBuilder(index),
