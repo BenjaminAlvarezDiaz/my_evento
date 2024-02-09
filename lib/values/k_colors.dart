@@ -19,15 +19,9 @@ const Color KPrimary_D1 = Color(0xFF4D000A);
 const Color KSecondary = Color(0xFF231142);
 const Color KSecondary_L1 = Color(0xFF4E386D);
 const Color KSecondary_D1 = Color(0xFF00001D);
-const Color KBackgroundColor = Color(0xFFF5F5F5);
+const Color KBackgroundColor = Color(0xFFFFFFFF);
 const Color KBackgroundColorNotUse = Color(0xFFECEFF1);
 
-var MYsystemTheme = SystemUiOverlayStyle.light.copyWith(
-  //systemNavigationBarColor: KBackgroundColor,
-  statusBarColor: KBackgroundColor,
-  //systemNavigationBarIconBrightness: Brightness.dark,
-  statusBarIconBrightness: Brightness.dark,
-);
 
 const Color KDefault_Text = Color(0xFF424242);
 const Color KGrey1 = Color(0xFF212121);
@@ -44,9 +38,12 @@ const Color KFontColor = KGrey2;
 const Color KShadow = Colors.black54;
 const Color KDefaultBackground = Color(0xFFFFFFFF);
 
-
-
-
+SystemUiOverlayStyle MYsystemTheme = SystemUiOverlayStyle.light.copyWith(
+  //systemNavigationBarColor: KBackgroundColor,
+  statusBarColor: KBackgroundColor,
+  //systemNavigationBarIconBrightness: Brightness.dark,
+  statusBarIconBrightness: Brightness.dark,
+);
 
 const Color KBackgroundBlue_T1 = Color(0xFF091014);
 const Color KBackgroundBlue = Color(0xFF111F28);

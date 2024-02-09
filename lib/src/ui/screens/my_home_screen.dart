@@ -198,11 +198,12 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
             padding: const EdgeInsets.all(20),
             child: SearchBox(
               borderColor: KGrey5,
-              placeHolder: 'Buscar',
+              backgroundColor: KGrey6,
+              placeHolder: 'Buscar evento',
               textStyle: const TextStyle(
                 color: KGrey4,
                 fontWeight: FontWeight.w400,
-                fontSize: 18,
+                fontSize: 14,
               ),
             ),
           ),
@@ -210,7 +211,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Align(
                 alignment: Alignment.topLeft,
-                child: Text('Mas populares', style: TextStyle(fontSize: 20, color: KGrey3, fontWeight: FontWeight.w500),)),
+                child: Text('Mas populares', style: TextStyle(fontSize: 20, color: KGrey2, fontWeight: FontWeight.w500),)),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 20),
@@ -220,7 +221,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
             padding: EdgeInsets.all(20),
             child: Row(
               children: [
-                Text('Por Categoria', style: TextStyle(fontSize: 20, color: KGrey3),),
+                Text('Por Categoria', style: TextStyle(fontSize: 20, color: KGrey2, fontWeight: FontWeight.w400),),
                 Expanded(child: SizedBox()),
                 GestureDetector(
                     onTap: (){},
@@ -246,7 +247,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Align(
                 alignment: Alignment.topLeft,
-                child: Text('Mas recientes', style: TextStyle(fontSize: 20, color: KGrey3, fontWeight: FontWeight.w500),)),
+                child: Text('Mas recientes', style: TextStyle(fontSize: 20, color: KGrey2, fontWeight: FontWeight.w500),)),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20),
@@ -289,8 +290,8 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
         Container(
             height: 50,
             width: 50,
-            decoration: BoxDecoration(color: KPrimary, borderRadius: BorderRadius.circular(10)),
-            child: Icon(icon, color: KBackgroundColor,),
+            decoration: BoxDecoration(color: KBackgroundColor, borderRadius: BorderRadius.circular(10)),
+            child: Icon(icon, color: KPrimary,),
         ),
         Text(text, style: TextStyle(fontSize: 16, color: KGrey2)),
       ],
