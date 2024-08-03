@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(MYsystemTheme);
+    SystemChrome.setSystemUIOverlayStyle(MySystemTheme);
     return MaterialApp(
       theme: ThemeData(
         scaffoldBackgroundColor: KBackgroundColor,

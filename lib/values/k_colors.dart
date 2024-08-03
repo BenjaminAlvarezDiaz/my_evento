@@ -38,7 +38,7 @@ const Color KFontColor = KGrey2;
 const Color KShadow = Colors.black54;
 const Color KDefaultBackground = Color(0xFFFFFFFF);
 
-SystemUiOverlayStyle MYsystemTheme = SystemUiOverlayStyle.light.copyWith(
+SystemUiOverlayStyle MySystemTheme = SystemUiOverlayStyle.light.copyWith(
   //systemNavigationBarColor: KBackgroundColor,
   statusBarColor: KBackgroundColor,
   //systemNavigationBarIconBrightness: Brightness.dark,
