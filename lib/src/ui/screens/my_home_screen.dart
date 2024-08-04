@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -37,12 +39,25 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   PageController pageController = PageController();
   late final TabController tabController;
 
+  final _controllerEventsHome = PageController(
+      viewportFraction: 1,
+      keepPage: true
+  );
+
+  double currentPage = 0.0;
+
+  /*void _listenerOfEvents(){
+    setState(() {
+      currentPage = _controllerEventsHome.page!;
+    });
+  }*/
+
   @override
   void initState(){
     _con.initScreen(arguments: args);
     tabController = TabController(length: 4, vsync: this);
     super.initState();
-
+    //_controllerEventsHome.addListener(_listenerOfEvents);
     refreshEvents();
   }
 
@@ -57,7 +72,8 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   @override
   void dispose(){
     _con.closeDataBase();
-
+    //_controllerEventsHome.removeListener(_listenerOfEvents);
+    _controllerEventsHome.dispose();
     super.dispose();
   }
 
@@ -265,26 +281,22 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   }
 
   Widget eventList(){
+    double? opacity;
     return Container(
       height: 200,
       width: 600,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            const SizedBox(height: 10,),
-            ScrollConfiguration(
-              behavior: MyBehavior(),
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: events.length,
-                itemBuilder: itemBuilder,
-                separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
-              ),
-            ),
-          ],
+      child: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: PageView.builder(
+          scrollDirection: Axis.horizontal,
+          controller: _controllerEventsHome,
+          //shrinkWrap: true,
+          //physics: const NeverScrollableScrollPhysics(),
+          itemCount: events.length,
+          itemBuilder: (context, int index){
+            return itemBuilder(context, index, 1);
+          },
+          //separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
         ),
       ),
     );
@@ -319,7 +331,9 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: events.length,
-              itemBuilder: itemBuilder,
+              itemBuilder: (BuildContext context, int index){
+                return itemBuilder(context, index, 1);
+              },
               separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
             ),
           )
@@ -366,33 +380,38 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
     );
   }
 
-  Widget itemBuilder(BuildContext context, int index){
+  Widget itemBuilder(BuildContext context, int index, double opacity){
     return InkWell(
       onTap: (){
         _con.onPressedEvent(context, index, events);
       },
-      child: Container(
-        height: 200,
-        width: 400,
-        child: Stack(
-          children: [
-            imageItemBuilder(index),
-            informationItemBuilder(index)
-          ],
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20),
+        child: Container(
+          height: 200,
+          width: 400,
+          child: Stack(
+            children: [
+              imageItemBuilder(index, opacity),
+              informationItemBuilder(index)
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget imageItemBuilder(int index){
+  Widget imageItemBuilder(int index, double opacity){
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(20)),
       child: Container(
           decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('${_con.getListEvent()[index].image}'),
-              fit: BoxFit.cover)
+              fit: BoxFit.cover,
+              opacity: opacity,
           )
+        )
       ),
     );
   }
