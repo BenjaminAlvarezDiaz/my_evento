@@ -230,7 +230,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
                 child: Text('Mas populares', style: TextStyle(fontSize: 20, color: KGrey2, fontWeight: FontWeight.w500),)),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20, top: 20),
+            padding: const EdgeInsets.only(top: 20),
             child: eventList(),
           ),
           Padding(
@@ -271,10 +271,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
                 )
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: eventList(),
-          ),
+          eventList(),
         ],
       ),
     );
@@ -334,7 +331,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
               itemBuilder: (BuildContext context, int index){
                 return itemBuilder(context, index, 1);
               },
-              separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
+              separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 20,),
             ),
           )
         ],
@@ -348,6 +345,9 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
       backgroundColor: KBackgroundColor,
       daysWithBorder: false,
       nameDaysWithBorder: false,
+      currentDayBorder: true,
+      currentDayBorderColor: KSecondary_L1,
+      borderRadiusGeometryOfDay: BorderRadius.circular(40),
       fontWeightOfNameDay: FontWeight.w500,
       fontWeightOfDay: FontWeight.normal,
       fontWeightOfMonth: FontWeight.w500,
@@ -386,7 +386,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
         _con.onPressedEvent(context, index, events);
       },
       child: Padding(
-        padding: const EdgeInsets.only(right: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Container(
           height: 200,
           width: 400,
