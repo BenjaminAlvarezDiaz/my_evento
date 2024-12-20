@@ -57,6 +57,7 @@ dependencies:
   flutter_spinner_picker: ^0.0.7
   time_picker_spinner: ^0.0.1
   material_design_icons_flutter: ^7.0.7296
+  flutter_custom_carousel: ^0.1.0+1
 dev_dependencies:
   flutter_test:
     sdk: flutter

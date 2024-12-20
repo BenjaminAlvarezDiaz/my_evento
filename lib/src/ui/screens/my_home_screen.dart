@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/ui/components/button_multifunction_component.dart';
 import 'package:my_evento/src/ui/components/calendar_picker.dart';
@@ -35,12 +39,25 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   PageController pageController = PageController();
   late final TabController tabController;
 
+  final _controllerEventsHome = PageController(
+      viewportFraction: 1,
+      keepPage: true
+  );
+
+  double currentPage = 0.0;
+
+  /*void _listenerOfEvents(){
+    setState(() {
+      currentPage = _controllerEventsHome.page!;
+    });
+  }*/
+
   @override
   void initState(){
     _con.initScreen(arguments: args);
     tabController = TabController(length: 4, vsync: this);
     super.initState();
-
+    //_controllerEventsHome.addListener(_listenerOfEvents);
     refreshEvents();
   }
 
@@ -55,7 +72,8 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   @override
   void dispose(){
     _con.closeDataBase();
-
+    //_controllerEventsHome.removeListener(_listenerOfEvents);
+    _controllerEventsHome.dispose();
     super.dispose();
   }
 
@@ -68,27 +86,31 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        shadowColor: KTransparent,
-        leading: leading(),
-        actions: [
-          actions()
-        ],
-        //centerTitle: false,
-        title: titlePage(),
-        backgroundColor: KPrimary,
-      ),
-      body: body(context),
-      bottomNavigationBar: BottomNavigationBar(
-        items: barItems(),
-        backgroundColor: KWhite,
-        selectedIconTheme: const IconThemeData(color: KSecondary, size: 30),
-        unselectedIconTheme: IconThemeData(color: KSecondary.withOpacity(0.4)),
-        currentIndex: _selectedIndex,
-        onTap: onTaped,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+    return Material(
+      child: Scaffold(
+        appBar: AppBar(
+          systemOverlayStyle: MySystemTheme,
+          shadowColor: KTransparent,
+          elevation: 0,
+          leading: leading(),
+          actions: [
+            actions()
+          ],
+          //centerTitle: false,
+          title: titlePage(),
+          backgroundColor: KTransparent,
+        ),
+        body: body(context),
+        bottomNavigationBar: BottomNavigationBar(
+          items: barItems(),
+          backgroundColor: KWhite,
+          selectedIconTheme: const IconThemeData(color: KSecondary, size: 30),
+          unselectedIconTheme: IconThemeData(color: KSecondary.withOpacity(0.4)),
+          currentIndex: _selectedIndex,
+          onTap: onTaped,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+        ),
       ),
     );
   }
@@ -132,7 +154,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   Widget leading(){
     return IconButton(
         onPressed: (){},
-        icon: const Icon(KOptions),
+        icon: const Icon(KOptions, color: KPrimary,),
         tooltip: ('Opciones')
     );
   }
@@ -140,7 +162,7 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   Widget actions(){
     return IconButton(
       onPressed: (){},
-      icon: const Icon(KNotifications),
+      icon: const Icon(KNotifications, color: KPrimary,),
       tooltip: ('Notificaciones'),
     );
   }
@@ -172,10 +194,10 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
     return IndexedStack(
       index: _selectedIndex,
       children: const [
-        Center(child: Text('Inicio')),
-        Center(child: Text('Calendario de eventos')),
-        Center(child: Text('Tus eventos')),
-        Center(child: Text('Tu perfil'))
+        Text('Inicio', style: TextStyle(color: KPrimary, fontSize: 26),),
+        Text('Calendario', style: TextStyle(color: KPrimary, fontSize: 26),),
+        Text('Tus eventos', style: TextStyle(color: KPrimary, fontSize: 26),),
+        Text('Tu perfil', style: TextStyle(color: KPrimary, fontSize: 26),)
       ],
     );
   }
@@ -185,82 +207,109 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
   }
 
   Widget eventListHome(){
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: SearchBox(
-            placeHolder: 'Buscar',
-            textStyle: const TextStyle(
-              color: KGray,
-              fontWeight: FontWeight.w400,
-              fontSize: 18,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Container(
-            height: 200,
-            width: 600,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  const SizedBox(height: 10,),
-                  ScrollConfiguration(
-                    behavior: MyBehavior(),
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                        itemCount: events.length,
-                        itemBuilder: itemBuilder,
-                        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
-                    ),
-                  ),
-                ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: SearchBox(
+              borderColor: KGrey5,
+              backgroundColor: KGrey6,
+              placeHolder: 'Buscar evento',
+              textStyle: const TextStyle(
+                color: KGrey3,
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
               ),
             ),
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Text('Por Categoria', style: TextStyle(fontSize: 20),),
-            ],
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Align(
+                alignment: Alignment.topLeft,
+                child: Text('Mas populares', style: TextStyle(fontSize: 20, color: KGrey2, fontWeight: FontWeight.w500),)),
           ),
-        ),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              eventsCategory(KMusic, 'Musica'),
-              eventsCategory(KTech, 'Tech'),
-              eventsCategory(KSports, 'Deportes'),
-              eventsCategory(KFashion, 'Moda'),
-              eventsCategory(KCulture, 'Cultura'),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: eventList(),
           ),
-        )
-      ],
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Text('Por Categoria', style: TextStyle(fontSize: 20, color: KGrey2, fontWeight: FontWeight.w400),),
+                Expanded(child: SizedBox()),
+                GestureDetector(
+                    onTap: (){},
+                    child: Text('Ver todo', style: TextStyle(fontSize: 16, color: KPrimary),)
+                )
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                eventsCategory(KMusic, 'Musica'),
+                eventsCategory(KTech, 'Tech'),
+                eventsCategory(KSports, 'Deportes'),
+                eventsCategory(KFashion, 'Moda'),
+                eventsCategory(KCulture, 'Cultura'),
+              ],
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Align(
+                alignment: Alignment.topLeft,
+                child: Text('Mas recientes',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: KGrey2,
+                      fontWeight: FontWeight.w500),
+                )
+            ),
+          ),
+          eventList(),
+        ],
+      ),
+    );
+  }
+
+  Widget eventList(){
+    double? opacity;
+    return Container(
+      height: 200,
+      width: 600,
+      child: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: PageView.builder(
+          scrollDirection: Axis.horizontal,
+          controller: _controllerEventsHome,
+          //shrinkWrap: true,
+          //physics: const NeverScrollableScrollPhysics(),
+          itemCount: events.length,
+          itemBuilder: (context, int index){
+            return itemBuilder(context, index, 1);
+          },
+          //separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
+        ),
+      ),
     );
   }
 
   Widget eventsCategory(IconData icon, String text){
-    return Container(
-      child: Column(
-        children: [
-          Container(
-              height: 50,
-              width: 50,
-              child: Icon(icon, color: KBackgroundColor,),
-              decoration: BoxDecoration(color: KPrimary, borderRadius: BorderRadius.circular(10)),
-          ),
-          Text(text, style: TextStyle(fontSize: 16)),
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(color: KBackgroundColor, borderRadius: BorderRadius.circular(10)),
+            child: Icon(icon, color: KPrimary,),
+        ),
+        Text(text, style: TextStyle(fontSize: 16, color: KGrey2)),
+      ],
     );
   }
 
@@ -279,8 +328,10 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: events.length,
-              itemBuilder: itemBuilder,
-              separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
+              itemBuilder: (BuildContext context, int index){
+                return itemBuilder(context, index, 1);
+              },
+              separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 20,),
             ),
           )
         ],
@@ -290,21 +341,22 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
 
   Widget calendar(){
     late int? daySelected = 0;
-    return Container(
-        color: KWhite,
-        child: CalendarPicker(
-          daysWithBorder: false,
-          nameDaysWithBorder: false,
-          fontWeightOfNameDay: FontWeight.w500,
-          fontWeightOfDay: FontWeight.normal,
-          fontWeightOfMonth: FontWeight.w500,
-          onDaySelected: (date){
-            setState(() {
-              daySelected = date.day;
-              print(daySelected);
-            });
-          },
-        )
+    return CalendarPicker(
+      backgroundColor: KBackgroundColor,
+      daysWithBorder: false,
+      nameDaysWithBorder: false,
+      currentDayBorder: true,
+      currentDayBorderColor: KSecondary_L1,
+      borderRadiusGeometryOfDay: BorderRadius.circular(40),
+      fontWeightOfNameDay: FontWeight.w500,
+      fontWeightOfDay: FontWeight.normal,
+      fontWeightOfMonth: FontWeight.w500,
+      onDaySelected: (date){
+        setState(() {
+          daySelected = date.day;
+          print(daySelected);
+        });
+      },
     );
   }
 
@@ -328,34 +380,38 @@ class _MyHomeScreenState extends StateMVC<MyHomeScreen> with TickerProviderState
     );
   }
 
-  Widget itemBuilder(BuildContext context, int index){
+  Widget itemBuilder(BuildContext context, int index, double opacity){
     return InkWell(
       onTap: (){
         _con.onPressedEvent(context, index, events);
       },
-      child: Container(
-        height: 200,
-        width: 400,
-        color: KWhite,
-        child: Stack(
-          children: [
-            imageItemBuilder(index),
-            informationItemBuilder(index)
-          ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Container(
+          height: 200,
+          width: 400,
+          child: Stack(
+            children: [
+              imageItemBuilder(index, opacity),
+              informationItemBuilder(index)
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget imageItemBuilder(int index){
+  Widget imageItemBuilder(int index, double opacity){
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(20)),
       child: Container(
           decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('${_con.getListEvent()[index].image}'),
-              fit: BoxFit.cover)
+              fit: BoxFit.cover,
+              opacity: opacity,
           )
+        )
       ),
     );
   }

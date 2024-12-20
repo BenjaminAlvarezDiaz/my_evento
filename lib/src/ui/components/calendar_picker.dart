@@ -6,6 +6,8 @@ class CalendarPicker extends StatefulWidget {
   final Color currentDayColor;
   final Color disabledColorDay;
   final Color enabledColorDay;
+  final Color currentDayBorderColor;
+  final bool currentDayBorder;
   final bool daysWithBorder;
   final bool enabledAllDaysOfMonth;
   final bool nameDaysWithBorder;
@@ -18,11 +20,15 @@ class CalendarPicker extends StatefulWidget {
   final double? heightCalendar;
   late int? onTapDaySelected;
   final Function(CalendarDate) onDaySelected;
+  final Color? backgroundColor;
   CalendarPicker({
     Key? key,
     this.currentDayColor = const Color(0xff7F0432),
     this.disabledColorDay = Colors.grey,
     this.enabledColorDay = Colors.black,
+    this.backgroundColor = Colors.white,
+    this.currentDayBorderColor = Colors.transparent,
+    this.currentDayBorder = true,
     this.daysWithBorder = true,
     this.enabledAllDaysOfMonth = true,
     this.nameDaysWithBorder = true,
@@ -113,7 +119,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        color: Colors.white,
+        color: widget.backgroundColor,
         width: widget.widthCalendar! < 500 ? 500 : widget.widthCalendar,
         height: widget.heightCalendar! < 500 ? 500 : widget.heightCalendar,
         child: ScrollConfiguration(
@@ -167,8 +173,16 @@ class _CalendarPickerState extends State<CalendarPicker> {
         widget.onDaySelected(date);
       },
       child: Container(
+        //Aquí se decide el color y si tienen o no un borde los dias o si solo lo tiene el dia actual
         decoration: BoxDecoration(
-          border: widget.daysWithBorder ? Border.all(color: isCurrentMonth ? isCurrentDay ? widget.currentDayColor : textColor : textColor) : null,
+          border: widget.daysWithBorder ?
+            Border.all(color: isCurrentMonth ?
+              isCurrentDay ? widget.currentDayColor
+                  : textColor : textColor)
+              : widget.currentDayBorder?
+            Border.all(color: isCurrentMonth ?
+              isCurrentDay ? widget.currentDayBorderColor
+                  : Colors.transparent : Colors.transparent) : null,
           borderRadius: widget.borderRadiusGeometryOfDay,
         ),
         child: Column(
@@ -221,7 +235,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
     double? fontSize = 20;
     Color? colorIcon = const Color(0xff7F0432);
     return Container(
-      color: Colors.white,
+      color: widget.backgroundColor,
       height: height,
       width: widthCalendar,
       child: Row(
@@ -236,7 +250,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
             },
           ) : SizedBox(width: sizeIcon * 2.4,),
           Container(
-            color: Colors.white,
+            color: widget.backgroundColor,
             width: widthCalendar! / 2,
             height: height,
             child: Center(child: Text(month, style: TextStyle(fontSize: fontSize, fontWeight: widget.fontWeightOfMonth),)),

@@ -106,14 +106,17 @@ class _ChooseDayAndTimeScreenState extends StateMVC<ChooseDayAndTimeScreen> {
 
   AppBar appBar(){
     return AppBar(
-      backgroundColor: KPrimary,
+      backgroundColor: KBackgroundColor,
+      systemOverlayStyle: MySystemTheme,
+      shadowColor: KTransparent,
+      elevation: 0,
       leading: IconButton(
           onPressed: (){
             _con.onPressedBack(context);
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: KWhite,
+            color: KPrimary_L1,
           )
       ),
     );

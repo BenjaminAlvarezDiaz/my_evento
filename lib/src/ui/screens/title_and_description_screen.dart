@@ -43,14 +43,17 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
 
   AppBar appBar(context){
     return AppBar(
-      backgroundColor: KPrimary,
+      backgroundColor: KBackgroundColor,
+      systemOverlayStyle: MySystemTheme,
+      shadowColor: KTransparent,
+      elevation: 0,
       leading: IconButton(
           onPressed: (){
             _con.onPressedBack(context);
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: KWhite,
+            color: KPrimary_L1,
           )
       ),
     );

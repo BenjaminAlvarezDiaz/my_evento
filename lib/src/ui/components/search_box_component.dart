@@ -92,7 +92,7 @@ class SearchBoxState extends State<SearchBox> {
                 widget.onClearSearchTap!();
               }
             },
-            child: const Icon(KSearch, size: 22,)
+            child: Icon(KSearch, size: 22, color: widget.textStyle?.color,)
           ),
         ],
       ),
