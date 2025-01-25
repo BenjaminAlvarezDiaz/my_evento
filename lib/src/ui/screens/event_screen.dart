@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:my_evento/src/models/event_model.dart';
@@ -137,26 +139,30 @@ class _EventScreenState extends StateMVC<EventScreen> {
   }
 
   Widget titleAndDate(){
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(_con.getTitle(), style: TextStyle(fontSize: 18),),
-            SizedBox(width: 110,)
-          ],
-        ),
-        Row(
-          children: [
-            Text('${formatDate(_con.getDateTime().day)}'
-                ' de Diciembre'
-                ' ${_con.getStartTime()}:${_con.getStartTime()}'
-                ' a ${_con.getEndTime()}:${_con.getEndTime()}',
-              style: const TextStyle(color: KGrey2, fontSize: 12),
-            ),
-            const SizedBox(width: 10,),
-          ],
-        )
-      ],
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+      width: exp(5.9),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(_con.getTitle(), style: TextStyle(fontSize: 18),),
+
+            ],
+          ),
+          Row(
+            children: [
+              Text('${formatDate(_con.getDateTime().day)}'
+                  ' de Diciembre'
+                  ' ${_con.getStartTime()}:${_con.getStartTime()}'
+                  ' a ${_con.getEndTime()}:${_con.getEndTime()}',
+                style: const TextStyle(color: KGrey2, fontSize: 12),
+              ),
+
+            ],
+          )
+        ],
+      ),
     );
   }
 

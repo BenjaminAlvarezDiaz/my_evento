@@ -80,6 +80,10 @@ class Dummy implements IDataAccess {
   ];
 
   @override
+  create(Event event) {
+  }
+
+  @override
   getDateEvent() {
     return ;
   }

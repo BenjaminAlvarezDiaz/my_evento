@@ -45,6 +45,7 @@ class EventDataBase implements IDataAccess{
     ''');
   }
 
+  @override
   Future<Event> create(Event event) async {
     final db = await instance.database;
 
