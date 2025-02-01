@@ -31,6 +31,10 @@ class DataManager {
 
   saveCulture(Future culture) async {}
 
+  createEvent(event) async {
+    dataAccess.create(event);
+  }
+
   getCulture() {}
 
   getDateEvent(){

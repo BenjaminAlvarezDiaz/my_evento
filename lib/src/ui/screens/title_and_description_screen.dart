@@ -12,24 +12,27 @@ class TitleAndDescriptionScreen extends StatefulWidget {
   const TitleAndDescriptionScreen({super.key, required this.eventTemporalData});
 
   @override
-  StateMVC<TitleAndDescriptionScreen> createState() => _TitleAndDescriptionScreenState();
+  StateMVC<TitleAndDescriptionScreen> createState() =>
+      _TitleAndDescriptionScreenState();
 }
 
-class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen> {
+class _TitleAndDescriptionScreenState
+    extends StateMVC<TitleAndDescriptionScreen> {
   late TitleAndDescriptionScreenController _con;
 
-  _TitleAndDescriptionScreenState() : super(TitleAndDescriptionScreenController()){
+  _TitleAndDescriptionScreenState()
+      : super(TitleAndDescriptionScreenController()) {
     _con = TitleAndDescriptionScreenController();
   }
 
   @override
-  void initState(){
+  void initState() {
     _con.setEventTemporalData(widget.eventTemporalData);
     super.initState();
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
@@ -41,25 +44,24 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
     );
   }
 
-  AppBar appBar(context){
+  AppBar appBar(context) {
     return AppBar(
       backgroundColor: KBackgroundColor,
       systemOverlayStyle: MySystemTheme,
       shadowColor: KTransparent,
       elevation: 0,
       leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             _con.onPressedBack(context);
           },
           icon: const Icon(
             Icons.arrow_back,
             color: KPrimary_L1,
-          )
-      ),
+          )),
     );
   }
 
-  Widget body(){
+  Widget body() {
     return Container(
       color: KTransparent,
       child: Center(
@@ -70,9 +72,13 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
               children: [
                 title(_con.getTitleEditingController()),
                 description(_con.getDescriptionUpEditingController()),
-                SizedBox(height: 110,),
+                SizedBox(
+                  height: 110,
+                ),
                 buttons(),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),
@@ -81,54 +87,57 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
     );
   }
 
-  Widget title(TextEditingController? textEditingController){
+  Widget title(TextEditingController? textEditingController) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, top: 20, right: 200, bottom: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text('Titulo: ', textAlign: TextAlign.left, style: TextStyle(fontSize: 20),),
-            ],
-          ),
-          TextField(
-            controller: textEditingController,
-            /*onSubmitted: (String value){
+      child: Column(children: [
+        Row(
+          children: [
+            Text(
+              'Titulo: ',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
+        TextField(
+          controller: textEditingController,
+          /*onSubmitted: (String value){
                         _con.onSubmittedTitle(value);
                       },*/
-            strutStyle: StrutStyle(),
-            style: TextStyle(fontSize: 18),
-            maxLines: 1,
-            textAlignVertical: TextAlignVertical.top,
-            cursorColor: KPrimary,
-            decoration: InputDecoration(
-                isDense: true,
-                focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: KSecondary, width: 1.5)
-                ),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: KSecondary_L1.withOpacity(0.5), width: 1.5)
-                ),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                hintText: 'Titulo evento',
-                contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5)),
-          ),
-        ]
-      ),
+          strutStyle: StrutStyle(),
+          style: TextStyle(fontSize: 18),
+          maxLines: 1,
+          textAlignVertical: TextAlignVertical.top,
+          cursorColor: KPrimary,
+          decoration: InputDecoration(
+              isDense: true,
+              focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: KSecondary, width: 1.5)),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: KSecondary_L1.withOpacity(0.5), width: 1.5)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+              hintText: 'Titulo evento',
+              contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5)),
+        ),
+      ]),
     );
   }
 
-  Widget description(TextEditingController? textEditingController){
+  Widget description(TextEditingController? textEditingController) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Column(
         children: [
           Row(
             children: [
-              Text('Descripción: ', textAlign: TextAlign.left, style: TextStyle(fontSize: 18),),
+              Text(
+                'Descripción: ',
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 18),
+              ),
             ],
           ),
           TextField(
@@ -139,20 +148,19 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
             maxLines: null,
             minLines: 14,
             strutStyle: StrutStyle(),
-            style: TextStyle(fontSize: 16,),
+            style: TextStyle(
+              fontSize: 16,
+            ),
             cursorColor: KPrimary,
             decoration: InputDecoration(
               isDense: true,
               focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: KSecondary, width: 1.5)
-              ),
+                  borderSide: BorderSide(color: KSecondary, width: 1.5)),
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: KSecondary_L1.withOpacity(0.5), width: 1.5)
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5)),
+                      color: KSecondary_L1.withOpacity(0.5), width: 1.5)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
               hintText: 'Descripción',
               contentPadding: EdgeInsets.all(10),
             ),
@@ -162,33 +170,47 @@ class _TitleAndDescriptionScreenState extends StateMVC<TitleAndDescriptionScreen
     );
   }
 
-  Widget buttons (){
+  Widget buttons() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           ButtonMultifunction(
-            text: Text('Cancelar', style: TextStyle(fontSize: 20, color: KDefault_Text),),
-            onTap: (){
+            text: Text(
+              'Cancelar',
+              style: TextStyle(fontSize: 20, color: KDefault_Text),
+            ),
+            onTap: () {
               _con.onPressedCancel(context);
             },
             withIcon: true,
             iconRight: true,
             width: 160,
             backgroundColor: KTransparent,
-            icon: Icon(Icons.clear, color: KCancel, size: 30,),
+            icon: Icon(
+              Icons.clear,
+              color: KCancel,
+              size: 30,
+            ),
           ),
           ButtonMultifunction(
-            text: Text('Siguiente', style: TextStyle(fontSize: 20),),
-            onTap: (){
+            text: Text(
+              'Siguiente',
+              style: TextStyle(fontSize: 20),
+            ),
+            onTap: () {
               _con.onPressedFollowing(context);
             },
             withIcon: true,
             iconRight: true,
             width: 160,
             backgroundColor: KTransparent,
-            icon: const Icon(Icons.check, color: KAccept, size: 30,),
+            icon: const Icon(
+              Icons.check,
+              color: KAccept,
+              size: 30,
+            ),
           ),
         ],
       ),

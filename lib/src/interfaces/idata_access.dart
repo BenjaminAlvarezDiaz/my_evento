@@ -1,4 +1,7 @@
+import 'package:my_evento/src/models/event_model.dart';
+
 abstract class IDataAccess {
+  create(Event event);
   getDateEvent();
   getHourEvent();
   //getTitleEvent();
